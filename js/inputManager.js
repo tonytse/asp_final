@@ -10,7 +10,6 @@ function InputManager() {
 
     this.onUpdate = function () {
 
-
         this.isUp = keyDown('w') || keyDown(38);
         this.isDown = keyDown('s') || keyDown(40);
         this.isLeft = keyDown('a') || keyDown(37);
