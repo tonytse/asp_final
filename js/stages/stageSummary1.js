@@ -1,4 +1,4 @@
-function StageMC1() {
+function StageSummary1() {
     let self = this;
 
     this.onEnter = function () {

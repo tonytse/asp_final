@@ -1,4 +1,4 @@
-function StageMC1() {
+function StageGameB() {
     let self = this;
 
     this.onEnter = function () {
