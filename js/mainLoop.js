@@ -1,3 +1,4 @@
+let gSceneManager = null;
 let gStageManager = null;
 let gPlayerManager = null;
 let gSpriteManager = null;
@@ -7,6 +8,7 @@ let dialogFont = null;
 let button;
 function preload() {
 
+	gSceneManager = new SceneManager()
 	gSpriteManager = new SpriteManager();
 	gStageManager = new StageManager();
 	gPlayerManager = new PlayerManager();
@@ -23,6 +25,11 @@ function preload() {
 	button.id('dialogButton');
 
 
+	gUIManager = new UIManager();
+
+	gUIManager.preload();
+	gSpriteManager.preload();
+	gPlayerManager.preload();
 }
 
 function setup() {
@@ -31,6 +38,9 @@ function setup() {
 
 function draw() {
 	clear();
+
+	gSceneManager.onDraw();
+	gPlayerManager.onDrawVirusBar();
 
 	gInputManager.onUpdate();
 	gStageManager.onDraw();
@@ -41,6 +51,10 @@ function draw() {
 	gDialogSystem.onDraw();
 
 
+
+	gPlayerManager.onDraw();
+
+	gUIManager.onDraw();
 
 }
 
