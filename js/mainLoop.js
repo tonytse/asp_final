@@ -11,7 +11,9 @@ function preload() {
 	gStageManager = new StageManager();
 	gPlayerManager = new PlayerManager();
 	gInputManager = new InputManager();
+    gUIManager = new UIManager();
 
+    gUIManager.preload();
 	gSpriteManager.preload();
     gPlayerManager.preload();
 }
@@ -31,6 +33,7 @@ function draw() {
 
     gPlayerManager.onDraw();
 	
+    gUIManager.onDraw();
 	
 }
 
