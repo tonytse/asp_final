@@ -1,3 +1,4 @@
+let gSceneManager = null;
 let gStageManager = null;
 let gPlayerManager = null;
 let gSpriteManager = null;
@@ -5,6 +6,7 @@ let gInputManager = null;
 
 function preload() {
 
+    gSceneManager = new SceneManager()
 	gSpriteManager = new SpriteManager();
 	gStageManager = new StageManager();
 	gPlayerManager = new PlayerManager();
@@ -21,13 +23,14 @@ function setup() {
 function draw() {
 	clear();
 
+    gSceneManager.onDraw();
     gPlayerManager.onDrawVirusBar();
 
 	gInputManager.onUpdate();
 	gStageManager.onDraw();
 
-
-	drawSprites();
+    gPlayerManager.onDraw();
+	
 	
 }
 

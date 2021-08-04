@@ -9,7 +9,7 @@ function SpriteManager() {
     this.explode_animation = null;
 
     this.preload = function () {
-        print('SpriteManager reload')
+        //print('SpriteManager reload')
 
         self.player = createSprite(300, 300, 614, 307);
 
