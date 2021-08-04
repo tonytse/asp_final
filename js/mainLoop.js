@@ -12,17 +12,17 @@ function preload() {
 	gStageManager = new StageManager();
 	gPlayerManager = new PlayerManager();
 	gInputManager = new InputManager();
-	gDialogSystem = new DialogSystem();
+	//gDialogSystem = new DialogSystem();
 	gUIManager = new UIManager();
 
 	gUIManager.preload();
 	gSpriteManager.preload();
 	gPlayerManager.preload();
     
-	let dialogJSON = loadJSON('test.json');
+	//let dialogJSON = loadJSON('test.json');
+    gUIManager.loadDialog( 'assets/gameData/test.json' );
 
-
-	gDialogSystem.init(dialogJSON);
+	//gDialogSystem.init(dialogJSON);
 
 
 }
@@ -40,10 +40,7 @@ function draw() {
 	gInputManager.onUpdate();
 	gStageManager.onDraw();
 
-
-	gDialogSystem.onDraw();
-
-
+	//gDialogSystem.onDraw();
 	gPlayerManager.onDraw();
 
 	gUIManager.onDraw();

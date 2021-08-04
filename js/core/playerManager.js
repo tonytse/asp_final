@@ -11,7 +11,6 @@ function PlayerManager() {
 
     this.onDrawVirusBar = function () {
 
-
         image(self.imgVirusIcon, 10, 0);
         image(self.imgVirusIcon, 55, -35);
 
