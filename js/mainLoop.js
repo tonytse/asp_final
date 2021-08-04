@@ -11,7 +11,7 @@ function preload() {
 	gInputManager = new InputManager();
 
 	gSpriteManager.preload();
-
+    gPlayerManager.preload();
 }
 
 function setup() {
@@ -20,6 +20,8 @@ function setup() {
 
 function draw() {
 	clear();
+
+    gPlayerManager.onDrawVirusBar();
 
 	gInputManager.onUpdate();
 	gStageManager.onDraw();
