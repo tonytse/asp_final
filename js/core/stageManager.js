@@ -26,10 +26,8 @@ function StageManager() {
         
     }
 
-    // init setup
-    this.init = function () {
-        self.changeStage( new StageStart() );
-
+    this.start = function () {
+        self.changeStage( new StageMC1() );
     }
 /*
     this.changeStatgeById( stageId ) {
@@ -48,6 +46,4 @@ function StageManager() {
         }
     }
 
-    // init this object
-    this.init();
 }

@@ -14,7 +14,7 @@ function PlayerManager() {
         image(self.imgVirusIcon, 10, 0);
         image(self.imgVirusIcon, 55, -35);
 
-        let barW = windowWidth - 150 - 50;
+        let barW = width - 150 - 50;
         stroke('black');
         strokeWeight(4);
         noFill();

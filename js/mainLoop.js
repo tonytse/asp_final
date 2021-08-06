@@ -3,32 +3,49 @@ let gStageManager = null;
 let gPlayerManager = null;
 let gSpriteManager = null;
 let gInputManager = null;
-
+let gDialogManager = null;
 
 function preload() {
 
 	gSceneManager = new SceneManager()
 	gSpriteManager = new SpriteManager();
-	gStageManager = new StageManager();
 	gPlayerManager = new PlayerManager();
 	gInputManager = new InputManager();
-	//gDialogSystem = new DialogSystem();
-	gUIManager = new UIManager();
+	gDialogManager = new DialogManager();
+    
+	gStageManager = new StageManager();
 
-	gUIManager.preload();
+	gDialogManager.preload();
 	gSpriteManager.preload();
 	gPlayerManager.preload();
     
-	//let dialogJSON = loadJSON('test.json');
-    gUIManager.loadDialog( 'assets/gameData/test.json' );
+}
 
-	//gDialogSystem.init(dialogJSON);
+function getScreenSize() {
 
+    let w = 800; 
+    let h = 600;
 
+    if( windowWidth > 800 && windowHeight > 600 )
+    {
+        if( windowWidth/4 < windowHeight/3 ) {
+            w = windowWidth;
+            h = windowWidth / 4 * 3;
+        }else {
+            w = windowHeight /3 * 4
+            h = windowHeight;
+        }
+    }
+    
+    return {w,h};
 }
 
 function setup() {
-	createCanvas(windowWidth, windowHeight);
+    let { w, h } = getScreenSize();
+
+    createCanvas(w,h);
+    gSceneManager.init(w, h);
+    gStageManager.start();
 }
 
 function draw() {
@@ -39,14 +56,16 @@ function draw() {
 
 	gInputManager.onUpdate();
 	gStageManager.onDraw();
-
-	//gDialogSystem.onDraw();
 	gPlayerManager.onDraw();
 
-	gUIManager.onDraw();
+	gDialogManager.onDraw();
 
 }
 
 function windowResized() {
-	resizeCanvas(windowWidth, windowHeight);
+    let { w, h } = getScreenSize();
+	resizeCanvas(w, h);
+    camera.position.x = width/2;
+    camera.position.y = height/2;
+    
 }
