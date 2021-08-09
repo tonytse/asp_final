@@ -7,7 +7,7 @@ function StageMC3() {
     this.onExit = function () {
     }
 
-    this.onDraw = function () {
+    this.onDraw = function (w,h) {
 
     }
 }

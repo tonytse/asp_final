@@ -2,7 +2,7 @@ function StageMC1() {
     let self = this;
 
     this.onEnter = function () {
-        
+        gSceneManager.loadHome();
         gDialogManager.loadDialog( 'assets/gameData/MC1_PreDialog.json', self.onPreDialogDone );
     }
 
@@ -11,13 +11,15 @@ function StageMC1() {
         
     }
 
-    this.onDraw = function () {
+    this.onDraw = function (w,h) {
 
     }
 
 
     this.onPreDialogDone = function () {
-        log("nPreDialogDone");
+        console.log("Start MC1");
+
+        gStageManager.changeStage( new StageGameA() );
     }
 
 }

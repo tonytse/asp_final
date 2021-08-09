@@ -3,63 +3,45 @@
 
 function StageStart() {
     let self = this;
-
-
+    let button = null;
 
     this.onEnter = function () {
-        //print('StageStart onEnter');
+        gSceneManager.loadTown();
+
+        self.button = createButton('Start');
+        self.button.size(200, 100);
+        self.button.id('startButton');
+        self.button.mousePressed( self.gotoMC1 );
+        self.onWindowResized( width, height );
     }
 
     this.onExit = function () {
-        //print('StageStart onExit');
+        if( self.button ) {
+            self.button.remove();
+            self.button = null;
+        }
     }
 
-    this.onDraw = function () {
-
-        //print('onDraw');
-        let d = deltaTime * 0.2;
-
-        if( gInputManager.isUp ) gSpriteManager.player.position.y -= d;
-        if( gInputManager.isDown ) gSpriteManager.player.position.y += d;
-        if( gInputManager.isLeft ) gSpriteManager.player.position.x-= d;
-        if( gInputManager.isRight ) gSpriteManager.player.position.x += d;
-
-
-        let anyAction = false;
-
-        if( gInputManager.isUp || gInputManager.isDown ) {
-            gSpriteManager.player.changeAnimation('Walk');
-            anyAction = true;
-        }
-
-        if( gInputManager.isLeft ) {
-            gSpriteManager.player.changeAnimation('Walk');
-            gSpriteManager.player.mirrorX(-1);
-            anyAction = true;
-        }   
-
-        if( gInputManager.isRight ) {
-            gSpriteManager.player.changeAnimation('Walk');
-            gSpriteManager.player.mirrorX(1);
-            anyAction = true;
-        }   
-
-        if( !anyAction ) {
-            gSpriteManager.player.changeAnimation('Idle');
-        }
-
-
-
-        //animation( gSpriteManager.player_stand_animation, self.posX, self.posY );
-
-        //ellipse(width / 2, height / 2, 50, 50);
-        fill(200);
+    this.onDraw = function (w,h) {
+        fill(255);
+        textSize(72);
         textAlign(CENTER);
-        text('Stage Start', width/2, 100);
-        //print('w ' + width);
-
+        
+        textFont(gDialogManager.font);
+        text( "Let's Flight COVID", 0, 70, w, 300 );
     }
 
-    
+    this.gotoMC1 = function () {
+        gStageManager.changeStage( new StageMC1() );
+    }
+
+    this.onWindowResized = function ( w, h ) {
+
+        if( self.button ) { 
+            self.button.position( (width-200) /2, height /2 + 100);
+
+        }
+
+    };
 
 }

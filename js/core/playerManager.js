@@ -3,6 +3,8 @@ function PlayerManager() {
 
     this.virusLevel = 50;
     this.imgVirusIcon;
+    this.isVisible = false;
+    this.isVirusBarVisible = false;
 
     this.preload = function () {
         //Image by Eduardo RS from Pixabay
@@ -10,23 +12,26 @@ function PlayerManager() {
     }
 
     this.onDrawVirusBar = function () {
+        if(self.isVirusBarVisible) {
+            image(self.imgVirusIcon, 10, 0);
+            image(self.imgVirusIcon, 55, -35);
 
-        image(self.imgVirusIcon, 10, 0);
-        image(self.imgVirusIcon, 55, -35);
+            let barW = width - 150 - 50;
+            stroke('black');
+            strokeWeight(4);
+            noFill();
+            rect(150, 25, barW, 30);
 
-        let barW = width - 150 - 50;
-        stroke('black');
-        strokeWeight(4);
-        noFill();
-        rect(150, 25, barW, 30);
-
-        fill(0, 130, 120, 150);
-        noStroke();
-        rect(150, 25, self.virusLevel / 100 * barW, 35);
+            fill(0, 130, 120, 150);
+            noStroke();
+            rect(150, 25, self.virusLevel / 100 * barW, 35);
+        }
     }
 
     this.onDraw = function () {
-        drawSprite( gSpriteManager.player );
+        if( self.isVisible ) {
+            drawSprite( gSpriteManager.player );
+        }
     }
 
 

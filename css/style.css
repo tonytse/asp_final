@@ -1,0 +1,31 @@
+@font-face {
+	font-family: dialogFont;
+	src: url(../assets/fonts/CabinSketch-Regular.ttf);
+}
+
+body {
+	padding: 0;
+	margin: 0;
+}
+
+#dialogButton {
+	background-color: white;
+	border: 2px solid white;
+	border-radius: 5px;
+	font: 36px dialogFont;
+	color: #457b9d;
+	cursor: pointer;
+}
+
+#startButton {
+	background-color: white;
+	border: 2px solid white;
+	border-radius: 5px;
+	font: 64px dialogFont;
+	color: #457b9d;
+	cursor: pointer;
+}
+
+#dialogButton:hover {
+	background-color: lightgoldenrodyellow;
+}

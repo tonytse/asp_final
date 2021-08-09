@@ -51,14 +51,17 @@ function setup() {
 function draw() {
 	clear();
 
-	gSceneManager.onDraw();
-	gPlayerManager.onDrawVirusBar();
-
+    let w = gSceneManager.width;
+    let h = gSceneManager.height;
+    
 	gInputManager.onUpdate();
-	gStageManager.onDraw();
-	gPlayerManager.onDraw();
 
-	gDialogManager.onDraw();
+	gSceneManager.onDraw(w,h);
+	gPlayerManager.onDrawVirusBar(w,h);
+	gStageManager.onDraw(w,h);
+	gPlayerManager.onDraw(w,h);
+
+	gDialogManager.onDraw(w,h);
 
 }
 
@@ -67,5 +70,8 @@ function windowResized() {
 	resizeCanvas(w, h);
     camera.position.x = width/2;
     camera.position.y = height/2;
-    
+
+    gSceneManager.onWindowResized(w,h);
+	gStageManager.onWindowResized(w,h);  
+    gDialogManager.onWindowResized(w,h);
 }

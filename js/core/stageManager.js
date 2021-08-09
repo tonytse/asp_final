@@ -13,8 +13,8 @@ function StageManager() {
 		}
 
         if (self.currentStage) {
-            if (self.tcurrentStage.hasOwnProperty("onExit")) {
-                self.tcurrentStage.onExit();
+            if (self.currentStage.hasOwnProperty("onExit")) {
+                self.currentStage.onExit();
             }
         }
 
@@ -27,7 +27,7 @@ function StageManager() {
     }
 
     this.start = function () {
-        self.changeStage( new StageMC1() );
+        self.changeStage( new StageStart() );
     }
 /*
     this.changeStatgeById( stageId ) {
@@ -40,9 +40,19 @@ function StageManager() {
 
     }
 */
-    this.onDraw = function () {
+    this.onDraw = function (w,h) {
         if (self.currentStage) {
-            self.currentStage.onDraw();
+            self.currentStage.onDraw(w,h);
+        }
+    }
+
+    
+    this.onWindowResized = function ( w, h ) {
+        if (self.currentStage) {
+            if (self.currentStage.hasOwnProperty("onWindowResized") ) {
+                self.currentStage.onWindowResized( w,h );
+            }
+
         }
     }
 

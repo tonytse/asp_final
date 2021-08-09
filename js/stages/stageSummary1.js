@@ -7,7 +7,7 @@ function StageSummary1() {
     this.onExit = function () {
     }
 
-    this.onDraw = function () {
+    this.onDraw = function (w,h) {
 
     }
 }

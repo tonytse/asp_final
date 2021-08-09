@@ -20,7 +20,7 @@ function DialogManager() {
         if( len <= self.currentIndex ) return;
 
         fill(0, 0, 0, 150);
-        rect(0, 0, width, height);
+        rect(0, 0, width, height - height / 4);
 
         fill(69, 123, 157);
         rect(0, height - height / 4, width, height / 4 );
@@ -44,10 +44,10 @@ function DialogManager() {
 
         loadJSON( jsonFile, function( json ){ self.json = json; });
         self.button = createButton('Next');
-        self.button.position( width - 120, height - 70);
         self.button.size(100, 50);
         self.button.id('dialogButton');
         self.button.mousePressed( self.nextLine );
+        self.onWindowResized( width, height );
         self.currentIndex = 0;
         self.isBlockingMode = true;
         self.callbackFunc = callbackFunc;
@@ -73,5 +73,13 @@ function DialogManager() {
             self.button.remove();
             self.button = null;
         }
+    };
+
+    this.onWindowResized = function ( w, h ) {
+
+        if( self.button ) { 
+            self.button.position( width - 120, height - 70);
+        }
+
     };
 }
