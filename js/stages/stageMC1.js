@@ -5,7 +5,6 @@ function StageMC1() {
         gSceneManager.loadHome();
         gDialogManager.load( 'MC1_PreDialog.json', self.onPreDialogDone );
     }
-
     this.onExit = function () {
 
     }
@@ -24,7 +23,5 @@ function StageMC1() {
 
     this.onPreDialogDone = function () {
         gMultipleChoice.open( 'MC1_QnA.json', self.gotoMC2, self.wrongAnswer );
-
     }
-
 }

@@ -31,7 +31,6 @@ function SceneManager() {
         if( currentFile == file ) return;
         self.background = loadImage('assets/scene/'+ file);
         currentFile = file;
-
     }
 
     this.onDraw = function (w,h) {

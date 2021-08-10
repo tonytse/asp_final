@@ -2,12 +2,26 @@ function StageMC6() {
     let self = this;
 
     this.onEnter = function () {
+        gSceneManager.loadBathroom();
+        gDialogManager.load( 'MC6_PreDialog.json', self.onPreDialogDone );
     }
-
     this.onExit = function () {
+
     }
 
     this.onDraw = function (w,h) {
 
+    }
+
+    this.gotoGameB = function () {
+        gStageManager.changeStage( new StageGameB(1) );
+    }
+
+    this.wrongAnswer = function ( ans ) {        
+	    gPlayerManager.virusLevel +=5;
+    }
+
+    this.onPreDialogDone = function () {
+        gMultipleChoice.open( 'MC6_QnA.json', self.gotoGameB, self.wrongAnswer );
     }
 }

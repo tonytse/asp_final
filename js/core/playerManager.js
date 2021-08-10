@@ -12,7 +12,7 @@ function PlayerManager() {
     this.mc4 = [];
     this.mc5 = [];
     this.mc6 = [];
-    
+
 
     this.preload = function () {
         //Image by Eduardo RS from Pixabay
@@ -20,7 +20,7 @@ function PlayerManager() {
     }
 
     this.onDrawVirusBar = function () {
-        if(self.isVirusBarVisible) {
+        if (self.isVirusBarVisible) {
             image(self.imgVirusIcon, 10, 0);
             image(self.imgVirusIcon, 55, -35);
 
@@ -37,8 +37,8 @@ function PlayerManager() {
     }
 
     this.onDraw = function () {
-        if( self.isVisible ) {
-            drawSprite( gSpriteManager.player );
+        if (self.isVisible) {
+            drawSprite(gSpriteManager.player);
         }
     }
 

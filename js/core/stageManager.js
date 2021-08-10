@@ -7,10 +7,10 @@ function StageManager() {
 
     this.changeStage = function (stage) {
 
-        if (!stage.hasOwnProperty("onDraw") ) {
-			alert("Stage must have draw function");
+        if (!stage.hasOwnProperty("onDraw")) {
+            alert("Stage must have draw function");
             return;
-		}
+        }
 
         if (self.currentStage) {
             if (self.currentStage.hasOwnProperty("onExit")) {
@@ -23,24 +23,24 @@ function StageManager() {
         }
 
         self.currentStage = stage;
-        
+
     }
 
     this.start = function () {
-        self.changeStage( new StageStart() );
+        self.changeStage(new StageStart());
     }
 
-    this.onDraw = function (w,h) {
+    this.onDraw = function (w, h) {
         if (self.currentStage) {
-            self.currentStage.onDraw(w,h);
+            self.currentStage.onDraw(w, h);
         }
     }
 
-    
-    this.onWindowResized = function ( w, h ) {
+
+    this.onWindowResized = function (w, h) {
         if (self.currentStage) {
-            if (self.currentStage.hasOwnProperty("onWindowResized") ) {
-                self.currentStage.onWindowResized( w,h );
+            if (self.currentStage.hasOwnProperty("onWindowResized")) {
+                self.currentStage.onWindowResized(w, h);
             }
 
         }

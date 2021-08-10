@@ -1,7 +1,8 @@
-function StageGameB() {
+function StageGameB( level = 0 ) {
     let self = this;
 
     this.onEnter = function () {
+        gSceneManager.loadTown();
     }
 
     this.onExit = function () {
@@ -9,6 +10,11 @@ function StageGameB() {
 
 
     this.onDraw = function (w,h) {
+
+        if( keyDown('n') )
+        {
+            gStageManager.changeStage( new StageSummary2() );
+        }
 
         //print('onDraw');
         /*
