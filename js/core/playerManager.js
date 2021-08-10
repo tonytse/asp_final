@@ -6,6 +6,14 @@ function PlayerManager() {
     this.isVisible = false;
     this.isVirusBarVisible = false;
 
+    this.mc1 = [];
+    this.mc2 = [];
+    this.mc3 = [];
+    this.mc4 = [];
+    this.mc5 = [];
+    this.mc6 = [];
+    
+
     this.preload = function () {
         //Image by Eduardo RS from Pixabay
         self.imgVirusIcon = loadImage('assets/virus_icon.png')

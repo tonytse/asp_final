@@ -29,17 +29,7 @@ function StageManager() {
     this.start = function () {
         self.changeStage( new StageStart() );
     }
-/*
-    this.changeStatgeById( stageId ) {
-        switch( stageId ) {
-            case 1: 
-                return self.changeStage( new StageDailog("a.json") );
-            case 2:
-                return self.changeStage( new StageMultipleChoice("b.json") );
-        }
 
-    }
-*/
     this.onDraw = function (w,h) {
         if (self.currentStage) {
             self.currentStage.onDraw(w,h);

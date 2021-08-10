@@ -4,6 +4,7 @@ let gPlayerManager = null;
 let gSpriteManager = null;
 let gInputManager = null;
 let gDialogManager = null;
+let gMultipleChoice = null;
 
 function preload() {
 
@@ -12,7 +13,7 @@ function preload() {
 	gPlayerManager = new PlayerManager();
 	gInputManager = new InputManager();
 	gDialogManager = new DialogManager();
-    
+    gMultipleChoice = new MultipleChoiceManager();
 	gStageManager = new StageManager();
 
 	gDialogManager.preload();
@@ -57,11 +58,14 @@ function draw() {
 	gInputManager.onUpdate();
 
 	gSceneManager.onDraw(w,h);
-	gPlayerManager.onDrawVirusBar(w,h);
 	gStageManager.onDraw(w,h);
 	gPlayerManager.onDraw(w,h);
 
+
 	gDialogManager.onDraw(w,h);
+    gMultipleChoice.onDraw(w,h);
+    
+	gPlayerManager.onDrawVirusBar(w,h);
 
 }
 
@@ -72,6 +76,8 @@ function windowResized() {
     camera.position.y = height/2;
 
     gSceneManager.onWindowResized(w,h);
-	gStageManager.onWindowResized(w,h);  
+	gStageManager.onWindowResized(w,h);
+
     gDialogManager.onWindowResized(w,h);
+    gMultipleChoice.onWindowResized(w,h);
 }

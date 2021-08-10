@@ -5,7 +5,10 @@ function DialogManager() {
     this.json = null;
     this.button = null;
     this.currentIndex = 0;
+    this.currentText = null;
     this.font;
+
+    this.callbackFunc = null;
 
     this.preload = function () {
         self.font = loadFont("assets/fonts/CabinSketch-Regular.ttf");
@@ -14,10 +17,7 @@ function DialogManager() {
     this.isBlockingMode = false;
 
     this.onDraw = function () {
-
-        if( self.json == null ) return;
-        let len = self.json.text['length'];
-        if( len <= self.currentIndex ) return;
+        if( self.currentText == null ) return;
 
         fill(0, 0, 0, 150);
         rect(0, 0, width, height - height / 4);
@@ -30,45 +30,74 @@ function DialogManager() {
         textAlign(LEFT);
         
         textFont(self.font);
-        text( self.json.text[self.currentIndex], 20, height - height / 4.5, 
+        text( self.currentText, 20, height - height / 4.5, 
                 width, height / 7);
         
     };
+    
+    this.setDialog = function( text ) {
+        self.currentText = text
+    }
 
-    this.callbackFunc = null;
 
-    this.loadDialog = function( jsonFile, callbackFunc = null )
+    this.load = function( jsonFile, callbackFunc = null )
     {
-        let width = gSceneManager.width;
-        let height = gSceneManager.height;
 
-        loadJSON( jsonFile, function( json ){ self.json = json; });
-        self.button = createButton('Next');
-        self.button.size(100, 50);
-        self.button.id('dialogButton');
-        self.button.mousePressed( self.nextLine );
-        self.onWindowResized( width, height );
-        self.currentIndex = 0;
         self.isBlockingMode = true;
         self.callbackFunc = callbackFunc;
+
+        //load the json file
+        loadJSON( 'assets/gameData/'+ jsonFile, function( json ) { 
+
+            let len = json.text['length'];
+
+            if ( len <= 0 ) {
+                self.close();
+                return;
+            }
+            
+            self.json = json; 
+            self.currentIndex = 0;
+            self.currentText = self.json.text[0];
+
+            self.button = createButton('Next');
+            self.button.size(100, 50);
+            self.button.class('dialogButton');
+            self.button.mousePressed( self.nextLine );
+            
+            let width = gSceneManager.width;
+            let height = gSceneManager.height;
+            self.onWindowResized( width, height );
+
+        });
+
     };
 
     
     this.nextLine = function() {
         self.currentIndex++;
+        
         let len = self.json.text['length'];
         if ( self.currentIndex >= len ) {
-            self.callbackFunc();
-            self.callbackFunc = null;
-            self.clearDailog();
+            self.close();
+        }else {
+            self.currentText = self.json.text[self.currentIndex];
         }
-    
+
     };
 
-    this.clearDailog = function() {
+    this.close = function() {
         self.json = null;
         self.currentIndex = 0;
         self.isBlockingMode = false;
+        self.currentText = null;
+
+
+        if( self.callbackFunc ) {
+            self.callbackFunc();
+            self.callbackFunc = null;
+        }
+
         if( self.button ) {
             self.button.remove();
             self.button = null;

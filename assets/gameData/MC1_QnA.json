@@ -1,0 +1,21 @@
+{
+    "title": "You will ... ?",
+    "answers": [
+        {
+            "text": "Wash you hand",
+            "isCorrect": true
+        },
+        {
+            "text": "Eat the cake",
+            "reason": "You have gems/virus in your hand ......",
+	        "reasonUrl": "http://website.com",
+            "isCorrect": false
+        },
+        {
+            "text": "Play video games",
+            "reason": "You have gems/virus in your hand ......",
+	        "reasonUrl": "http://website.com",
+            "isCorrect": false
+        }
+    ]
+}

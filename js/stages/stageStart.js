@@ -10,12 +10,13 @@ function StageStart() {
 
         self.button = createButton('Start');
         self.button.size(200, 100);
-        self.button.id('startButton');
+        self.button.class('startButton');
         self.button.mousePressed( self.gotoMC1 );
         self.onWindowResized( width, height );
     }
 
     this.onExit = function () {
+        gPlayerManager.isVirusBarVisible = true;
         if( self.button ) {
             self.button.remove();
             self.button = null;

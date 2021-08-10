@@ -3,23 +3,28 @@ function StageMC1() {
 
     this.onEnter = function () {
         gSceneManager.loadHome();
-        gDialogManager.loadDialog( 'assets/gameData/MC1_PreDialog.json', self.onPreDialogDone );
+        gDialogManager.load( 'MC1_PreDialog.json', self.onPreDialogDone );
     }
 
     this.onExit = function () {
 
-        
     }
 
     this.onDraw = function (w,h) {
 
     }
 
+    this.gotoMC2 = function () {
+        gStageManager.changeStage( new StageMC2() );
+    }
+
+    this.wrongAnswer = function ( ans ) {        
+	    gPlayerManager.virusLevel +=5;
+    }
 
     this.onPreDialogDone = function () {
-        console.log("Start MC1");
+        gMultipleChoice.open( 'MC1_QnA.json', self.gotoMC2, self.wrongAnswer );
 
-        gStageManager.changeStage( new StageGameA() );
     }
 
 }

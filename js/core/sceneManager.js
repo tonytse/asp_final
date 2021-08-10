@@ -4,6 +4,7 @@ function SceneManager() {
     let width;
     let height;
     let background = null;
+    let currentFile = null;
 
     this.init = function ( width, height ) {
         self.width = width;
@@ -27,7 +28,9 @@ function SceneManager() {
     
 
     this.load = function( file ) {
+        if( currentFile == file ) return;
         self.background = loadImage('assets/scene/'+ file);
+        currentFile = file;
 
     }
 
