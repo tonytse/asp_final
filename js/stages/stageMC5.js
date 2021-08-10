@@ -3,25 +3,29 @@ function StageMC5() {
 
     this.onEnter = function () {
         gSceneManager.loadBathroom();
-        gDialogManager.load( 'MC5_PreDialog.json', self.onPreDialogDone );
+        gDialogManager.load('MC5_PreDialog.json', self.onPreDialogDone);
     }
     this.onExit = function () {
 
     }
 
-    this.onDraw = function (w,h) {
+    this.onDraw = function (w, h) {
 
     }
 
-    this.gotoGameB = function () {
-        gStageManager.changeStage( new StageGameB(1) );
+    this.gotoGameB = function (stopwatch) {
+        if( stopwatch < 10000 ) {
+            gPlayerManager.score + 10000 - stopwatch;
+        }
+        gStageManager.changeStage(new StageGameB(1));
     }
 
-    this.wrongAnswer = function ( ans ) {        
-	    gPlayerManager.virusLevel +=5;
+    this.wrongAnswer = function (ans) {
+        gPlayerManager.virusLevel += 5;
+        gPlayerManager.mc5.push(parseInt(ans));
     }
 
     this.onPreDialogDone = function () {
-        gMultipleChoice.open( 'MC5_QnA.json', self.gotoGameB, self.wrongAnswer );
+        gMultipleChoice.open('MC5_QnA.json', self.gotoGameB, self.wrongAnswer);
     }
 }

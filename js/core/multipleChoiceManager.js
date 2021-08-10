@@ -6,6 +6,8 @@ function MultipleChoiceManager() {
     this.callbackCorrect = null;
     this.callbackWrong = null;
     //this.isBlockingMode = true;
+    this.stopwatch = new StopWatch();
+
     this.button = [];
 
     this.onDraw = function () {
@@ -36,7 +38,6 @@ function MultipleChoiceManager() {
                 self.button[i].class('dialogButton');
                 self.button[i].id(i);
                 self.button[i].mousePressed(self.answer);
-
             }
 
             gDialogManager.setDialog(json.title);
@@ -44,6 +45,7 @@ function MultipleChoiceManager() {
             let width = gSceneManager.width;
             let height = gSceneManager.height;
             self.onWindowResized(width, height);
+            self.stopwatch.start();
 
         });
     };
@@ -69,7 +71,7 @@ function MultipleChoiceManager() {
         self.callbackWrong = null;
 
         if (self.callbackCorrect) {
-            self.callbackCorrect();
+            self.callbackCorrect( self.stopwatch.stop() );
             self.callbackCorrect = null;
         }
 

@@ -27,8 +27,8 @@ function StageManager() {
     }
 
     this.start = function () {
-        //self.changeStage(new StageStart());
-        self.changeStage(new StageMC4());
+        self.changeStage(new StageStart());
+        //self.changeStage(new StageMC4());
     }
 
     this.onDraw = function (w, h) {

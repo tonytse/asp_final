@@ -5,7 +5,8 @@ function PlayerManager() {
     this.imgVirusIcon;
     this.isVisible = false;
     this.isVirusBarVisible = false;
-
+    this.score = 0;
+    
     this.mc1 = [];
     this.mc2 = [];
     this.mc3 = [];
