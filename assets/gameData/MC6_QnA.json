@@ -1,21 +1,15 @@
 {
-    "title": "MC6",
+    "title": "What type of sanitizer should Tom consider buying?",
     "answers": [
         {
-            "text": "Correct Answer",
+            "text": "Non-alchohol based sanitizer",
+            "reason": "Alchohol based sanitizers are more effective in killing the germs including coronaviruses",
+	        "reasonUrl": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7301780/",
+            "isCorrect": false
+        },
+        {
+            "text": "Alchohol based sanitizer",
             "isCorrect": true
-        },
-        {
-            "text": "Wrong Answer #1",
-            "reason": "You have gems/virus in your hand ......",
-	        "reasonUrl": "http://website.com",
-            "isCorrect": false
-        },
-        {
-            "text": "Wrong Answer #2",
-            "reason": "You have gems/virus in your hand ......",
-	        "reasonUrl": "http://website.com",
-            "isCorrect": false
         }
     ]
 }

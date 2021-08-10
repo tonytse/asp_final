@@ -1,21 +1,22 @@
 {
-    "title": "MC4",
+    "title": "When will Tom go out?",
     "answers": [
         {
-            "text": "Correct Answer",
+            "text": "12:30pm",
+			"reason": "It's safer to go outside when there is less crowd.",
+	        "reasonUrl": "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public",
+            "isCorrect": false
+        },
+        {
+            "text": "6:00pm",
+            "reason": "You have gems/virus in your hand ......",
+			"reason": "It's safer to go outside when there is less crowd.",
+	        "reasonUrl": "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public",
+            "isCorrect": false
+        },
+        {
+            "text": "Check local guidelines for Non-peak hours",
             "isCorrect": true
-        },
-        {
-            "text": "Wrong Answer #1",
-            "reason": "You have gems/virus in your hand ......",
-	        "reasonUrl": "http://website.com",
-            "isCorrect": false
-        },
-        {
-            "text": "Wrong Answer #2",
-            "reason": "You have gems/virus in your hand ......",
-	        "reasonUrl": "http://website.com",
-            "isCorrect": false
         }
     ]
 }
