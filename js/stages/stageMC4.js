@@ -5,6 +5,7 @@ function StageMC4() {
         gSceneManager.loadBathroom();
         gDialogManager.load( 'MC4_PreDialog.json', self.onPreDialogDone );
     }
+    
     this.onExit = function () {
 
     }
@@ -22,7 +23,6 @@ function StageMC4() {
     }
 
     this.onPreDialogDone = function () {
-        console.log( "StageMC4 gMultipleChoice -> ");
         gMultipleChoice.open( 'MC4_QnA.json', self.gotoMC5, self.wrongAnswer );
     }
 }

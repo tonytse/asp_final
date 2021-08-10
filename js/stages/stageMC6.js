@@ -14,7 +14,7 @@ function StageMC6() {
     }
 
     this.gotoGameB = function () {
-        gStageManager.changeStage( new StageGameB(1) );
+        gStageManager.changeStage( new StageGameB(2) );
     }
 
     this.wrongAnswer = function ( ans ) {        

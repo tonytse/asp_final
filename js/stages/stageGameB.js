@@ -1,6 +1,7 @@
-function StageGameB( level = 0 ) {
+function StageGameB( level ) {
     let self = this;
-
+    let currentLevel;
+    
     this.onEnter = function () {
         gSceneManager.loadTown();
     }
@@ -13,7 +14,13 @@ function StageGameB( level = 0 ) {
 
         if( keyDown('n') )
         {
-            gStageManager.changeStage( new StageSummary2() );
+            console.log( self.currentLevel );
+
+            if( self.currentLevel == 1  )  {
+                gStageManager.changeStage( new StageMC6() );
+            }else {
+                gStageManager.changeStage( new StageSummary2() );
+            }
         }
 
         //print('onDraw');
@@ -59,4 +66,5 @@ function StageGameB( level = 0 ) {
         */
 
     }
+    self.currentLevel = level;
 }

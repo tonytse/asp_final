@@ -28,6 +28,7 @@ function DialogManager() {
         fill(255);
         textSize(36);
         textAlign(LEFT);
+        textLeading(70);
 
         textFont(self.font);
         text(self.currentText, 20, height - height / 4.5,
@@ -48,7 +49,7 @@ function DialogManager() {
     this.load = function (jsonFile, callbackFunc = null) {
 
         self.callbackFunc = callbackFunc;
-        console.log('DialogManager load cb' + self.callbackFunc );
+        //console.log('DialogManager load cb' + self.callbackFunc );
 
         //load the json file
         loadJSON('assets/gameData/' + jsonFile, function (json) {
