@@ -15,7 +15,7 @@ function StageMC3() {
 
     this.gotoSummary1 = function (stopwatch) {
         if( stopwatch < 10000 ) {
-            gPlayerManager.score + 10000 - stopwatch;
+            gPlayerManager.score += 10000 - stopwatch;
         }
         gStageManager.changeStage(new StageSummary1());
     }

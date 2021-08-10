@@ -15,7 +15,7 @@ function StageMC5() {
 
     this.gotoGameB = function (stopwatch) {
         if( stopwatch < 10000 ) {
-            gPlayerManager.score + 10000 - stopwatch;
+            gPlayerManager.score += 10000 - stopwatch;
         }
         gStageManager.changeStage(new StageGameB(1));
     }
