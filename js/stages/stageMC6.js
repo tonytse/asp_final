@@ -2,7 +2,7 @@ function StageMC6() {
     let self = this;
 
     this.onEnter = function () {
-        gSceneManager.loadBathroom();
+        gSceneManager.loadSupermarket();
         gDialogManager.load( 'MC6_PreDialog.json', self.onPreDialogDone );
     }
     this.onExit = function () {

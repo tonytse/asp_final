@@ -26,6 +26,11 @@ function SceneManager() {
         self.load('bathroom.jpg');
     };
     
+    this.loadSupermarket = function() {
+        // https://www.vecteezy.com/vector-art/1254668-woman-with-an-eco-friendly-bag-at-food-store    
+        self.load('supermarket.jpg');
+    };
+    
 
     this.load = function( file ) {
         if( currentFile == file ) return;
