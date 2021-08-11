@@ -8,76 +8,77 @@ let gMultipleChoice = null;
 
 function preload() {
 
-	gSceneManager = new SceneManager()
-	gSpriteManager = new SpriteManager();
-	gPlayerManager = new PlayerManager();
-	gInputManager = new InputManager();
-	gDialogManager = new DialogManager();
+    gSceneManager = new SceneManager()
+    gSpriteManager = new SpriteManager();
+    gPlayerManager = new PlayerManager();
+    gInputManager = new InputManager();
+    gDialogManager = new DialogManager();
     gMultipleChoice = new MultipleChoiceManager();
-	gStageManager = new StageManager();
+    gStageManager = new StageManager();
 
-	gDialogManager.preload();
-	gSpriteManager.preload();
-	gPlayerManager.preload();
-    
+    gDialogManager.preload();
+    gSpriteManager.preload();
+    gPlayerManager.preload();
+
 }
 
 function getScreenSize() {
 
-    let w = 800; 
+    let w = 800;
     let h = 600;
 
-    if( windowWidth > 800 && windowHeight > 600 )
-    {
-        if( windowWidth/4 < windowHeight/3 ) {
+    if (windowWidth > 800 && windowHeight > 600) {
+        if (windowWidth / 4 < windowHeight / 3) {
             w = windowWidth;
             h = windowWidth / 4 * 3;
-        }else {
-            w = windowHeight /3 * 4
+        } else {
+            w = windowHeight / 3 * 4
             h = windowHeight;
         }
     }
-    
-    return {w,h};
+
+    return { w, h };
 }
 
 function setup() {
     let { w, h } = getScreenSize();
 
-    createCanvas(w,h);
+    createCanvas(w, h);
     gSceneManager.init(w, h);
-    gStageManager.start();
+    //gStageManager.start();
+    gStageManager.changeStage(new StageGameB(1));
 }
 
 function draw() {
-	clear();
+    clear();
 
     let w = gSceneManager.width;
     let h = gSceneManager.height;
-    
-	gInputManager.onUpdate();
 
-	gSceneManager.onDraw(w,h);
-	gStageManager.onDraw(w,h);
-	gPlayerManager.onDraw(w,h);
+    gInputManager.onUpdate();
+
+    gSceneManager.onDraw(w, h);
+    gStageManager.onDraw(w, h);
+    gPlayerManager.onDraw(w, h);
 
 
-	gDialogManager.onDraw(w,h);
-    gMultipleChoice.onDraw(w,h);
-    
-	gPlayerManager.onDrawVirusBar(w,h);
+
+    gDialogManager.onDraw(w, h);
+    gMultipleChoice.onDraw(w, h);
+
+    gPlayerManager.onDrawVirusBar(w, h);
 
 }
 
 function windowResized() {
     let { w, h } = getScreenSize();
-	resizeCanvas(w, h);
-    camera.position.x = width/2;
-    camera.position.y = height/2;
+    resizeCanvas(w, h);
+    camera.position.x = width / 2;
+    camera.position.y = height / 2;
 
-    gSceneManager.onWindowResized(w,h);
-	gStageManager.onWindowResized(w,h);
+    gSceneManager.onWindowResized(w, h);
+    gStageManager.onWindowResized(w, h);
 
-    gDialogManager.onWindowResized(w,h);
-    gMultipleChoice.onWindowResized(w,h);
+    gDialogManager.onWindowResized(w, h);
+    gMultipleChoice.onWindowResized(w, h);
 }
