@@ -3,7 +3,7 @@ function StageGameB(level) {
     let currentLevel;
 
     this.onEnter = function () {
-        gSceneManager.loadTown();
+        gSceneManager.loadGameB();
         gSpriteManager.player.position.y = windowHeight / 1.31;
         gSpriteManager.player.position.x = 500;
 
@@ -37,11 +37,10 @@ function StageGameB(level) {
         }
 
         drawSprite(gSpriteManager.redBoy);
-        drawSprite(gSpriteManager.player);
         drawSprite(gSpriteManager.cowBoy);
         drawSprite(gSpriteManager.cowGirl);
         //drawSprite(gSpriteManager.girl);
-
+        drawSprite(gSpriteManager.player);
 
         //print('onDraw');
 
@@ -67,6 +66,7 @@ function StageGameB(level) {
         }
 
         if (gInputManager.isRight) {
+            gSceneManager.offsetX += d;
             gSpriteManager.player.changeAnimation('Walk');
             gSpriteManager.player.mirrorX(1);
             anyAction = true;

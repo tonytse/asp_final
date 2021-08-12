@@ -45,8 +45,8 @@ function setup() {
 
     createCanvas(w, h);
     gSceneManager.init(w, h);
-    //gStageManager.start();
-    gStageManager.changeStage(new StageGameB(1));
+    gStageManager.start();
+    //gStageManager.changeStage(new StageGameB(1));
 }
 
 function draw() {
@@ -60,8 +60,6 @@ function draw() {
     gSceneManager.onDraw(w, h);
     gStageManager.onDraw(w, h);
     gPlayerManager.onDraw(w, h);
-
-
 
     gDialogManager.onDraw(w, h);
     gMultipleChoice.onDraw(w, h);

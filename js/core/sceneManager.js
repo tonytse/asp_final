@@ -5,10 +5,18 @@ function SceneManager() {
     let height;
     let background = null;
     let currentFile = null;
+    let offsetX = 100;
 
     this.init = function ( width, height ) {
+        self.offsetX = 0;
         self.width = width;
         self.height = height;
+    };
+
+    
+    this.loadGameB = function() {
+        // http://unluckystudio.com/free-game-artassets-16-side-view-cars-assets/
+        self.load('gameB.jpg');
     };
 
     this.loadTown = function() {
@@ -31,16 +39,22 @@ function SceneManager() {
         self.load('supermarket.jpg');
     };
     
-
+    
     this.load = function( file ) {
         if( currentFile == file ) return;
+        self.offsetX = 0;
         self.background = loadImage('assets/scene/'+ file);
         currentFile = file;
     }
 
     this.onDraw = function (w,h) {
         if( self.background ) {
-            image(self.background, 0, 0, self.width, self.height, 0, 0, self.background.width, self.background.height );
+            
+            let width = self.background.width;
+            let r = width/1280;
+            let height = self.background.height;
+
+            image(self.background, 0, 0, w, h, self.offsetX, 0, width/r, height );
         }
     }
 
