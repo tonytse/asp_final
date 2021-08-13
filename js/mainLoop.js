@@ -81,4 +81,5 @@ function windowResized() {
 
     gDialogManager.onWindowResized(w, h);
     gMultipleChoice.onWindowResized(w, h);
+
 }
