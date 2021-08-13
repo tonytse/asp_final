@@ -1,0 +1,21 @@
+{
+    "question": "What should I do next?",
+    "options": {
+        "1": {
+            "name": "Watch TV",
+            "result": "false",
+            "why": "Since Thomas just came back from outside, he should wash his hands, or he has the chance of infecting himself, his family and spreading the virus around the house if he touches things. Therefore he should wash his hands first.",
+            "url": "https://www.unicef.org/coronavirus/everything-you-need-know-about-washing-your-hands-protect-against-coronavirus-covid-19"
+        },
+        "2": {
+            "name": "Eat Cake",
+            "result": "false",
+            "why": "Thomas just came from outside, therefore there is probability there is virus in his hands. If there is virus in his hands and he eats the cake he will infect himself. Therefore he should wash his hands first.",
+            "url": "https://www.unicef.org/coronavirus/everything-you-need-know-about-washing-your-hands-protect-against-coronavirus-covid-19"
+        },
+        "3": {
+            "name": "Wash Hand",
+            "result": "true"
+        }
+    }
+}

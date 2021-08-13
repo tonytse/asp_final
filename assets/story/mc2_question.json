@@ -1,0 +1,19 @@
+{
+    "question": "How should I wash my hand?",
+    "options": {
+        "1": {
+            "name": "Soap",
+            "result": "true"
+        },
+        "2": {
+            "name": "Hand wash",
+            "result": "true"
+        },
+        "3": {
+            "name": "Just Water",
+            "result": "false",
+            "why": "Just water does not help remove virus from hands. Soap is a critical ingredient which sticks to the virus and washes away from your hand.",
+            "url": "https://www.who.int/southeastasia/news/detail/15-10-2020-handwashing-an-effective-tool-to-prevent-covid-19-other-diseases"
+        }
+    }
+}
