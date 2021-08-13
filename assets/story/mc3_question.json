@@ -1,0 +1,21 @@
+{
+    "question": "What should I do next?",
+    "options": {
+        "1": {
+            "name": "Watch TV",
+            "result": "false",
+            "why": "After doing so many activities, it is likely virus has gotten to Thomas's clothes as well and it is a good idea to change clothes first, before doing anything else.",
+            "url": "https://www.unicef.org/coronavirus/cleaning-and-hygiene-tips-help-keep-coronavirus-covid-19-out-your-home"
+        },
+        "2": {
+            "name": "Eat Cake",
+            "result": "false",
+            "why": "After doing so many activities, it is likely virus has gotten to Thomas's clothes as well and it is a good idea to change clothes first, before doing anything else.",
+            "url": "https://www.unicef.org/coronavirus/cleaning-and-hygiene-tips-help-keep-coronavirus-covid-19-out-your-home"
+        },
+        "3": {
+            "name": "Change Clothes",
+            "result": "true"
+        }
+    }
+}
