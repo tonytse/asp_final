@@ -1,4 +1,5 @@
 function StageGameB(level) {
+
     let self = this;
     let currentLevel;
     let leftEdge = 14;
@@ -10,33 +11,28 @@ function StageGameB(level) {
     this.onEnter = function () {
 
         gSceneManager.loadGameB();
-        gSpriteManager.player.position.y = height / 1.31;
-        gSpriteManager.player.position.x = width / 2;
-        gSpriteManager.player.scale = width * 0.0005;
-
-        gSpriteManager.redBoy.position.y = height / 1.3;
-        gSpriteManager.redBoy.position.x = width / 20;
-        gSpriteManager.redBoy.scale = width * 0.0005;
-
-        gSpriteManager.cowBoy.position.y = height / 1.32;
-        gSpriteManager.cowBoy.position.x = width / 4;
-        gSpriteManager.cowBoy.scale = width * 0.0005;
-
-        gSpriteManager.cowGirl.position.y = height / 1.32;
-        gSpriteManager.cowGirl.position.x = width / 1.5;
-        gSpriteManager.cowGirl.scale = width * 0.0005;
-
-        gSpriteManager.girl.position.y = height / 1.3;
-        gSpriteManager.girl.position.x = width / 1.2;
-        gSpriteManager.girl.scale = width * 0.0005;
 
         self.oldWidth = width;
         self.oldHeight = height;
 
         characters = [gSpriteManager.redBoy, gSpriteManager.cowBoy, gSpriteManager.cowGirl, gSpriteManager.girl, gSpriteManager.player];
+
+        for (let i = 0; i < characters.length; ++i) {
+            characters[i].position.y = height / 1.3;
+            characters[i].scale = width * 0.0005;
+        }
+
+        gSpriteManager.player.position.x = width / 2;
+        gSpriteManager.redBoy.position.x = width / 20;
+        gSpriteManager.cowBoy.position.x = width / 4;
+        gSpriteManager.cowGirl.position.x = width / 1.5;
+        gSpriteManager.girl.position.x = width / 1.2;
+
+
     }
 
     this.onExit = function () {
+        characters = [];
     }
 
 
@@ -60,7 +56,7 @@ function StageGameB(level) {
 
         let d = deltaTime * 0.2;
 
-        for (var i = 0; i < characters.length; i++) {
+        for (let i = 0; i < characters.length; ++i) {
             drawSprite(characters[i]);
         }
 
@@ -156,25 +152,12 @@ function StageGameB(level) {
 
     this.onWindowResized = function (w, h) {
 
-        gSpriteManager.player.scale = w * 0.0005;
-        gSpriteManager.player.position.x = (gSpriteManager.player.position.x / self.oldWidth) * w;
-        gSpriteManager.player.position.y = (gSpriteManager.player.position.y / self.oldHeight) * h;
+        for (let i = 0; i < characters.length; ++i) {
+            characters[i].scale = w * 0.0005;
+            characters[i].position.x = (characters[i].position.x / self.oldWidth) * w;
+            characters[i].position.y = (characters[i].position.y / self.oldHeight) * h;
+        }
 
-        gSpriteManager.cowBoy.scale = w * 0.0005;
-        gSpriteManager.cowBoy.position.x = (gSpriteManager.cowBoy.position.x / self.oldWidth) * w;
-        gSpriteManager.cowBoy.position.y = (gSpriteManager.cowBoy.position.y / self.oldHeight) * h;
-
-        gSpriteManager.cowGirl.scale = w * 0.0005;
-        gSpriteManager.cowGirl.position.x = (gSpriteManager.cowGirl.position.x / self.oldWidth) * w;
-        gSpriteManager.cowGirl.position.y = (gSpriteManager.cowGirl.position.y / self.oldHeight) * h;
-
-        gSpriteManager.girl.scale = w * 0.0005;
-        gSpriteManager.girl.position.x = (gSpriteManager.girl.position.x / self.oldWidth) * w;
-        gSpriteManager.girl.position.y = (gSpriteManager.girl.position.y / self.oldHeight) * h;
-
-        gSpriteManager.redBoy.scale = w * 0.0005;
-        gSpriteManager.redBoy.position.x = (gSpriteManager.redBoy.position.x / self.oldWidth) * w;
-        gSpriteManager.redBoy.position.y = (gSpriteManager.redBoy.position.y / self.oldHeight) * h;
 
         self.oldWidth = w;
         self.oldHeight = h;
