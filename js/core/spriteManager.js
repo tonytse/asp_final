@@ -7,6 +7,7 @@ function SpriteManager() {
     this.cowBoy = null;
     this.cowGirl = null;
     this.girl = null;
+    this.characterScale = windowWidth * 0.0004;
 
 
     this.explode_sprite_sheet = null;
@@ -27,7 +28,7 @@ function SpriteManager() {
             'assets/player/Walk0006.png', 'assets/player/Walk0007.png', 'assets/player/Walk0008.png', 'assets/player/Walk0009.png', 'assets/player/Walk0010.png',
             'assets/player/Walk0011.png', 'assets/player/Walk0012.png', 'assets/player/Walk0013.png', 'assets/player/Walk0014.png', 'assets/player/Walk0015.png');
         self.player.offY = 18;
-        self.player.scale = 0.5;
+        self.player.scale = self.characterScale
 
         self.redBoy = createSprite(windowWidth / 40, windowHeight / 1.3, 614, 307);
 
@@ -39,7 +40,7 @@ function SpriteManager() {
             'assets/crowd/red_hat_boy/Run0001.png', 'assets/crowd/red_hat_boy/Run0002.png', 'assets/crowd/red_hat_boy/Run0003.png', 'assets/crowd/red_hat_boy/Run0004.png', 'assets/crowd/red_hat_boy/Run0005.png',
             'assets/crowd/red_hat_boy/Run0006.png', 'assets/crowd/red_hat_boy/Run0007.png', 'assets/crowd/red_hat_boy/Run0008.png');
         self.redBoy.offY = 18;
-        self.redBoy.scale = 0.5;
+        self.redBoy.scale = self.characterScale
 
         self.cowBoy = createSprite(windowWidth / 40, windowHeight / 1.3, 614, 307);
 
@@ -51,7 +52,7 @@ function SpriteManager() {
             'assets/crowd/cowboy/Run0001.png', 'assets/crowd/cowboy/Run0002.png', 'assets/crowd/cowboy/Run0003.png', 'assets/crowd/cowboy/Run0004.png', 'assets/crowd/cowboy/Run0005.png',
             'assets/crowd/cowboy/Run0006.png', 'assets/crowd/cowboy/Run0007.png', 'assets/crowd/cowboy/Run0008.png', 'assets/crowd/cowboy/Run0009.png', 'assets/crowd/cowboy/Run0010.png');
         self.cowBoy.offY = 18;
-        self.cowBoy.scale = 0.5;
+        self.cowBoy.scale = self.characterScale
 
         self.cowGirl = createSprite(windowWidth / 40, windowHeight / 1.3, 614, 307);
 
@@ -63,7 +64,7 @@ function SpriteManager() {
             'assets/crowd/cowgirl/Run0001.png', 'assets/crowd/cowgirl/Run0002.png', 'assets/crowd/cowgirl/Run0003.png', 'assets/crowd/cowgirl/Run0004.png', 'assets/crowd/cowgirl/Run0005.png',
             'assets/crowd/cowgirl/Run0006.png', 'assets/crowd/cowgirl/Run0007.png', 'assets/crowd/cowgirl/Run0008.png');
         self.cowGirl.offY = 18;
-        self.cowGirl.scale = 0.5;
+        self.cowGirl.scale = self.characterScale
 
         self.girl = createSprite(windowWidth / 40, windowHeight / 1.3, 614, 307);
 
@@ -78,7 +79,7 @@ function SpriteManager() {
             'assets/crowd/girl/Walk0011.png', 'assets/crowd/girl/Walk0012.png', 'assets/crowd/girl/Walk0013.png', 'assets/crowd/girl/Walk0014.png', 'assets/crowd/girl/Walk0015.png', 'assets/crowd/girl/Walk0016.png', 'assets/crowd/girl/Walk0017.png', 'assets/crowd/girl/Walk0018.png', 'assets/crowd/girl/Walk0019.png', 'assets/crowd/girl/Walk0020.png');
 
         self.girl.offY = 18;
-        self.girl.scale = 0.5;
+        self.girl.scale = self.characterScale
 
         //self.explode_sprite_sheet = loadSpriteSheet('assets/explode_sprite_sheet.png', 171, 158, 11);
         //self.explode_animation = loadAnimation(self.explode_sprite_sheet);
@@ -97,6 +98,4 @@ function SpriteManager() {
         // inside super market bg: https://www.vecteezy.com/vector-art/1254668-woman-with-an-eco-friendly-bag-at-food-store
 
     }
-
-
 }

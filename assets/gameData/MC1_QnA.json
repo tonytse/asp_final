@@ -1,20 +1,20 @@
 {
-    "title": "MC1",
+    "title": "What should I do next?",
     "answers": [
         {
-            "text": "Correct Answer",
+            "text": "Wash Hand",
             "isCorrect": true
         },
         {
-            "text": "Wrong Answer #1",
-            "reason": "You have gems/virus in your hand ......",
-	        "reasonUrl": "http://website.com",
+            "text": "Watch TV",
+            "reason": "Since Thomas just came back from outside, he should wash his hands, or he has the chance of infecting himself, his family and spreading the virus around the house if he touches things. Therefore he should wash his hands first.",
+            "reasonUrl": "https://www.unicef.org/coronavirus/everything-you-need-know-about-washing-your-hands-protect-against-coronavirus-covid-19",
             "isCorrect": false
         },
         {
-            "text": "Wrong Answer #2",
-            "reason": "You have gems/virus in your hand ......",
-	        "reasonUrl": "http://website.com",
+            "text": "Eat Cake",
+            "reason": "Thomas just came from outside, therefore there is probability there is virus in his hands. If there is virus in his hands and he eats the cake he will infect himself. Therefore he should wash his hands first.",
+            "reasonUrl": "https://www.unicef.org/coronavirus/everything-you-need-know-about-washing-your-hands-protect-against-coronavirus-covid-19",
             "isCorrect": false
         }
     ]

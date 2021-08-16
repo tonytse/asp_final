@@ -2,19 +2,19 @@
     "title": "MC3",
     "answers": [
         {
-            "text": "Correct Answer",
+            "text": "Change Clothes",
             "isCorrect": true
         },
         {
-            "text": "Wrong Answer #1",
-            "reason": "You have gems/virus in your hand ......",
-	        "reasonUrl": "http://website.com",
+            "text": "Watch TV",
+            "reason": "After doing so many activities, it is likely virus has gotten to Thomas's clothes as well and it is a good idea to change clothes first, before doing anything else.",
+            "reasonUrl": "https://www.unicef.org/coronavirus/cleaning-and-hygiene-tips-help-keep-coronavirus-covid-19-out-your-home",
             "isCorrect": false
         },
         {
-            "text": "Wrong Answer #2",
-            "reason": "You have gems/virus in your hand ......",
-	        "reasonUrl": "http://website.com",
+            "text": "Eat Cake",
+            "reason": "After doing so many activities, it is likely virus has gotten to Thomas's clothes as well and it is a good idea to change clothes first, before doing anything else.",
+            "reasonUrl": "https://www.unicef.org/coronavirus/cleaning-and-hygiene-tips-help-keep-coronavirus-covid-19-out-your-home",
             "isCorrect": false
         }
     ]
