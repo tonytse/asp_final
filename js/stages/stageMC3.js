@@ -13,11 +13,11 @@ function StageMC3() {
 
     }
 
-    this.gotoSummary1 = function (stopwatch) {
+    this.gotoMC4 = function (stopwatch) {
         if( stopwatch < 10000 ) {
             gPlayerManager.score += 10000 - stopwatch;
         }
-        gStageManager.changeStage(new StageSummary1());
+        gStageManager.changeStage(new StageMC4());
     }
 
     this.wrongAnswer = function (ans) {
@@ -26,6 +26,6 @@ function StageMC3() {
     }
 
     this.onPreDialogDone = function () {
-        gMultipleChoice.open('MC3_QnA.json', self.gotoSummary1, self.wrongAnswer);
+        gMultipleChoice.open('MC3_QnA.json', self.gotoMC4, self.wrongAnswer);
     }
 }

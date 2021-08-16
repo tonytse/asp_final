@@ -35,7 +35,6 @@ function StageGameB(level) {
         characters = [];
     }
 
-
     this.onDraw = function (w, h) {
         if (keyDown('n')) {
             console.log(self.currentLevel);
@@ -43,7 +42,7 @@ function StageGameB(level) {
             if (self.currentLevel == 1) {
                 gStageManager.changeStage(new StageMC6());
             } else {
-                gStageManager.changeStage(new StageSummary2());
+                gStageManager.changeStage(new StageEnd());
             }
         }
 
