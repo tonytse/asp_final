@@ -10,7 +10,7 @@ function PlayerManager() {
     
     this.mcWrongAns;
     
-    this.reset() = function() {
+    this.reset = function() {
         self.virusLevel = 50;
         self.imgVirusIcon;
         self.isVisible = false;
@@ -58,5 +58,5 @@ function PlayerManager() {
         }
     }
 
-    reset();
+    this.reset();
 }
