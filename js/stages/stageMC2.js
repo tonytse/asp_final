@@ -3,7 +3,7 @@ function StageMC2() {
 
     this.onEnter = function () {
         gSceneManager.loadBathroom();
-        gDialogManager.load('MC2_PreDialog.json', self.onPreDialogDone);
+        gDialogManager.load(gGameDataManager.getPreDialogJson(2), self.onPreDialogDone);
     }
     this.onExit = function () {
 
@@ -26,6 +26,6 @@ function StageMC2() {
     }
 
     this.onPreDialogDone = function () {
-        gMultipleChoice.open('MC2_QnA.json', self.gotoGameA, self.wrongAnswer);
+        gMultipleChoice.open(gGameDataManager.getMCJson(2), self.gotoGameA, self.wrongAnswer);
     }
 }

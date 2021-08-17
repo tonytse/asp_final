@@ -5,9 +5,10 @@ let gSpriteManager = null;
 let gInputManager = null;
 let gDialogManager = null;
 let gMultipleChoice = null;
+let gGameDataManager = null;
 
 function preload() {
-
+    gGameDataManager = new GameDataManager();
     gSceneManager = new SceneManager()
     gSpriteManager = new SpriteManager();
     gPlayerManager = new PlayerManager();

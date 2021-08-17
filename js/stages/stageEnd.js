@@ -5,7 +5,17 @@ function StageEnd() {
     this.onEnter = function () {
 
         gSceneManager.loadTown();
-        gDialogManager.setDialog( "~END~", self.onDialogDone );
+        gDialogManager.setDialog( "~Thank you for playing~", self.onDialogDone );
+
+        //gPlayerManager.
+        /*
+        this.mc1 = [];
+        this.mc2 = [];
+        this.mc3 = [];
+        this.mc4 = [];
+        this.mc5 = [];
+        this.mc6 = [];
+        */
 
     }
 

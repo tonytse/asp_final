@@ -52,7 +52,7 @@ function DialogManager() {
         //console.log('DialogManager load cb' + self.callbackFunc );
 
         //load the json file
-        loadJSON('assets/gameData/' + jsonFile, function (json) {
+        loadJSON( jsonFile, function (json) {
 
             let len = json.text['length'];
 

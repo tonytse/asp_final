@@ -21,7 +21,7 @@ function MultipleChoiceManager() {
 
         //self.isBlockingMode = false;
 
-        loadJSON('assets/gameData/' + jsonFile, function (json) {
+        loadJSON( jsonFile, function (json) {
 
             let len = json.answers['length'];
 

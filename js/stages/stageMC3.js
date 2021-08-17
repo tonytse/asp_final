@@ -3,7 +3,7 @@ function StageMC3() {
 
     this.onEnter = function () {
         gSceneManager.loadHome();
-        gDialogManager.load('MC3_PreDialog.json', self.onPreDialogDone);
+        gDialogManager.load(gGameDataManager.getPreDialogJson(3), self.onPreDialogDone);
     }
     this.onExit = function () {
 
@@ -26,6 +26,6 @@ function StageMC3() {
     }
 
     this.onPreDialogDone = function () {
-        gMultipleChoice.open('MC3_QnA.json', self.gotoMC4, self.wrongAnswer);
+        gMultipleChoice.open(gGameDataManager.getMCJson(3), self.gotoMC4, self.wrongAnswer);
     }
 }

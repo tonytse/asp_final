@@ -3,29 +3,29 @@ function StageMC1() {
 
     this.onEnter = function () {
         gSceneManager.loadHome();
-        gDialogManager.load( 'MC1_PreDialog.json', self.onPreDialogDone );
+        gDialogManager.load(gGameDataManager.getPreDialogJson(1), self.onPreDialogDone);
     }
     this.onExit = function () {
 
     }
 
-    this.onDraw = function (w,h) {
+    this.onDraw = function (w, h) {
 
     }
 
-    this.gotoMC2 = function ( stopwatch ) {
-        if( stopwatch < 10000 ) {
+    this.gotoMC2 = function (stopwatch) {
+        if (stopwatch < 10000) {
             gPlayerManager.score += 10000 - stopwatch;
         }
-        gStageManager.changeStage( new StageMC2() );
+        gStageManager.changeStage(new StageMC2());
     }
 
-    this.wrongAnswer = function ( ans ) {        
-	    gPlayerManager.virusLevel +=5;
-        gPlayerManager.mc1.push( parseInt(ans) ); 
+    this.wrongAnswer = function (ans) {
+        gPlayerManager.virusLevel += 5;
+        gPlayerManager.mc1.push(parseInt(ans));
     }
 
     this.onPreDialogDone = function () {
-        gMultipleChoice.open( 'MC1_QnA.json', self.gotoMC2, self.wrongAnswer );
+        gMultipleChoice.open(gGameDataManager.getMCJson(1), self.gotoMC2, self.wrongAnswer);
     }
 }
