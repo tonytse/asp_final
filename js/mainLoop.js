@@ -48,6 +48,7 @@ function setup() {
     gSceneManager.init(w, h);
     gStageManager.start();
     //gStageManager.changeStage(new StageGameB(1));
+    //gStageManager.changeStage(new StageEnd());
 }
 
 function draw() {
@@ -64,6 +65,9 @@ function draw() {
 
     gDialogManager.onDraw(w, h);
     gMultipleChoice.onDraw(w, h);
+
+    
+    gStageManager.onDrawOverlay(w, h);
 
     gPlayerManager.onDrawVirusBar(w, h);
 

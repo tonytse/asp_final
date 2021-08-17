@@ -37,13 +37,19 @@ function StageManager() {
         }
     }
 
+    this.onDrawOverlay = function (w, h) {
+        if (self.currentStage) {
+            if (self.currentStage.hasOwnProperty("onDrawOverlay")) {
+                self.currentStage.onDrawOverlay(w, h);
+            }
+        }
+    }
 
     this.onWindowResized = function (w, h) {
         if (self.currentStage) {
             if (self.currentStage.hasOwnProperty("onWindowResized")) {
                 self.currentStage.onWindowResized(w, h);
             }
-
         }
     }
 

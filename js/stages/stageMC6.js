@@ -1,9 +1,10 @@
 function StageMC6() {
     let self = this;
+    let stageId = 6;
 
     this.onEnter = function () {
         gSceneManager.loadSupermarket();
-        gDialogManager.load(gGameDataManager.getPreDialogJson(6), self.onPreDialogDone);
+        gDialogManager.load(gGameDataManager.getPreDialogJson(stageId), self.onPreDialogDone);
     }
     this.onExit = function () {
 
@@ -21,11 +22,10 @@ function StageMC6() {
     }
 
     this.wrongAnswer = function (ans) {
-        gPlayerManager.virusLevel += 5;
-        gPlayerManager.mc6.push(parseInt(ans));
+        gPlayerManager.wrongMCAnswer(stageId, ans);
     }
 
     this.onPreDialogDone = function () {
-        gMultipleChoice.open(gGameDataManager.getMCJson(6), self.gotoGameB, self.wrongAnswer);
+        gMultipleChoice.open(gGameDataManager.getMCJson(stageId), self.gotoGameB, self.wrongAnswer);
     }
 }

@@ -7,6 +7,7 @@ function StageStart() {
 
     this.onEnter = function () {
         gSceneManager.loadTown();
+        
 
         self.button = createButton('Start');
         self.button.size(200, 100);

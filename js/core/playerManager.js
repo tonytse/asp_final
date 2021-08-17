@@ -1,19 +1,34 @@
 function PlayerManager() {
     let self = this;
 
-    this.virusLevel = 50;
+    this.virusLevel;
     this.imgVirusIcon;
-    this.isVisible = false;
-    this.isVirusBarVisible = false;
-    this.score = 0;
+    this.isVisible;
+    this.isVirusBarVisible;
+    this.score;
+    this.isCompleted;
     
-    this.mc1 = [];
-    this.mc2 = [];
-    this.mc3 = [];
-    this.mc4 = [];
-    this.mc5 = [];
-    this.mc6 = [];
+    this.mcWrongAns;
+    
+    this.reset() = function() {
+        self.virusLevel = 50;
+        self.imgVirusIcon;
+        self.isVisible = false;
+        self.isVirusBarVisible = false;
+        self.score = 0;
+        self.isCompleted = false;
+        self.mcWrongAns = [];
+    }
 
+    this.wrongMCAnswer = function( mc, ans ) {
+        gPlayerManager.virusLevel += 5;
+        //console.log( 'MC ' + mc + ': ' + ans );
+        //mc1.push(parseInt(ans));
+        var obj = new Object();
+        obj.mc = parseInt(mc);
+        obj.ans = parseInt(ans);
+        self.mcWrongAns.push(obj);
+    }
 
     this.preload = function () {
         //Image by Eduardo RS from Pixabay
@@ -43,5 +58,5 @@ function PlayerManager() {
         }
     }
 
-
+    reset();
 }

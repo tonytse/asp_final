@@ -1,9 +1,10 @@
 function StageMC1() {
     let self = this;
+    let stageId = 1;
 
     this.onEnter = function () {
         gSceneManager.loadHome();
-        gDialogManager.load(gGameDataManager.getPreDialogJson(1), self.onPreDialogDone);
+        gDialogManager.load(gGameDataManager.getPreDialogJson(stageId), self.onPreDialogDone);
     }
     this.onExit = function () {
 
@@ -21,11 +22,10 @@ function StageMC1() {
     }
 
     this.wrongAnswer = function (ans) {
-        gPlayerManager.virusLevel += 5;
-        gPlayerManager.mc1.push(parseInt(ans));
+        gPlayerManager.wrongMCAnswer(stageId, ans);
     }
 
     this.onPreDialogDone = function () {
-        gMultipleChoice.open(gGameDataManager.getMCJson(1), self.gotoMC2, self.wrongAnswer);
+        gMultipleChoice.open(gGameDataManager.getMCJson(stageId), self.gotoMC2, self.wrongAnswer);
     }
 }

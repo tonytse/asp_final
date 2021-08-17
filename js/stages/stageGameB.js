@@ -27,8 +27,6 @@ function StageGameB(level) {
         gSpriteManager.cowBoy.position.x = width / 4;
         gSpriteManager.cowGirl.position.x = width / 1.5;
         gSpriteManager.girl.position.x = width / 1.2;
-
-
     }
 
     this.onExit = function () {
@@ -37,11 +35,11 @@ function StageGameB(level) {
 
     this.onDraw = function (w, h) {
         if (keyDown('n')) {
-            console.log(self.currentLevel);
 
             if (self.currentLevel == 1) {
                 gStageManager.changeStage(new StageMC6());
             } else {
+                gPlayerManager.isCompleted = true;
                 gStageManager.changeStage(new StageEnd());
             }
         }

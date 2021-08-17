@@ -1,9 +1,10 @@
 function StageMC4() {
     let self = this;
+    let stageId = 4;
 
     this.onEnter = function () {
         gSceneManager.loadBathroom();
-        gDialogManager.load(gGameDataManager.getPreDialogJson(4), self.onPreDialogDone);
+        gDialogManager.load(gGameDataManager.getPreDialogJson(stageId), self.onPreDialogDone);
     }
 
     this.onExit = function () {
@@ -22,11 +23,10 @@ function StageMC4() {
     }
 
     this.wrongAnswer = function (ans) {
-        gPlayerManager.virusLevel += 5;
-        gPlayerManager.mc4.push(parseInt(ans));
+        gPlayerManager.wrongMCAnswer(stageId, ans);
     }
 
     this.onPreDialogDone = function () {
-        gMultipleChoice.open(gGameDataManager.getMCJson(4), self.gotoMC5, self.wrongAnswer);
+        gMultipleChoice.open(gGameDataManager.getMCJson(stageId), self.gotoMC5, self.wrongAnswer);
     }
 }
