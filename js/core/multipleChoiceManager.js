@@ -10,22 +10,25 @@ function MultipleChoiceManager() {
 
     this.currAnimation = null;
     this.stopwatchCurrAnimation = new StopWatch();
+    this.currAnimationDur = 0;
+    this.isCloseAfterAnimation = false;
     this.button = [];
 
     this.onDraw = function () {
 
         //! When you draw correctAniamtion
         if( self.currAnimation ) {
-            //image( self.correctAnimation, 10, 10 );
-            if( self.stopwatchCurrAnimation.get() > 3  ) {
+            if( self.stopwatchCurrAnimation.get() > self.currAnimationDur ) {
                 self.currAnimation.remove();
                 self.currAnimation = null;
-                console.log("del image");
+                
+                if( self.isCloseAfterAnimation ) {
+                    gDialogManager.close();
+                    self.close();
+                }
             }
         }
   
-
-
     };
 
     this.open = function (jsonFile, callbackCorrect, callbackWrong) {
@@ -71,22 +74,22 @@ function MultipleChoiceManager() {
             self.currAnimation.remove();
             self.currAnimation  = null;
         }
-
-        //console.log( 'answer '+ this.id() );
+        
         if (self.json.answers[this.id()].isCorrect) {
             
-            self.currAnimation = createImg("assets/Animation/transparentmarkyesgif.gif");
-    
-            self.currAnimation.play();
-            self.stopwatchCurrAnimation.start();
-            gDialogManager.close();
-            self.close();
+            self.currAnimation = createImg("assets/multipleChoice/correct.gif",  function () {
+                self.isCloseAfterAnimation = true;
+                self.currAnimationDur = 2500; // TODO 
+                self.stopwatchCurrAnimation.start();
+            });    
+            
         } else {
                 
-            //! Load the animation
-            self.currAnimation = createImg("assets/Animation/Tryagingifeditedtransparent.gif");
-            self.currAnimation.play();
-            self.stopwatchCurrAnimation.start();
+            self.currAnimation = createImg("assets/multipleChoice/tryagain.gif", function () {
+                self.currAnimationDur = 2500; // TODO 
+                self.stopwatchCurrAnimation.start();    
+            });
+            
 
             self.callbackWrong(this.id());
             self.button[this.id()].hide();
@@ -103,6 +106,8 @@ function MultipleChoiceManager() {
         self.json = null;
         //self.isBlockingMode = false;
         self.callbackWrong = null;
+        self.currAnimationDur = 0;
+        self.isCloseAfterAnimation = false;
 
         if (self.callbackCorrect) {
             self.callbackCorrect( self.stopwatch.get() );
@@ -145,7 +150,9 @@ function MultipleChoiceManager() {
 
 
         if( self.currAnimation ) {
-            self.currAnimation .position(100, 25);
+            s = min( w,h );
+            self.currAnimation.size( s, s );
+            self.currAnimation.position( (w-s)/2, (h-s)/2);
         }
     };
 }

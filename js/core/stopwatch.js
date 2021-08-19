@@ -6,7 +6,7 @@ function StopWatch() {
         self.t =  Date.now();
     }
 
-    this.stop = function() {
+    this.get = function() {
         return Date.now() - self.t;
     }
 
