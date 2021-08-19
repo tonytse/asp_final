@@ -79,14 +79,14 @@ function MultipleChoiceManager() {
             
             self.currAnimation = createImg("assets/multipleChoice/correct.gif",  function () {
                 self.isCloseAfterAnimation = true;
-                self.currAnimationDur = 2500; // TODO 
+                self.currAnimationDur = 4000; // TODO 
                 self.stopwatchCurrAnimation.start();
             });    
             
         } else {
                 
             self.currAnimation = createImg("assets/multipleChoice/tryagain.gif", function () {
-                self.currAnimationDur = 2500; // TODO 
+                self.currAnimationDur = 4000; // TODO 
                 self.stopwatchCurrAnimation.start();    
             });
             
