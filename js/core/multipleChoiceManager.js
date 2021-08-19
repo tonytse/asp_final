@@ -8,9 +8,23 @@ function MultipleChoiceManager() {
     //this.isBlockingMode = true;
     this.stopwatch = new StopWatch();
 
+    this.currAnimation = null;
+    this.stopwatchCurrAnimation = new StopWatch();
     this.button = [];
 
     this.onDraw = function () {
+
+        //! When you draw correctAniamtion
+        if( self.currAnimation ) {
+            //image( self.correctAnimation, 10, 10 );
+            if( self.stopwatchCurrAnimation.get() > 3  ) {
+                self.currAnimation.remove();
+                self.currAnimation = null;
+                console.log("del image");
+            }
+        }
+  
+
 
     };
 
@@ -18,6 +32,7 @@ function MultipleChoiceManager() {
 
         self.callbackCorrect = callbackCorrect;
         self.callbackWrong = callbackWrong;
+
 
         //self.isBlockingMode = false;
 
@@ -51,18 +66,37 @@ function MultipleChoiceManager() {
     };
 
     this.answer = function () {
+
+        if(self.currAnimation ) {
+            self.currAnimation.remove();
+            self.currAnimation  = null;
+        }
+
         //console.log( 'answer '+ this.id() );
         if (self.json.answers[this.id()].isCorrect) {
+            
+            self.currAnimation = createImg("assets/Animation/transparentmarkyesgif.gif");
+    
+            self.currAnimation.play();
+            self.stopwatchCurrAnimation.start();
             gDialogManager.close();
             self.close();
         } else {
+                
+            //! Load the animation
+            self.currAnimation = createImg("assets/Animation/Tryagingifeditedtransparent.gif");
+            self.currAnimation.play();
+            self.stopwatchCurrAnimation.start();
+
             self.callbackWrong(this.id());
             self.button[this.id()].hide();
-
-            let width = gSceneManager.width;
-            let height = gSceneManager.height;
-            self.onWindowResized(width, height);
         }
+
+        
+        let width = gSceneManager.width;
+        let height = gSceneManager.height;
+        self.onWindowResized(width, height);
+
     }
 
     this.close = function () {
@@ -71,7 +105,7 @@ function MultipleChoiceManager() {
         self.callbackWrong = null;
 
         if (self.callbackCorrect) {
-            self.callbackCorrect( self.stopwatch.stop() );
+            self.callbackCorrect( self.stopwatch.get() );
             self.callbackCorrect = null;
         }
 
@@ -107,6 +141,11 @@ function MultipleChoiceManager() {
             self.button[i].size(dw * 0.8, 250);
             self.button[i].position(80 + (idx) * dw * 0.8 + (idx * 2 + 1) * dw * 0.1, 260);
             idx++;
+        }
+
+
+        if( self.currAnimation ) {
+            self.currAnimation .position(100, 25);
         }
     };
 }
