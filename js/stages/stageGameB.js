@@ -7,6 +7,7 @@ function StageGameB(level) {
     let oldWidth = null;
     let oldHeight = null;
     let characters = [];
+    let endGame = false;
 
     this.onEnter = function () {
 
@@ -47,17 +48,18 @@ function StageGameB(level) {
         characters.sort(function (a, b) {
             return a.scale - b.scale;
         });
-
+        //gSceneManager.offsetX
 
         //print('onDraw');
 
         let d = deltaTime * 0.2;
 
         for (let i = 0; i < characters.length; ++i) {
-            drawSprite(characters[i]);
+            //drawSprite(characters[i]);
         }
+        drawSprite(gSpriteManager.player);
 
-        if (gInputManager.isUp && gSpriteManager.player.position.y > width / 2.65) {
+        if (gInputManager.isUp && gSpriteManager.player.position.y > width / 2.65 && endGame == false) {
             gSpriteManager.player.position.y -= d;
             gSpriteManager.player.scale -= (gSpriteManager.player.scale / width) * 15;
 
@@ -66,7 +68,7 @@ function StageGameB(level) {
                 rightEdge -= 0.008;
             }
         };
-        if (gInputManager.isDown && gSpriteManager.player.position.y < height / 1.25) {
+        if (gInputManager.isDown && gSpriteManager.player.position.y < height / 1.25 && endGame == false) {
             gSpriteManager.player.position.y += d;
             gSpriteManager.player.scale += (gSpriteManager.player.scale / width) * 15;
             leftEdge -= 0.15;
@@ -74,31 +76,37 @@ function StageGameB(level) {
                 rightEdge += 0.008;
             }
         };
-        if (gInputManager.isLeft && gSpriteManager.player.position.x > width / leftEdge) {
+        if (gInputManager.isLeft && gSpriteManager.player.position.x > width / leftEdge && endGame == false) {
 
             gSpriteManager.player.position.x -= d;
 
         }
-        if (gInputManager.isRight && gSpriteManager.player.position.x < width / rightEdge) {
+        if (gInputManager.isRight && gSpriteManager.player.position.x < width / rightEdge && endGame == false) {
             gSpriteManager.player.position.x += d
         };
 
 
         let anyAction = false;
 
-        if (gInputManager.isUp || gInputManager.isDown) {
+        if (gInputManager.isUp || gInputManager.isDown && endGame == false) {
             gSpriteManager.player.changeAnimation('Walk');
             anyAction = true;
         }
 
-        if (gInputManager.isLeft) {
+        if (gInputManager.isLeft && endGame == false) {
             gSpriteManager.player.changeAnimation('Walk');
             gSpriteManager.player.mirrorX(-1);
             anyAction = true;
         }
 
-        if (gInputManager.isRight) {
-            gSceneManager.offsetX += d;
+        if (gInputManager.isRight && endGame == false) {
+            // TODO: Provide a limit for scene
+            // TODO: Warning 
+            if (gSceneManager.offsetX < gSceneManager.background.width / 2) {
+                gSceneManager.offsetX += d;
+            }
+
+
             gSpriteManager.player.changeAnimation('Walk');
             gSpriteManager.player.mirrorX(1);
             anyAction = true;
@@ -108,7 +116,24 @@ function StageGameB(level) {
             gSpriteManager.player.changeAnimation('Idle');
         }
 
-        //animation( gSpriteManager.player_stand_animation, self.posX, self.posY );
+
+        if (
+            (gSceneManager.offsetX + gSpriteManager.player.position.x) > gSceneManager.background.width / 1.163 &&
+            (gSceneManager.offsetX + gSpriteManager.player.position.x) < gSceneManager.background.width / 1.067
+        ) {
+            if (
+                gSpriteManager.player.position.y > gSceneManager.background.height / 2.04 &&
+                gSpriteManager.player.position.y < gSceneManager.background.height / 1.845
+            ) {
+                anyAction = false;
+                endGame = true;
+
+            }
+        }
+        fill(0, 0, 0, 150);
+        rect(0, 0, width, height);
+
+        //animation(gSpriteManager.player_stand_animation, self.posX, self.posY);
 
         // //ellipse(width / 2, height / 2, 50, 50);
         // fill(200);
@@ -119,33 +144,8 @@ function StageGameB(level) {
 
     }
 
-    // this.moveNPC() = function name(npc) {
-    //     if (gSpriteManager.player.position.y > width / 2.65) {
-    //         gSpriteManager.player.position.y -= d;
-    //         gSpriteManager.player.scale -= (gSpriteManager.player.scale / width) * 15;
-
-    //         leftEdge += 0.15;
-    //         if (rightEdge > 1.05) {
-    //             rightEdge -= 0.008;
-    //         }
-    //     };
-    //     if (gInputManager.isDown && gSpriteManager.player.position.y < height / 1.25) {
-    //         gSpriteManager.player.position.y += d;
-    //         gSpriteManager.player.scale += (gSpriteManager.player.scale / width) * 15;
-    //         leftEdge -= 0.15;
-    //         if (rightEdge < 1.1) {
-    //             rightEdge += 0.008;
-    //         }
-    //     };
-    //     if (gInputManager.isLeft && gSpriteManager.player.position.x > width / leftEdge) {
-
-    //         gSpriteManager.player.position.x -= d;
-
-    //     }
-    //     if (gInputManager.isRight && gSpriteManager.player.position.x < width / rightEdge) {
-    //         gSpriteManager.player.position.x += d
-    //     };
-    // }
+    this.moveNPC = function (character, x, y) {
+    }
 
     this.onWindowResized = function (w, h) {
 
