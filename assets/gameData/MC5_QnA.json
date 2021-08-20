@@ -1,5 +1,5 @@
 {
-    "title": "What should Tom do before going out?",
+    "title": "What should I do before going out?",
     "answers": [
         {
             "text": "Wear a mask",
@@ -8,13 +8,13 @@
         {
             "text": "Go without wearing a mask",
             "reason": "Wearing masks prevent Covid-19 transmission by restricting the respiratory droplets from spreading or coming in direct contact with people.",
-	        "reasonUrl": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7902177/",
+            "reasonUrl": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7902177/",
             "isCorrect": false
         },
         {
             "text": "Wear a scarves",
             "reason": "Wearing masks prevent Covid-19 transmission by restricting the respiratory droplets from spreading or coming in direct contact with people.",
-	        "reasonUrl": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7902177/",
+            "reasonUrl": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7902177/",
             "isCorrect": false
         }
     ]

@@ -1,17 +1,17 @@
 {
-    "title": "When will Tom go out?",
+    "title": "When should I go out?",
     "answers": [
         {
             "text": "12:30pm",
-			"reason": "It's safer to go outside when there is less crowd.",
-	        "reasonUrl": "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public",
+            "reason": "It's safer to go outside when there is less crowd.",
+            "reasonUrl": "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public",
             "isCorrect": false
         },
         {
             "text": "6:00pm",
             "reason": "You have gems/virus in your hand ......",
-			"reason": "It's safer to go outside when there is less crowd.",
-	        "reasonUrl": "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public",
+            "reason": "It's safer to go outside when there is less crowd.",
+            "reasonUrl": "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public",
             "isCorrect": false
         },
         {
