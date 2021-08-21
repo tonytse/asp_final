@@ -9,7 +9,8 @@ function StageGameB(level) {
     let characters = [];
     let d = deltaTime * 0.2;
     let endGame = false;
-    let font = loadFont("assets/fonts/rampart_one.ttf");
+    let winFont = loadFont("assets/fonts/rampart_one.ttf");
+    let warningFont = loadFont("assets/fonts/frijole_regular.ttf");
 
 
     this.onEnter = function () {
@@ -64,8 +65,21 @@ function StageGameB(level) {
         for (let i = 0; i < characters.length; ++i) {
             drawSprite(characters[i].name);
             this.moveNPC(characters[i], 0.3 * i);
+            if (
+                characters[i].name != gSpriteManager.player &&
+                dist(gSpriteManager.player.position.x, gSpriteManager.player.position.y, characters[i].name.position.x, characters[i].name.position.y) < 100) {
+                fill(255, 214, 10);
+                rectMode(CENTER);
+                noStroke();
+                rect(width / 2, height / 1.13, width / 1.5, height / 6, 5);
+                textAlign(CENTER);
+                textSize(width / 25);
+                textFont(warningFont);
+                fill(217, 4, 41);
+                text("WARNING!! \nMAINTAIN DISTANCE!!", width / 2, height / 1.15);
+            }
         }
-        drawSprite(gSpriteManager.player);
+
         self.d = deltaTime * 0.2
         if (gInputManager.isUp && gSpriteManager.player.position.y > width / 2.65 && endGame == false) {
             gSpriteManager.player.position.y -= self.d;
