@@ -52,5 +52,12 @@ function StageManager() {
             }
         }
     }
+    this.preload = function () {
+        if (self.currentStage) {
+            if (self.currentStage.hasOwnProperty("preload")) {
+                self.currentStage.preload();
+            }
+        }
+    }
 
 }

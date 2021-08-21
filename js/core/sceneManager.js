@@ -14,7 +14,6 @@ function SceneManager() {
         self.height = height;
 
         self.win = createSprite(300, 300, 614, 307);
-        self.win.addAnimation('Won',);
     };
 
 
@@ -53,7 +52,6 @@ function SceneManager() {
 
     this.onDraw = function (w, h) {
         if (self.background) {
-
             let width = self.background.width;
             let r = width / 1280;
             let height = self.background.height;

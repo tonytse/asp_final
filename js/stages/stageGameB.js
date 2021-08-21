@@ -8,6 +8,8 @@ function StageGameB(level) {
     let oldHeight = null;
     let characters = [];
     let endGame = false;
+    let font = loadFont("assets/fonts/rampart_one.ttf");
+
 
     this.onEnter = function () {
 
@@ -28,6 +30,7 @@ function StageGameB(level) {
         gSpriteManager.cowBoy.position.x = width / 4;
         gSpriteManager.cowGirl.position.x = width / 1.5;
         gSpriteManager.girl.position.x = width / 1.2;
+
     }
 
     this.onExit = function () {
@@ -116,22 +119,28 @@ function StageGameB(level) {
             gSpriteManager.player.changeAnimation('Idle');
         }
 
-
         if (
-            (gSceneManager.offsetX + gSpriteManager.player.position.x) > gSceneManager.background.width / 1.163 &&
-            (gSceneManager.offsetX + gSpriteManager.player.position.x) < gSceneManager.background.width / 1.067
+            gSceneManager.offsetX > 1100 && gSpriteManager.player.position.x > width / 1.33
         ) {
-            if (
-                gSpriteManager.player.position.y > gSceneManager.background.height / 2.04 &&
-                gSpriteManager.player.position.y < gSceneManager.background.height / 1.845
-            ) {
+
+            if (gSpriteManager.player.position.y < height / 1.75) {
+
                 anyAction = false;
                 endGame = true;
-
+                fill(0, 0, 0, 150);
+                rect(0, 0, width, height);
+                fill(255, 200, 100);
+                noStroke();
+                rect(width / 3, height / 4, width / 3, height / 2, 10);
+                fill(100, 150, 200);
+                // textFont(font);
+                // textSize(100);
+                // textAlign(CENTER);
+                // text("You Win !!", width / 2, height / 3);
+                // console.log("Working");
             }
         }
-        fill(0, 0, 0, 150);
-        rect(0, 0, width, height);
+
 
         //animation(gSpriteManager.player_stand_animation, self.posX, self.posY);
 

@@ -20,6 +20,7 @@ function preload() {
     gDialogManager.preload();
     gSpriteManager.preload();
     gPlayerManager.preload();
+    gStageManager.preload();
 
 }
 
