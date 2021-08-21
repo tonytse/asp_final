@@ -13,7 +13,6 @@ function StageGameB(level) {
     let winFont = loadFont("assets/fonts/rampart_one.ttf");
     let warningFont = loadFont("assets/fonts/frijole_regular.ttf");
 
-
     this.onEnter = function () {
         gSceneManager.loadGameB();
         self.oldWidth = width;
@@ -44,6 +43,7 @@ function StageGameB(level) {
     }
 
     this.onDraw = function (w, h) {
+        anyAction = false;
         self.d = deltaTime * 0.2
         if (keyDown('n')) {
             if (self.currentLevel == 1) {
@@ -67,6 +67,7 @@ function StageGameB(level) {
         this.manageInputs();
         this.characterAnimations();
         this.finishLevel();
+        fill(0,0,0,100);
     }
 
     this.moveNPC = function (character, speed) {
@@ -80,13 +81,13 @@ function StageGameB(level) {
         }
         if (character.direction == false && character.name != gSpriteManager.player && endGame == false) {
             character.name.position.y += self.d * speed;
-            character.name.scale += (character.name.scale / width) * 15 * speed;
+            character.name.scale += ((character.name.scale / width) * 15) * speed;
             character.name.changeAnimation('Walk');
             character.name.mirrorX(-1);
         }
         if (character.direction == true && character.name != gSpriteManager.player && endGame == false) {
             character.name.position.y -= self.d * speed;
-            character.name.scale -= (character.name.scale / width) * 15 * speed;
+            character.name.scale -= ((character.name.scale / width) * 15) * speed;
             character.name.changeAnimation('Walk');
             character.name.mirrorX(-1);
         }
@@ -95,7 +96,7 @@ function StageGameB(level) {
     this.showWarning = function (character) {
         if (
             character.name != gSpriteManager.player &&
-            dist(gSpriteManager.player.position.x, gSpriteManager.player.position.y, character.name.position.x, character.name.position.y) < 100) {
+            dist(gSpriteManager.player.position.x, gSpriteManager.player.position.y, character.name.position.x, character.name.position.y) < 300*gSpriteManager.player.scale) {
             fill(255, 214, 10);
             rectMode(CENTER);
             noStroke();
