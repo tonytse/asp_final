@@ -7,6 +7,7 @@ function StageGameB(level) {
     let oldWidth = null;
     let oldHeight = null;
     let characters = [];
+    let d = deltaTime * 0.2;
     let endGame = false;
     let font = loadFont("assets/fonts/rampart_one.ttf");
 
@@ -18,18 +19,23 @@ function StageGameB(level) {
         self.oldWidth = width;
         self.oldHeight = height;
 
-        characters = [gSpriteManager.redBoy, gSpriteManager.cowBoy, gSpriteManager.cowGirl, gSpriteManager.girl, gSpriteManager.player];
+        characters = [
+            { name: gSpriteManager.redBoy, direction: false },
+            { name: gSpriteManager.cowBoy, direction: false },
+            { name: gSpriteManager.cowGirl, direction: false },
+            { name: gSpriteManager.girl, direction: false },
+            { name: gSpriteManager.player, direction: false },];
 
         for (let i = 0; i < characters.length; ++i) {
-            characters[i].position.y = height / 1.3;
-            characters[i].scale = width * 0.0005;
+            characters[i].name.position.y = height / 1.3;
+            characters[i].name.scale = width * 0.0005;
         }
 
-        gSpriteManager.player.position.x = width / 2;
-        gSpriteManager.redBoy.position.x = width / 20;
-        gSpriteManager.cowBoy.position.x = width / 4;
-        gSpriteManager.cowGirl.position.x = width / 1.5;
-        gSpriteManager.girl.position.x = width / 1.2;
+        gSpriteManager.player.position.x = width / 5;
+        gSpriteManager.redBoy.position.x = width / 1.5;
+        gSpriteManager.cowBoy.position.x = width * 1;
+        gSpriteManager.cowGirl.position.x = width * 1.4;
+        gSpriteManager.girl.position.x = width * 1.8;
 
     }
 
@@ -49,21 +55,20 @@ function StageGameB(level) {
         }
 
         characters.sort(function (a, b) {
-            return a.scale - b.scale;
+            return a.name.scale - b.name.scale;
         });
         //gSceneManager.offsetX
 
         //print('onDraw');
 
-        let d = deltaTime * 0.2;
-
         for (let i = 0; i < characters.length; ++i) {
-            //drawSprite(characters[i]);
+            drawSprite(characters[i].name);
+            this.moveNPC(characters[i], 0.3 * i);
         }
         drawSprite(gSpriteManager.player);
-
+        self.d = deltaTime * 0.2
         if (gInputManager.isUp && gSpriteManager.player.position.y > width / 2.65 && endGame == false) {
-            gSpriteManager.player.position.y -= d;
+            gSpriteManager.player.position.y -= self.d;
             gSpriteManager.player.scale -= (gSpriteManager.player.scale / width) * 15;
 
             leftEdge += 0.15;
@@ -72,7 +77,7 @@ function StageGameB(level) {
             }
         };
         if (gInputManager.isDown && gSpriteManager.player.position.y < height / 1.25 && endGame == false) {
-            gSpriteManager.player.position.y += d;
+            gSpriteManager.player.position.y += self.d;
             gSpriteManager.player.scale += (gSpriteManager.player.scale / width) * 15;
             leftEdge -= 0.15;
             if (rightEdge < 1.1) {
@@ -81,11 +86,13 @@ function StageGameB(level) {
         };
         if (gInputManager.isLeft && gSpriteManager.player.position.x > width / leftEdge && endGame == false) {
 
-            gSpriteManager.player.position.x -= d;
+            gSpriteManager.player.position.x -= self.d;
 
         }
         if (gInputManager.isRight && gSpriteManager.player.position.x < width / rightEdge && endGame == false) {
-            gSpriteManager.player.position.x += d
+            if (gSceneManager.offsetX > 1100) {
+                gSpriteManager.player.position.x += self.d
+            }
         };
 
 
@@ -106,7 +113,12 @@ function StageGameB(level) {
             // TODO: Provide a limit for scene
             // TODO: Warning 
             if (gSceneManager.offsetX < gSceneManager.background.width / 2) {
-                gSceneManager.offsetX += d;
+                gSceneManager.offsetX += self.d;
+                for (let i = 0; i < characters.length; ++i) {
+                    if (characters[i].name != gSpriteManager.player) {
+                        characters[i].name.position.x -= self.d;
+                    }
+                }
             }
 
 
@@ -124,7 +136,6 @@ function StageGameB(level) {
         ) {
 
             if (gSpriteManager.player.position.y < height / 1.75) {
-
                 anyAction = false;
                 endGame = true;
                 fill(0, 0, 0, 150);
@@ -153,15 +164,36 @@ function StageGameB(level) {
 
     }
 
-    this.moveNPC = function (character, x, y) {
+    this.moveNPC = function (character, speed) {
+        self.d = deltaTime * 0.2
+
+        if (character.name.position.y < height / 2) {
+            character.direction = false;
+        }
+        if (character.name.position.y > height / 1.2) {
+            character.direction = true;
+        }
+        if (character.direction == false && character.name != gSpriteManager.player && endGame == false) {
+            character.name.position.y += self.d * speed;
+            character.name.scale += (character.name.scale / width) * 15 * speed;
+            character.name.changeAnimation('Walk');
+            character.name.mirrorX(-1);
+        }
+        if (character.direction == true && character.name != gSpriteManager.player && endGame == false) {
+            character.name.position.y -= self.d * speed;
+            character.name.scale -= (character.name.scale / width) * 15 * speed;
+            character.name.changeAnimation('Walk');
+            character.name.mirrorX(-1);
+        }
+
     }
 
     this.onWindowResized = function (w, h) {
 
         for (let i = 0; i < characters.length; ++i) {
-            characters[i].scale = w * 0.0005;
-            characters[i].position.x = (characters[i].position.x / self.oldWidth) * w;
-            characters[i].position.y = (characters[i].position.y / self.oldHeight) * h;
+            characters[i].name.scale = w * 0.0005;
+            characters[i].name.position.x = (characters[i].name.position.x / self.oldWidth) * w;
+            characters[i].name.position.y = (characters[i].name.position.y / self.oldHeight) * h;
         }
 
 
