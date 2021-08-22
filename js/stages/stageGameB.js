@@ -8,7 +8,6 @@ function StageGameB(level) {
     let oldWidth = null;
     let oldHeight = null;
 
-
     let characters = [];
     let endGame = false;
 
@@ -73,7 +72,7 @@ function StageGameB(level) {
         for (let i = 0; i < characters.length; ++i) {
 
             if (characters[i].name != gSpriteManager.player) {
-                this.moveNPC(d, characters[i], 0.3 * i);
+                this.moveNPC(d, characters[i]);
                 if (!showWarning) showWarning = this.isShowWarning(characters[i]);
             }
             drawSprite(characters[i].name);
@@ -158,7 +157,7 @@ function StageGameB(level) {
     this.charYToScale = function (width, height, y) {
         let s = width * 0.0005;
         return map(y, height * 0.5, height * 0.8, s * 0.6, s);
-    };
+    }
 
     this.manageInputs = function (d) {
         if (endGame) return;
@@ -193,6 +192,7 @@ function StageGameB(level) {
             }
         };
     }
+
     this.finishLevel = function () {
         if (
             gSceneManager.offsetX > 1100 && gSpriteManager.player.position.x > width / 1.33
@@ -224,12 +224,9 @@ function StageGameB(level) {
             characters[i].name.scale = this.charYToScale(w, h, characters[i].name.position.y);
         }
 
-
         self.oldWidth = w;
         self.oldHeight = h;
     }
-
-
 }
 
 
