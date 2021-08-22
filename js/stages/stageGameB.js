@@ -1,17 +1,21 @@
 function StageGameB(level) {
 
     let self = this;
-    let currentLevel;
+
     let leftEdge = 14;
     let rightEdge = 1.1;
+
     let oldWidth = null;
     let oldHeight = null;
+
+
     let characters = [];
-    let d = deltaTime * 0.2;
     let endGame = false;
-    let anyAction = false;
+
     let winFont = loadFont("assets/fonts/rampart_one.ttf");
     let warningFont = loadFont("assets/fonts/frijole_regular.ttf");
+
+    this.currentLevel = level;
 
     this.onEnter = function () {
         gSceneManager.loadGameB();
@@ -19,16 +23,18 @@ function StageGameB(level) {
         self.oldHeight = height;
 
         characters = [
-            { name: gSpriteManager.redBoy, direction: false },
-            { name: gSpriteManager.cowBoy, direction: false },
-            { name: gSpriteManager.cowGirl, direction: false },
-            { name: gSpriteManager.girl, direction: false },
-            { name: gSpriteManager.player, direction: false },
+            { name: gSpriteManager.player, direction: false, speed: 1 * this.currentLevel },
+            { name: gSpriteManager.redBoy, direction: false, speed: 1 * this.currentLevel },
+            { name: gSpriteManager.cowBoy, direction: false, speed: 1.1 * this.currentLevel },
+            { name: gSpriteManager.cowGirl, direction: false, speed: 1.2 * this.currentLevel },
+            { name: gSpriteManager.girl, direction: false, speed: 1.3 * this.currentLevel },
         ];
 
         for (let i = 0; i < characters.length; ++i) {
-            characters[i].name.position.y = height / 1.3;
-            characters[i].name.scale = width * 0.0005;
+            characters[i].name.position.y = height * 0.65;
+            characters[i].name.scale = this.charYToScale(width, height, characters[i].name.position.y);
+            characters[i].name.changeAnimation('Walk');
+            characters[i].name.mirrorX(-1);
         }
 
         gSpriteManager.player.position.x = width / 5;
@@ -43,8 +49,9 @@ function StageGameB(level) {
     }
 
     this.onDraw = function (w, h) {
-        anyAction = false;
-        self.d = deltaTime * 0.2
+
+        let d = deltaTime * 0.2;
+
         if (keyDown('n')) {
             if (self.currentLevel == 1) {
                 gStageManager.changeStage(new StageMC6());
@@ -58,45 +65,21 @@ function StageGameB(level) {
             return a.name.scale - b.name.scale;
         });
 
+
+        this.manageInputs(d);
+        this.playerAnimations(d);
+
+        let showWarning = false;
         for (let i = 0; i < characters.length; ++i) {
+
+            if (characters[i].name != gSpriteManager.player) {
+                this.moveNPC(d, characters[i], 0.3 * i);
+                if (!showWarning) showWarning = this.isShowWarning(characters[i]);
+            }
             drawSprite(characters[i].name);
-            this.moveNPC(characters[i], 0.3 * i);
-            this.showWarning(characters[i]);
         }
 
-        this.manageInputs();
-        this.characterAnimations();
-        this.finishLevel();
-        fill(0,0,0,100);
-    }
-
-    this.moveNPC = function (character, speed) {
-        self.d = deltaTime * 0.2
-
-        if (character.name.position.y < height / 2) {
-            character.direction = false;
-        }
-        if (character.name.position.y > height / 1.2) {
-            character.direction = true;
-        }
-        if (character.direction == false && character.name != gSpriteManager.player && endGame == false) {
-            character.name.position.y += self.d * speed;
-            character.name.scale += ((character.name.scale / width) * 15) * speed;
-            character.name.changeAnimation('Walk');
-            character.name.mirrorX(-1);
-        }
-        if (character.direction == true && character.name != gSpriteManager.player && endGame == false) {
-            character.name.position.y -= self.d * speed;
-            character.name.scale -= ((character.name.scale / width) * 15) * speed;
-            character.name.changeAnimation('Walk');
-            character.name.mirrorX(-1);
-        }
-
-    }
-    this.showWarning = function (character) {
-        if (
-            character.name != gSpriteManager.player &&
-            dist(gSpriteManager.player.position.x, gSpriteManager.player.position.y, character.name.position.x, character.name.position.y) < 300*gSpriteManager.player.scale) {
+        if (showWarning) {
             fill(255, 214, 10);
             rectMode(CENTER);
             noStroke();
@@ -107,31 +90,61 @@ function StageGameB(level) {
             fill(217, 4, 41);
             text("WARNING!! \nMAINTAIN DISTANCE!!", width / 2, height / 1.15);
         }
+
+        this.finishLevel();
     }
 
-    this.characterAnimations = function () {
-        if (gInputManager.isUp || gInputManager.isDown && endGame == false) {
+    this.moveNPC = function (d, character) {
+
+        if (endGame == true) return;
+
+        if (character.direction == false) {
+            character.name.position.y += d * character.speed;
+        } else {
+            character.name.position.y -= d * character.speed;
+        }
+        character.name.scale = this.charYToScale(width, height, character.name.position.y);
+
+        if (character.direction && character.name.position.y < height * 0.5) {
+            character.direction = false;
+        }
+
+        if (!character.direction && character.name.position.y > height * 0.8) {
+            character.direction = true;
+        }
+
+    }
+    this.isShowWarning = function (character) {
+        if (dist(gSpriteManager.player.position.x, gSpriteManager.player.position.y, character.name.position.x, character.name.position.y) < 300 * gSpriteManager.player.scale) {
+            return true;
+        }
+    }
+
+    this.playerAnimations = function (d) {
+        if (endGame) return;
+        let anyAction = false;
+
+        if (gInputManager.isUp || gInputManager.isDown) {
             gSpriteManager.player.changeAnimation('Walk');
             anyAction = true;
         }
 
-        if (gInputManager.isLeft && endGame == false) {
+        if (gInputManager.isLeft) {
             gSpriteManager.player.changeAnimation('Walk');
             gSpriteManager.player.mirrorX(-1);
             anyAction = true;
         }
 
-        if (gInputManager.isRight && endGame == false) {
-            // TODO: Provide a limit for scene
-            // TODO: Warning 
+        if (gInputManager.isRight) {
+
             if (gSceneManager.offsetX < gSceneManager.background.width / 2) {
-                gSceneManager.offsetX += self.d;
+                gSceneManager.offsetX += d;
                 for (let i = 0; i < characters.length; ++i) {
-                    if (characters[i].name != gSpriteManager.player) {
-                        characters[i].name.position.x -= self.d;
-                    }
+                    if (characters[i].name == gSpriteManager.player) continue;
+                    characters[i].name.position.x -= d;
                 }
             }
+
             gSpriteManager.player.changeAnimation('Walk');
             gSpriteManager.player.mirrorX(1);
             anyAction = true;
@@ -141,42 +154,51 @@ function StageGameB(level) {
             gSpriteManager.player.changeAnimation('Idle');
         }
     }
-    this.manageInputs = function () {
-        if (gInputManager.isUp && gSpriteManager.player.position.y > width / 2.65 && endGame == false) {
-            gSpriteManager.player.position.y -= self.d;
-            gSpriteManager.player.scale -= (gSpriteManager.player.scale / width) * 15;
+
+    this.charYToScale = function (width, height, y) {
+        let s = width * 0.0005;
+        return map(y, height * 0.5, height * 0.8, s * 0.6, s);
+    };
+
+    this.manageInputs = function (d) {
+        if (endGame) return;
+
+        if (gInputManager.isUp && gSpriteManager.player.position.y > height * 0.5) {
+            gSpriteManager.player.position.y -= d;
+            gSpriteManager.player.scale = this.charYToScale(width, height, gSpriteManager.player.position.y);
 
             leftEdge += 0.15;
             if (rightEdge > 1.05) {
                 rightEdge -= 0.008;
             }
         };
-        if (gInputManager.isDown && gSpriteManager.player.position.y < height / 1.25 && endGame == false) {
-            gSpriteManager.player.position.y += self.d;
-            gSpriteManager.player.scale += (gSpriteManager.player.scale / width) * 15;
+
+        if (gInputManager.isDown && gSpriteManager.player.position.y < height * 0.8) {
+            gSpriteManager.player.position.y += d;
+            gSpriteManager.player.scale = this.charYToScale(width, height, gSpriteManager.player.position.y);
+
             leftEdge -= 0.15;
             if (rightEdge < 1.1) {
                 rightEdge += 0.008;
             }
         };
-        if (gInputManager.isLeft && gSpriteManager.player.position.x > width / leftEdge && endGame == false) {
 
-            gSpriteManager.player.position.x -= self.d;
-
+        if (gInputManager.isLeft && gSpriteManager.player.position.x > width / leftEdge) {
+            gSpriteManager.player.position.x -= d;
         }
-        if (gInputManager.isRight && gSpriteManager.player.position.x < width / rightEdge && endGame == false) {
+
+        if (gInputManager.isRight && gSpriteManager.player.position.x < width / rightEdge) {
             if (gSceneManager.offsetX > 1100) {
-                gSpriteManager.player.position.x += self.d
+                gSpriteManager.player.position.x += d
             }
         };
     }
-    this.finishLevel = function(){
+    this.finishLevel = function () {
         if (
             gSceneManager.offsetX > 1100 && gSpriteManager.player.position.x > width / 1.33
         ) {
 
             if (gSpriteManager.player.position.y < height / 1.75) {
-                anyAction = false;
                 endGame = true;
                 fill(0, 0, 0, 150);
                 rect(0, 0, width, height);
@@ -196,9 +218,10 @@ function StageGameB(level) {
     this.onWindowResized = function (w, h) {
 
         for (let i = 0; i < characters.length; ++i) {
-            characters[i].name.scale = w * 0.0005;
             characters[i].name.position.x = (characters[i].name.position.x / self.oldWidth) * w;
             characters[i].name.position.y = (characters[i].name.position.y / self.oldHeight) * h;
+
+            characters[i].name.scale = this.charYToScale(w, h, characters[i].name.position.y);
         }
 
 
@@ -206,7 +229,6 @@ function StageGameB(level) {
         self.oldHeight = h;
     }
 
-    self.currentLevel = level;
 
 }
 
