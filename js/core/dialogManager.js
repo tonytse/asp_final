@@ -6,7 +6,7 @@ function DialogManager() {
     this.button = null;
     this.currentIndex = 0;
     this.currentText = null;
-    this.font;
+    this.font = null;
 
     this.callbackFunc = null;
 
