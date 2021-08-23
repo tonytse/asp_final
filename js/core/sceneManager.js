@@ -17,7 +17,7 @@ function SceneManager() {
     };
 
 
-    this.loadGameB = function () {
+    this.loadGameB = function (level) {
         // http://unluckystudio.com/free-game-artassets-16-side-view-cars-assets/
         self.load('gameB.jpg');
     };
