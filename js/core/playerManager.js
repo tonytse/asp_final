@@ -1,18 +1,17 @@
 function PlayerManager() {
     let self = this;
+    this.imgVirusIcon = null;
 
-    this.virusLevel;
-    this.imgVirusIcon;
-    this.isVisible;
-    this.isVirusBarVisible;
-    this.score;
-    this.isCompleted;
+    this.virusLevel = 50;
+    this.isVisible = false;
+    this.isVirusBarVisible = false;
+    this.score = 0;
+    this.isCompleted = false;
     
-    this.mcWrongAns;
+    this.mcWrongAns = [];
     
     this.reset = function() {
         self.virusLevel = 50;
-        self.imgVirusIcon;
         self.isVisible = false;
         self.isVirusBarVisible = false;
         self.score = 0;

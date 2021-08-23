@@ -6,12 +6,13 @@ function StageMC6() {
         gSceneManager.loadSupermarket();
         gDialogManager.load(gGameDataManager.getPreDialogJson(stageId), self.onPreDialogDone);
     }
-    this.onExit = function () {
 
+    this.onExit = function () {
+        // onExit function
     }
 
     this.onDraw = function (w, h) {
-
+        // onDraw function
     }
 
     this.gotoGameB = function (stopwatch) {

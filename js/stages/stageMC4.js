@@ -8,11 +8,11 @@ function StageMC4() {
     }
 
     this.onExit = function () {
-
+        // onExit function
     }
 
     this.onDraw = function (w, h) {
-
+        // onDraw function
     }
 
     this.gotoMC5 = function (stopwatch) {

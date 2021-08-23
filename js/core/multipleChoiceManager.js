@@ -150,7 +150,7 @@ function MultipleChoiceManager() {
 
 
         if( self.currAnimation ) {
-            s = min( w,h );
+            let s = min( w,h );
             self.currAnimation.size( s, s );
             self.currAnimation.position( (w-s)/2, (h-s)/2);
         }
