@@ -11,8 +11,10 @@ function StageGameB(level) {
     let characters = [];
     let endGame = false;
 
-    let winFont = loadFont("assets/fonts/rampart_one.ttf");
+    let finishLevelFont = loadFont("assets/fonts/sigmar_one.ttf");
     let warningFont = loadFont("assets/fonts/frijole_regular.ttf");
+    let arrowKeys = loadImage("assets/gameB/arrow_keys.png");
+    let tryAgainButton = createButton('Try Again');
 
     this.currentLevel = level;
 
@@ -45,10 +47,12 @@ function StageGameB(level) {
 
     this.onExit = function () {
         characters = [];
+        gPlayerManager.isVirusBarVisible = false;
     }
 
     this.onDraw = function (w, h) {
-
+        gPlayerManager.isVirusBarVisible = true;
+    
         let d = deltaTime * 0.2;
 
         if (keyDown('n')) {
@@ -78,7 +82,7 @@ function StageGameB(level) {
             drawSprite(characters[i].name);
         }
 
-        if (showWarning) {
+        if (showWarning && !endGame) {
             fill(255, 214, 10);
             rectMode(CENTER);
             noStroke();
@@ -88,9 +92,14 @@ function StageGameB(level) {
             textFont(warningFont);
             fill(217, 4, 41);
             text("WARNING!! \nMAINTAIN DISTANCE!!", width / 2, height / 1.15);
+            //change below to 0.1 before production
+            gPlayerManager.virusLevel += 0.1;
         }
-
         this.finishLevel();
+    }
+
+    this.tryAgain = function(){
+
     }
 
     this.moveNPC = function (d, character) {
@@ -156,7 +165,8 @@ function StageGameB(level) {
 
     this.charYToScale = function (width, height, y) {
         let s = width * 0.0005;
-        return map(y, height * 0.5, height * 0.8, s * 0.6, s);
+        //return map(y, height * 0.5, height * 0.8, s * 0.6, s);
+        return map(y, height * 0.5, height * 0.8, s * 0.35, s);
     }
 
     this.manageInputs = function (d) {
@@ -187,13 +197,47 @@ function StageGameB(level) {
         }
 
         if (gInputManager.isRight && gSpriteManager.player.position.x < width / rightEdge) {
-            if (gSceneManager.offsetX > 1100) {
+            if (gSceneManager.offsetX > 1100 || gSpriteManager.player.position.x < width/4) {
                 gSpriteManager.player.position.x += d
             }
         };
     }
 
     this.finishLevel = function () {
+        if(gPlayerManager.virusLevel >=100){
+            endGame = true;  
+            gPlayerManager.isVirusBarVisible = false;
+            for (let i = 0; i < characters.length; ++i) {
+                characters[i].name.changeAnimation('Idle');
+            }
+        fill(0, 0, 0, 150);
+        rect(0, 0, width, height);
+        fill(230,57,70);
+        noStroke();
+        rect(width / 3, height / 4, width / 3, height / 2, 10);
+        fill(255);
+        textFont(finishLevelFont);
+        textAlign(CENTER);
+        textSize(width/35);
+        text("LEVEL FAILED!!", width/2,height/3.2);
+        textFont("Arial");
+        textSize(width/70);
+        rectMode(CENTER);
+        text("You were unable to maintain distance from other characters and have got COVID-19.", width/2,height/3,  width /4)
+        imageMode(CENTER);
+        image(arrowKeys, width/2, height/2.15, width/10, width/14.6);
+        text("Use arrow keys to maintain a certain distance from the characters to avoid getting COVID-19. If you get too close, you should see a warning.", width/2,height/1.85,  width /4)
+
+        tryAgainButton.position(width/2.28,height/1.55);
+        tryAgainButton.mousePressed(this.tryAgain);
+        tryAgainButton.style("color", "red");
+        tryAgainButton.style("background-color", "white");
+        tryAgainButton.style("border", "none");
+        tryAgainButton.style("border-radius", "5%");
+        tryAgainButton.style("padding", "10px");
+        tryAgainButton.style("font-family", "dialogFont");
+        tryAgainButton.style("font-size", "2em");
+        }
         if (
             gSceneManager.offsetX > 1100 && gSpriteManager.player.position.x > width / 1.33
         ) {
