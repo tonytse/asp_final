@@ -77,7 +77,7 @@ function MultipleChoiceManager() {
         
         if (self.json.answers[this.id()].isCorrect) {
             
-            self.currAnimation = createImg("assets/multipleChoice/correct.gif",  function () {
+            self.currAnimation = createImg("assets/correct.gif",  function () {
                 self.isCloseAfterAnimation = true;
                 self.currAnimationDur = 4000;
                 self.stopwatchCurrAnimation.start();
@@ -85,7 +85,7 @@ function MultipleChoiceManager() {
             
         } else {
                 
-            self.currAnimation = createImg("assets/multipleChoice/tryagain.gif", function () {
+            self.currAnimation = createImg("assets/tryagain.gif", function () {
                 self.currAnimationDur = 4000;
                 self.stopwatchCurrAnimation.start();    
             });
