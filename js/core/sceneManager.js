@@ -6,14 +6,11 @@ function SceneManager() {
     let background = null;
     let currentFile = null;
     let offsetX = 100;
-    this.win = null;
 
     this.init = function (width, height) {
         self.offsetX = 0;
         self.width = width;
         self.height = height;
-
-        self.win = createSprite(300, 300, 614, 307);
     };
 
 
