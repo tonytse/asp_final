@@ -11,7 +11,7 @@ function StageMC2() {
     }
 
     this.onDraw = function (w, h) {
-
+        // onDraw function
     }
 
     this.gotoGameA = function (stopwatch) {

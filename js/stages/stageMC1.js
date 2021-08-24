@@ -7,11 +7,11 @@ function StageMC1() {
         gDialogManager.load(gGameDataManager.getPreDialogJson(stageId), self.onPreDialogDone);
     }
     this.onExit = function () {
-
+        // onExit function
     }
 
     this.onDraw = function (w, h) {
-
+        // onDraw function
     }
 
     this.gotoMC2 = function (stopwatch) {
