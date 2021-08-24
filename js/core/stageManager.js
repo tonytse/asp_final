@@ -7,7 +7,7 @@ function StageManager() {
 
     this.changeStage = function (stage) {
 
-        if (!stage.hasOwnProperty("onDraw")) {
+        if (stage && !stage.hasOwnProperty("onDraw")) {
             alert("Stage must have draw function");
             return;
         }
@@ -18,17 +18,15 @@ function StageManager() {
             }
         }
 
-        if (stage.hasOwnProperty("onEnter")) {
+        if (stage && stage.hasOwnProperty("onEnter")) {
             stage.onEnter();
         }
 
         self.currentStage = stage;
-
     }
 
     this.start = function () {
         self.changeStage(new StageStart());
-        //self.changeStage(new StageMC4());
     }
 
     this.onDraw = function (w, h) {
