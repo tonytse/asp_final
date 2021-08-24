@@ -1,37 +1,63 @@
 @font-face {
-    font-family: dialogFont;
-    src: url(../assets/fonts/CabinSketch-Regular.ttf);
+  font-family: dialogFont;
+  src: url(../assets/fonts/CabinSketch-Regular.ttf);
 }
 
 body {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .dialogButton {
-    background-color: white;
-    border: 2px solid white;
-    border-radius: 5px;
-    font-size: 36px;
-    font-family: dialogFont;
-    color: #457b9d;
-    cursor: pointer;
+  background-color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  font-size: 36px;
+  font-family: dialogFont;
+  color: #457b9d;
+  cursor: pointer;
 }
 
 .dialogButton:hover {
-    background-color: lightgoldenrodyellow;
+  background-color: lightgoldenrodyellow;
 }
 
 .startButton {
-    background-color: white;
-    border: 2px solid white;
-    border-radius: 5px;
-    font-size: 64px;
-    font-family: dialogFont;
-    color: #457b9d;
-    cursor: pointer;
+  background-color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  font-size: 64px;
+  font-family: dialogFont;
+  color: #457b9d;
+  cursor: pointer;
 }
 
 .startButton:hover {
-    background-color: lightgoldenrodyellow;
+  background-color: lightgoldenrodyellow;
+}
+
+#tryAgainButton {
+  position: absolute;
+  color: red;
+  background-color: white;
+  border: none;
+  border-radius: 5%;
+  padding: 0.3em 1em;
+  font-family: dialogFont;
+  font-size: 2em;
+  text-align: center;
+  cursor: pointer;
+}
+
+#goNext {
+  position: absolute;
+  color: blueviolet;
+  background-color: white;
+  border: none;
+  border-radius: 5%;
+  padding: 0.3em 1em;
+  font-family: dialogFont;
+  font-size: 2em;
+  text-align: center;
+  cursor: pointer;
 }
