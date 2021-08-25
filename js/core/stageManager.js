@@ -58,4 +58,11 @@ function StageManager() {
         }
     }
 
+    this.onMouseMoved = function () {
+        if (self.currentStage) {
+            if (self.currentStage.hasOwnProperty("onMouseMoved")) {
+                self.currentStage.onMouseMoved();
+            }
+        }
+    }
 }

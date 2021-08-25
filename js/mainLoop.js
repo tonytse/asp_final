@@ -47,9 +47,10 @@ function setup() {
 
     createCanvas(w, h);
     gSceneManager.init(w, h);
-    //gStageManager.start();
-    gStageManager.changeStage(new StageGameB(2));
+    gStageManager.start();
+    //gStageManager.changeStage(new StageGameB(1));
     //gStageManager.changeStage(new StageEnd());
+    gStageManager.changeStage(new StageGameA());
 }
 
 function draw() {
@@ -72,6 +73,10 @@ function draw() {
 
     gPlayerManager.onDrawVirusBar(w, h);
 
+}
+
+function mouseMoved() {
+    gStageManager.onMouseMoved();
 }
 
 function windowResized() {

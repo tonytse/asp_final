@@ -22,6 +22,10 @@ function StageGameA() {
 
     };
 
+    this.onMouseMoved = function () {
+        
+    }
+
     this.onDraw = function (w,h) {
 
 
