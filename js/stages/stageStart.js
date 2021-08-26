@@ -30,7 +30,7 @@ function StageStart() {
         textAlign(CENTER);
 
         textFont(gDialogManager.font);
-        text("Let's Flight COVID", 0, 70, w, 300);
+        text("Let's Fight COVID", 0, 70, w, 300);
     }
 
     this.gotoMC1 = function () {
