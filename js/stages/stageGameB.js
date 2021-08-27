@@ -96,7 +96,11 @@ function StageGameB(level) {
             text("WARNING!! \nMAINTAIN DISTANCE!!", width / 2, height / 1.15);
             pop();
             //change below to 0.1 before production
-            gPlayerManager.virusLevel += 0.1;
+            if(self.currentLevel == 1){
+                gPlayerManager.virusLevel += 0.1;
+            } else {
+                gPlayerManager.virusLevel += 0.5;
+            }
         }
  
         this.finishLevel();
@@ -206,7 +210,10 @@ function StageGameB(level) {
                     gSceneManager.offsetX -= d;
                     for (let i = 0; i < characters.length; ++i) {
                         if (characters[i].name == gSpriteManager.player) continue;
-                        characters[i].name.position.x += d/1.2;
+                        console.log("x: "+ gSpriteManager.redBoy.position.x);
+                        console.log("offset: "+gSceneManager.offsetX);
+                        console.log("width: "+ width);
+                        characters[i].name.position.x += d/(1280/width);
                     }
                 }
             }
@@ -303,7 +310,7 @@ function StageGameB(level) {
             image(arrowKeys, width/2, height/2.15, width/10, width/14.6);
             text("Use arrow keys to maintain a certain distance from the characters to avoid getting COVID-19. If you get too close, you should see a warning.", width/2,height/1.85,  width /4)
     
-            tryAgainButton.position(width/2.36,height/1.55);
+            tryAgainButton.position(width/2 -  tryAgainButton.width/2,height/1.55);
             tryAgainButton.mousePressed(this.tryAgain);
             tryAgainButton.id("tryAgainButton");
             tryAgainButton.show();
@@ -328,19 +335,14 @@ function StageGameB(level) {
                 textFont(finishLevelFont);
                 textAlign(CENTER);
                 textSize(width/25);
-                text("LEVEL\nCOMPLETE!!", width/2,height/2.8);
+                text("LEVEL\nCOMPLETE!!", width/2,height/2.4);
                 textFont("Arial");
                 textSize(width/70);
         
-                goNextButton.position(width/2.5,height/2.1);
+                goNextButton.position(width/2 - goNextButton.width/2,height/1.75);
                 goNextButton.mousePressed(this.goNext);
                 goNextButton.id("goNext");
                 goNextButton.show();
-        
-                tryAgainButton.position(width/2.55,height/1.65);
-                tryAgainButton.mousePressed(this.tryAgain);
-                tryAgainButton.id("tryAgainButton");
-                tryAgainButton.show();
                 endGame = true;
               
             }
@@ -365,19 +367,15 @@ function StageGameB(level) {
                 textFont(finishLevelFont);
                 textAlign(CENTER);
                 textSize(width/25);
-                text("LEVEL\nCOMPLETE!!", width/2,height/2.8);
+                text("LEVEL\nCOMPLETE!!", width/2,height/2.4);
                 textFont("Arial");
                 textSize(width/70);
         
-                goNextButton.position(width/2.5,height/2.1);
+                goNextButton.position(width/2 - goNextButton.width/2,height/1.75);
                 goNextButton.mousePressed(this.goNext);
                 goNextButton.id("goNext");
                 goNextButton.show();
-        
-                tryAgainButton.position(width/2.55,height/1.65);
-                tryAgainButton.mousePressed(this.tryAgain);
-                tryAgainButton.id("tryAgainButton");
-                tryAgainButton.show();
+
                 endGame = true;
               
             }
@@ -385,9 +383,9 @@ function StageGameB(level) {
     }
     this.goNext = function(){
     if(self.currentLevel == 1){
-        gStageManager.changeStage(new StageGameB(2))
+        gStageManager.changeStage(new StageMC6());
     } else {
-        // What to do if the current level is 2?
+        gStageManager.changeStage(new StageEnd());
     }
     }
 
