@@ -61,3 +61,16 @@ body {
   text-align: center;
   cursor: pointer;
 }
+
+#virusFree {
+  position: absolute;
+  color: rgb(43, 226, 150);
+  background-color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 5%;
+  padding: 0.3em 1em;
+  font-family: dialogFont, Helvetica, Arial, Verdana, Tahoma, sans-serif;
+  font-size: 2em;
+  text-align: center;
+  cursor: pointer;
+}

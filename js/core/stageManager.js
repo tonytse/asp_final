@@ -65,4 +65,12 @@ function StageManager() {
             }
         }
     }
+
+    this.onMouseDragged = function () {
+        if (self.currentStage) {
+            if (self.currentStage.hasOwnProperty("onMouseDragged")) {
+                self.currentStage.onMouseDragged();
+            }
+        }
+    }
 }

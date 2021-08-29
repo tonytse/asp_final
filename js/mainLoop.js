@@ -48,9 +48,9 @@ function setup() {
     createCanvas(w, h);
     gSceneManager.init(w, h);
     gStageManager.start();
-    gStageManager.changeStage(new StageGameB(2));
+    //gStageManager.changeStage(new StageGameB(2));
     //gStageManager.changeStage(new StageEnd());
-    //gStageManager.changeStage(new StageGameA());
+    gStageManager.changeStage(new StageGameA());
 }
 
 function draw() {
@@ -77,6 +77,10 @@ function draw() {
 
 function mouseMoved() {
     gStageManager.onMouseMoved();
+}
+
+function mouseDragged() {
+    gStageManager.onMouseDragged();
 }
 
 function windowResized() {
