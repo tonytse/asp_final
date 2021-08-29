@@ -1,39 +1,60 @@
 function StageGameA() {
+
     let self = this;
+
+    let oldWidth = null;
+    let oldHeight = null;
+
     let imgLeftHand = null;
     let imgRightHand = null;
 
-    let dLeftHandX = 0;
-    let dLeftHandY = 0;
-
     let dRightHandX = 0;
-    let dRightHandY = 0;
 
     let bubbles = [];
-    //let virusFreeButton = createButton("You Are Virus Free!!");
-    let handWashingTime = 0;
-    //let bubbleTimer = 0;
+
+    let bubbleTimer = 0;
+    let handWashingTimer = 0;
+    let showExitButtonTimer = 0;
+    let maxReduceVirus = 40;
+
+    this.exitButton = null;
 
     this.onEnter = function () {
+
+        let width = gSceneManager.width;
+        let height = gSceneManager.height;
+
+        dRightHandX = width * 0.6;
+
+        oldWidth = width;
+        oldHeight = height;
+
         gSceneManager.loadBathroom();
 
         // https://dlpng.com/png/6583488
         self.imgLeftHand = loadImage('assets/gameA/leftHand.png');
         self.imgRightHand = loadImage('assets/gameA/rightHand.png');
 
+        self.exitButton = createButton("Click here to exit washroom if you completely washed your hand");
+        self.exitButton.mousePressed(this.exitWashroom);
+        self.exitButton.class("dialogButton");
+        self.exitButton.hide();
+
+        self.onWindowResized(width, height);
     };
 
     this.onExit = function () {
+        bubbles = [];
+
+        if (self.exitButton) {
+
+            self.exitButton.remove();
+            self.exitButton = null;
+        }
 
     };
 
-    // this.onMouseMoved = function () {
-
-    // };
-
-
     //function to make the bubbles
-
     function Bubble(x, y) {
         this.x = x;
         this.y = y;
@@ -53,76 +74,88 @@ function StageGameA() {
 
     this.onMouseDragged = function () {
 
-        let handWashAreaX = width * 0.4 - width * 0.15;
-        let handWashAreaY = height * 0.4;
-        let handWashAreaW = width * 0.4;
+        let handWashAreaX = width * 0.6;
+        let handWashAreaY = height * 0.6;
+        let handWashAreaW = width * 0.13;
         let handWashAreaH = height * 0.5;
 
-
-        if (mouseX > handWashAreaX && mouseX < handWashAreaX + handWashAreaW && mouseY > handWashAreaY 
+        if (mouseX > handWashAreaX && mouseX < handWashAreaX + handWashAreaW && mouseY > handWashAreaY
             && mouseY < handWashAreaY + handWashAreaH) {
 
-        
-            dRightHandX = mouseX;
-            //dRightHandY = mouseY;
+            dRightHandX = mouseX - self.imgRightHand.width / 2;
 
-            handWashingTime += deltaTime;
+            let dt = deltaTime / 1000;
 
-            //console.log('handWashingTime ' + handWashingTime);
+            handWashingTimer += dt;
 
-            if (bubbles.length < 40 ) { 
-                
-                if((handWashingTime % 0.5) == 0)
-                {
-                    bubbles.push(new Bubble(mouseX, mouseY));
-                }
-
+            if (maxReduceVirus > 0) {
+                let r = Math.min(maxReduceVirus, dt);
+                gPlayerManager.virusLevel -= r;
+                maxReduceVirus -= dt;
             }
 
+            if (bubbles.length < 40) {
+                bubbleTimer += dt;
+                if (bubbleTimer > 5) {
+                    bubbleTimer -= 5;
+                    bubbles.push(new Bubble(mouseX, handWashAreaY + random(0, 100)));
+                }
+            }
         }
-
 
     };
 
     this.onDraw = function (w, h) {
+        showExitButtonTimer += deltaTime / 1000;
 
-        //washing hands
-        if (mouseX > w / 3 && mouseX < w * 8 / 10 && mouseY > h * .45 && mouseY < h * .9) {
-            
-            //water 
-            fill("blue");
-            rect(w * 0.63, h * .558, 16, h * .25);
-
-        
-         }
-
-        // The button after the virus is completely gone
-        if (handWashingTime > 20) {
-            // console.log("Done!!!");
-            // console.log(bubbles.length);
-            
-            // virusFreeButton.position(width / 2, height / 2);
-            // virusFreeButton.mousePressed(this.virusFree);
-            // virusFreeButton.id("You Are Virus Free!!!");
-            // virusFreeButton.show();
+        if (showExitButtonTimer > 5) {
+            if (self.exitButton.style('display') == 'none') {
+                self.exitButton.show();
+            }
         }
 
-
         //Left/right hand
+        let s = width * 0.0008;
         let x = w / 2;
-        let y = h - self.imgLeftHand.height;
-        image(self.imgLeftHand, x - 100 + dLeftHandX, y + dLeftHandY);
-        image(self.imgRightHand, dRightHandX, h - self.imgLeftHand.height + dRightHandY);
-
+        let y = h - (s * self.imgLeftHand.height);
+        image(self.imgLeftHand, x, y, s * self.imgLeftHand.width, s * self.imgLeftHand.height);
+        image(self.imgRightHand, dRightHandX, y, s * self.imgRightHand.width, s * self.imgRightHand.height);
 
         for (var i = 0; i < bubbles.length; i++) {
             bubbles[i].move();
             bubbles[i].display();
         }
 
-        if (keyDown('n')) {
-            gStageManager.changeStage(new StageMC3());
-        }
+        //water 
+        stroke('white');
+        strokeWeight(1);
+        fill('rgba(0,0,255, 0.25)');
+        rect(w * 0.63, h * .558, w * 0.02, h * .25);
 
     };
+
+    this.onWindowResized = function (w, h) {
+
+        self.exitButton.position(0, h * 0.2);
+
+        dRightHandX = (dRightHandX / oldWidth) * w;
+
+        for (var i = 0; i < bubbles.length; i++) {
+            bubbles[i].x = (bubbles[i].x / oldWidth) * w;
+            bubbles[i].y = (bubbles[i].y / oldHeight) * h;
+        }
+
+        oldWidth = w;
+        oldHeight = h;
+
+    }
+
+    this.exitWashroom = function () {
+
+        let t = Math.max(handWashingTimer, 20);
+        gPlayerManager.score += t * 100;
+        gStageManager.changeStage(new StageMC3());
+        gPlayerManager.gameAWashedTime = handWashingTimer;
+
+    }
 }

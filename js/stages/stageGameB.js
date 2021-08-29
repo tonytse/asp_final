@@ -16,12 +16,13 @@ function StageGameB(level) {
     let arrowKeys = loadImage("assets/gameB/arrow_keys.png");
     let tryAgainButton = createButton('Try Again');
     let goNextButton = createButton('Go Next');
+    let timer = new StopWatch();
 
     this.currentLevel = level;
 
     this.onEnter = function () {
         gSceneManager.loadGameB(self.currentLevel);
-        
+
         self.oldWidth = width;
         self.oldHeight = height;
 
@@ -35,8 +36,8 @@ function StageGameB(level) {
 
         this.reset();
 
-        if(self.currentLevel == 2){
-            gSceneManager.offsetX = gSceneManager.background.width/2;
+        if (self.currentLevel == 2) {
+            gSceneManager.offsetX = gSceneManager.background.width / 2;
             gSceneManager.offsetX = 1280;
         }
     }
@@ -73,9 +74,9 @@ function StageGameB(level) {
         for (let i = 0; i < characters.length; ++i) {
 
             if (characters[i].name != gSpriteManager.player) {
-                if(this.currentLevel == 1){
+                if (this.currentLevel == 1) {
                     this.moveNPC(d, characters[i]);
-                } else{
+                } else {
                     characters[i].name.changeAnimation('Idle');
                 }
                 if (!showWarning) showWarning = this.isShowWarning(characters[i]);
@@ -96,33 +97,44 @@ function StageGameB(level) {
             text("WARNING!! \nMAINTAIN DISTANCE!!", width / 2, height / 1.15);
             pop();
             //change below to 0.1 before production
-            if(self.currentLevel == 1){
+            if (self.currentLevel == 1) {
                 gPlayerManager.virusLevel += 0.1;
             } else {
-                gPlayerManager.virusLevel += 0.5;
+                gPlayerManager.virusLevel += 0.3;
             }
         }
- 
+
         this.finishLevel();
     }
 
-    this.tryAgain = function(){
+    this.tryAgain = function () {
+
+        gPlayerManager.virusLevel = 50;
         gPlayerManager.isVirusBarVisible = true;
+
+
+        if (self.currentLevel == 1) {
+            gPlayerManager.gameBLevel1Retry = true;
+        } else {
+            gPlayerManager.gameBLevel2Retry = true;
+        }
+
         endGame = false;
-        gPlayerManager.reset();
         self.reset();
+
     }
 
-    this.reset = function(){
-        if(self.currentLevel == 1){
+    this.reset = function () {
+        endGame = false;
+        if (self.currentLevel == 1) {
             gSpriteManager.player.position.x = width / 5;
             gSpriteManager.redBoy.position.x = width / 1.5;
             gSpriteManager.cowBoy.position.x = width * 1;
             gSpriteManager.cowGirl.position.x = width * 1.4;
             gSpriteManager.girl.position.x = width * 1.8;
-        } else{
+        } else {
             gSpriteManager.player.position.x = width / 1.2;
-            
+
             gSpriteManager.redBoy.position.x = width / 5;
             gSpriteManager.redBoy.position.y = height / 1.8;
 
@@ -137,33 +149,35 @@ function StageGameB(level) {
         }
 
         for (let i = 0; i < characters.length; ++i) {
-            if(self.currentLevel == 1 || gSpriteManager.player == characters[i].name){
+            if (self.currentLevel == 1 || gSpriteManager.player == characters[i].name) {
                 characters[i].name.position.y = height * 0.65;
             }
             characters[i].name.scale = self.charYToScale(width, height, characters[i].name.position.y);
             characters[i].name.changeAnimation('Walk');
-            if(characters[i].name !== gSpriteManager.player){
-                if(self.currentLevel == 1){
+            if (characters[i].name !== gSpriteManager.player) {
+                if (self.currentLevel == 1) {
                     characters[i].name.mirrorX(-1);
-                } else{
+                } else {
                     characters[i].name.mirrorX(1);
                 }
-            } else{
-                if(self.currentLevel == 1){
+            } else {
+                if (self.currentLevel == 1) {
                     characters[i].name.mirrorX(1);
-                } else{
+                } else {
                     characters[i].name.mirrorX(-1);
                 }
             }
         }
-       if(self.currentLevel == 1){
-        gSceneManager.offsetX = 0;
-       } else {
-        gSceneManager.offsetX = 1280;
-       }
+        if (self.currentLevel == 1) {
+            gSceneManager.offsetX = 0;
+        } else {
+            gSceneManager.offsetX = 1280;
+        }
 
         tryAgainButton.hide();
         goNextButton.hide();
+
+        timer.start();
     }
 
     this.moveNPC = function (d, character) {
@@ -205,15 +219,13 @@ function StageGameB(level) {
             gSpriteManager.player.changeAnimation('Walk');
             gSpriteManager.player.mirrorX(-1);
             anyAction = true;
-            if(self.currentLevel == 2 && gSceneManager.offsetX >= 0 ){
+            if (self.currentLevel == 2 && gSceneManager.offsetX >= 0) {
                 if (self.currentLevel == 2) {
                     gSceneManager.offsetX -= d;
                     for (let i = 0; i < characters.length; ++i) {
                         if (characters[i].name == gSpriteManager.player) continue;
-                        console.log("x: "+ gSpriteManager.redBoy.position.x);
-                        console.log("offset: "+gSceneManager.offsetX);
-                        console.log("width: "+ width);
-                        characters[i].name.position.x += d/(1280/width);
+
+                        characters[i].name.position.x += d / (1280 / width);
                     }
                 }
             }
@@ -229,7 +241,7 @@ function StageGameB(level) {
                 }
             }
 
-            
+
             gSpriteManager.player.changeAnimation('Walk');
             gSpriteManager.player.mirrorX(1);
             anyAction = true;
@@ -270,15 +282,15 @@ function StageGameB(level) {
         };
 
         if (gInputManager.isLeft && gSpriteManager.player.position.x > width / leftEdge) {
-            if (gSceneManager.offsetX < 200 || gSpriteManager.player.position.x > width/1.25 && self.currentLevel == 2) {
-            gSpriteManager.player.position.x -= d;
+            if (gSceneManager.offsetX < 200 || gSpriteManager.player.position.x > width / 1.25 && self.currentLevel == 2) {
+                gSpriteManager.player.position.x -= d;
             }
         }
 
         if (gInputManager.isRight && gSpriteManager.player.position.x < width / rightEdge) {
-            if(self.currentLevel == 2){
+            if (self.currentLevel == 2) {
                 gSpriteManager.player.position.x += d;
-            } else if (gSceneManager.offsetX > 1100 || gSpriteManager.player.position.x < width/4) {
+            } else if (gSceneManager.offsetX > 1100 || gSpriteManager.player.position.x < width / 4) {
                 gSpriteManager.player.position.x += d;
             }
         };
@@ -286,31 +298,31 @@ function StageGameB(level) {
 
     this.finishLevel = function () {
         // When the player loses
-        if(gPlayerManager.virusLevel >=100){
-            endGame = true;  
+        if (gPlayerManager.virusLevel >= 100) {
+            endGame = true;
             gPlayerManager.isVirusBarVisible = false;
             for (let i = 0; i < characters.length; ++i) {
                 characters[i].name.changeAnimation('Idle');
             }
             fill(0, 0, 0, 150);
             rect(0, 0, width, height);
-            fill(230,57,70);
+            fill(230, 57, 70);
             noStroke();
             rect(width / 3, height / 4, width / 3, height / 2, 10);
             fill(255);
             textFont(finishLevelFont);
             textAlign(CENTER);
-            textSize(width/35);
-            text("LEVEL FAILED!!", width/2,height/3.2);
+            textSize(width / 35);
+            text("LEVEL FAILED!!", width / 2, height / 3.2);
             textFont("Arial");
-            textSize(width/70);
+            textSize(width / 70);
             rectMode(CENTER);
-            text("You were unable to maintain distance from other characters and have got COVID-19.", width/2,height/3,  width /4)
+            text("You were unable to maintain distance from other characters and have got COVID-19.", width / 2, height / 3, width / 4)
             imageMode(CENTER);
-            image(arrowKeys, width/2, height/2.15, width/10, width/14.6);
-            text("Use arrow keys to maintain a certain distance from the characters to avoid getting COVID-19. If you get too close, you should see a warning.", width/2,height/1.85,  width /4)
-    
-            tryAgainButton.position(width/2 -  tryAgainButton.width/2,height/1.55);
+            image(arrowKeys, width / 2, height / 2.15, width / 10, width / 14.6);
+            text("Use arrow keys to maintain a certain distance from the characters to avoid getting COVID-19. If you get too close, you should see a warning.", width / 2, height / 1.85, width / 4)
+
+            tryAgainButton.position(width / 2 - tryAgainButton.width / 2, height / 1.55);
             tryAgainButton.mousePressed(this.tryAgain);
             tryAgainButton.id("tryAgainButton");
             tryAgainButton.show();
@@ -328,23 +340,23 @@ function StageGameB(level) {
                 }
                 fill(0, 0, 0, 150);
                 rect(0, 0, width, height);
-                fill(255,186,8);
+                fill(255, 186, 8);
                 noStroke();
                 rect(width / 3, height / 4, width / 3, height / 2, 10);
                 fill(255);
                 textFont(finishLevelFont);
                 textAlign(CENTER);
-                textSize(width/25);
-                text("LEVEL\nCOMPLETE!!", width/2,height/2.4);
+                textSize(width / 25);
+                text("LEVEL\nCOMPLETE!!", width / 2, height / 2.4);
                 textFont("Arial");
-                textSize(width/70);
-        
-                goNextButton.position(width/2 - goNextButton.width/2,height/1.75);
+                textSize(width / 70);
+
+                goNextButton.position(width / 2 - goNextButton.width / 2, height / 1.75);
                 goNextButton.mousePressed(this.goNext);
                 goNextButton.id("goNext");
                 goNextButton.show();
                 endGame = true;
-              
+
             }
         }
         // When the player Wins Level 2
@@ -360,33 +372,36 @@ function StageGameB(level) {
                 }
                 fill(0, 0, 0, 150);
                 rect(0, 0, width, height);
-                fill(255,186,8);
+                fill(255, 186, 8);
                 noStroke();
                 rect(width / 3, height / 4, width / 3, height / 2, 10);
                 fill(255);
                 textFont(finishLevelFont);
                 textAlign(CENTER);
-                textSize(width/25);
-                text("LEVEL\nCOMPLETE!!", width/2,height/2.4);
+                textSize(width / 25);
+                text("LEVEL\nCOMPLETE!!", width / 2, height / 2.4);
                 textFont("Arial");
-                textSize(width/70);
-        
-                goNextButton.position(width/2 - goNextButton.width/2,height/1.75);
+                textSize(width / 70);
+
+                goNextButton.position(width / 2 - goNextButton.width / 2, height / 1.75);
                 goNextButton.mousePressed(this.goNext);
                 goNextButton.id("goNext");
                 goNextButton.show();
 
                 endGame = true;
-              
+
             }
         }
     }
-    this.goNext = function(){
-    if(self.currentLevel == 1){
-        gStageManager.changeStage(new StageMC6());
-    } else {
-        gStageManager.changeStage(new StageEnd());
-    }
+    this.goNext = function () {
+        let remainTime = 150.0 - timer.get()/1000;
+        if (self.currentLevel == 1) {
+            if( remainTime > 0 ) gPlayerManager.score += remainTime * 10;
+            gStageManager.changeStage(new StageMC6());
+        } else {
+            if( remainTime > 0 ) gPlayerManager.score += remainTime * 20;
+            gStageManager.changeStage(new StageEnd());
+        }
     }
 
     this.onWindowResized = function (w, h) {

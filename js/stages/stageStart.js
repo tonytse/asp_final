@@ -17,6 +17,7 @@ function StageStart() {
     }
 
     this.onExit = function () {
+        gPlayerManager.reset();
         gPlayerManager.isVirusBarVisible = true;
         if (self.button) {
             self.button.remove();

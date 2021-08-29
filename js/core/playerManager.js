@@ -1,5 +1,6 @@
 function PlayerManager() {
     let self = this;
+
     this.imgVirusIcon = null;
 
     this.virusLevel = 50;
@@ -7,6 +8,9 @@ function PlayerManager() {
     this.isVirusBarVisible = false;
     this.score = 0;
     this.isCompleted = false;
+    this.gameBLevel1Retry = false;
+    this.gameBLevel2Retry = false;
+    this.gameAWashedTime = 0;
     
     this.mcWrongAns = [];
     
@@ -17,12 +21,12 @@ function PlayerManager() {
         self.score = 0;
         self.isCompleted = false;
         self.mcWrongAns = [];
+        self.gameBLevel1Retry = false;
+        self.gameBLevel2Retry = false;
     }
 
     this.wrongMCAnswer = function( mc, ans ) {
         gPlayerManager.virusLevel += 5;
-        //console.log( 'MC ' + mc + ': ' + ans );
-        //mc1.push(parseInt(ans));
         var obj = new Object();
         obj.mc = parseInt(mc);
         obj.ans = parseInt(ans);
@@ -47,7 +51,7 @@ function PlayerManager() {
 
             fill(0, 130, 120, 150);
             noStroke();
-            rect(150, 25, self.virusLevel / 100 * barW, 35);
+            rect(150, 25, self.virusLevel / 100 * barW, 30);
         }
     }
 

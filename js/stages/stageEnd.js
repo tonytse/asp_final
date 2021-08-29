@@ -12,18 +12,18 @@ function StageEnd() {
         gSceneManager.loadTown();
         gDialogManager.setDialog("~~ Thank you for playing ~~", self.onDialogDone);
 
-        this.score = "Your Score: " + gPlayerManager.score;
+        this.score = "Your Score: " + parseInt(gPlayerManager.score);
         this.cong = "Congratulations. Well done";
 
         if (gPlayerManager.mcWrongAns.length <= 0) {
             this.tips = "You got all the correct answer, you nailed it";
         } else {
 
+            //! TODO Tony: Hits from game A and game B
             let idx = Math.floor(Math.random() * gPlayerManager.mcWrongAns.length);
 
             let obj = gPlayerManager.mcWrongAns[idx];
             let jsonFile = gGameDataManager.getMCJson(obj.mc);
-            console.log(jsonFile);
 
             loadJSON(jsonFile, function (json) {
 
@@ -47,6 +47,7 @@ function StageEnd() {
     }
 
     this.onDraw = function (w, h) {
+
     }
 
     this.onDrawOverlay = function (w, h) {

@@ -50,7 +50,7 @@ function setup() {
     gStageManager.start();
     //gStageManager.changeStage(new StageGameB(2));
     //gStageManager.changeStage(new StageEnd());
-    gStageManager.changeStage(new StageGameA());
+    //gStageManager.changeStage(new StageGameA());
 }
 
 function draw() {
@@ -67,7 +67,6 @@ function draw() {
 
     gDialogManager.onDraw(w, h);
     gMultipleChoice.onDraw(w, h);
-
 
     gStageManager.onDrawOverlay(w, h);
 
