@@ -35,7 +35,7 @@ function StageGameA() {
         self.imgLeftHand = loadImage('assets/gameA/leftHand.png');
         self.imgRightHand = loadImage('assets/gameA/rightHand.png');
 
-        self.exitButton = createButton("Click here to exit washroom if you completely washed your hand");
+        self.exitButton = createButton("Click here to exit washroom after washing your hands for 20s.");
         self.exitButton.mousePressed(this.exitWashroom);
         self.exitButton.class("dialogButton");
         self.exitButton.hide();
@@ -96,8 +96,8 @@ function StageGameA() {
 
             if (bubbles.length < 40) {
                 bubbleTimer += dt;
-                if (bubbleTimer > 5) {
-                    bubbleTimer -= 5;
+                if (bubbleTimer > 0.5) {
+                    bubbleTimer -= 0.5;
                     bubbles.push(new Bubble(mouseX, handWashAreaY + random(0, 100)));
                 }
             }
@@ -108,7 +108,8 @@ function StageGameA() {
     this.onDraw = function (w, h) {
         showExitButtonTimer += deltaTime / 1000;
 
-        if (showExitButtonTimer > 5) {
+
+        if (showExitButtonTimer > 10) {
             if (self.exitButton.style('display') == 'none') {
                 self.exitButton.show();
             }
