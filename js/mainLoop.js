@@ -17,6 +17,7 @@ function preload() {
     gMultipleChoice = new MultipleChoiceManager();
     gStageManager = new StageManager();
 
+    gInputManager.preload();
     gDialogManager.preload();
     gSpriteManager.preload();
     gPlayerManager.preload();

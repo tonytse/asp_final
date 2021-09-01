@@ -104,7 +104,11 @@ function StageGameB(level) {
             }
         }
 
+        if (!endGame) {
+            gInputManager.onDraw(w, h);
+        }
         this.finishLevel();
+
     }
 
     this.tryAgain = function () {
@@ -394,12 +398,12 @@ function StageGameB(level) {
         }
     }
     this.goNext = function () {
-        let remainTime = 150.0 - timer.get()/1000;
+        let remainTime = 150.0 - timer.get() / 1000;
         if (self.currentLevel == 1) {
-            if( remainTime > 0 ) gPlayerManager.score += remainTime * 10;
+            if (remainTime > 0) gPlayerManager.score += remainTime * 10;
             gStageManager.changeStage(new StageMC6());
         } else {
-            if( remainTime > 0 ) gPlayerManager.score += remainTime * 20;
+            if (remainTime > 0) gPlayerManager.score += remainTime * 20;
             gStageManager.changeStage(new StageEnd());
         }
     }
