@@ -21,6 +21,7 @@ function StageGameB(level) {
     this.currentLevel = level;
 
     this.onEnter = function () {
+        gPlayerManager.isVirusBarVisible = true;
         gSceneManager.loadGameB(self.currentLevel);
 
         self.oldWidth = width;
@@ -44,13 +45,11 @@ function StageGameB(level) {
 
     this.onExit = function () {
         characters = [];
-        gPlayerManager.isVirusBarVisible = false;
         tryAgainButton.hide();
         goNextButton.hide();
     }
 
     this.onDraw = function (w, h) {
-        gPlayerManager.isVirusBarVisible = true;
         let d = deltaTime * 0.2;
 
         if (keyDown('n')) {
@@ -107,6 +106,17 @@ function StageGameB(level) {
         if (!endGame) {
             gInputManager.onDraw(w, h);
         }
+
+        fill(0);
+        textAlign(CENTER);
+        textSize(width / 50);
+        textFont(warningFont);
+        if (self.currentLevel == 1) {
+            text("Keep safety distance and go to shopping center ---->", width * 0.5, 150);
+        }else {
+            text("<--- Keep safety distance and go back home", width * 0.5, 150);
+        }
+
         this.finishLevel();
 
     }

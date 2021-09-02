@@ -1,4 +1,6 @@
 function StageGameA() {
+    
+    let warningFont = loadFont("assets/fonts/frijole_regular.ttf");
 
     let self = this;
 
@@ -20,6 +22,7 @@ function StageGameA() {
     this.exitButton = null;
 
     this.onEnter = function () {
+        gPlayerManager.isVirusBarVisible = true;
 
         let width = gSceneManager.width;
         let height = gSceneManager.height;
@@ -106,13 +109,18 @@ function StageGameA() {
     };
 
     this.onDraw = function (w, h) {
-        showExitButtonTimer += deltaTime / 1000;
-
 
         if (showExitButtonTimer > 10) {
+
+            fill(255, 186, 8);
+            noStroke();
+            rect( self.exitButton.position().x-10, self.exitButton.position().y - 7 , self.exitButton.size().width+20, self.exitButton.size().height+14, 20);
+
             if (self.exitButton.style('display') == 'none') {
                 self.exitButton.show();
             }
+        }else {
+            showExitButtonTimer += deltaTime / 1000;
         }
 
         //Left/right hand
@@ -133,12 +141,22 @@ function StageGameA() {
         fill('rgba(0,0,255, 0.25)');
         rect(w * 0.63, h * .558, w * 0.02, h * .25);
 
+        //hits
+        fill(0);
+        textAlign(CENTER);
+        textSize(width / 45);
+        textFont(warningFont);
+        text("Tips: Wash your hand by draging your right hand", width * 0.5, height * 0.42);
+       
+
+
     };
 
     this.onWindowResized = function (w, h) {
 
-        self.exitButton.position(0, h * 0.2);
-
+        self.exitButton.position( w*0.1/2, 150 );
+        self.exitButton.size( w * 0.9, 50 );
+        self.exitButton.style('font-size', '' + w*0.025  +'px');
         dRightHandX = (dRightHandX / oldWidth) * w;
 
         for (var i = 0; i < bubbles.length; i++) {
