@@ -107,14 +107,14 @@ function StageGameB(level) {
             gInputManager.onDraw(w, h);
         }
 
-        fill(0);
+        fill(100);
         textAlign(CENTER);
         textSize(width / 50);
         textFont(warningFont);
         if (self.currentLevel == 1) {
-            text("Keep safety distance and go to shopping center ---->", width * 0.5, 150);
+            text("Keep a safe distance and go to the supermarket ---->", width * 0.5, 150);
         }else {
-            text("<--- Keep safety distance and go back home", width * 0.5, 150);
+            text("<--- Keep a safe distance and go back home", width * 0.5, 150);
         }
 
         this.finishLevel();

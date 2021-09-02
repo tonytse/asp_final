@@ -135,18 +135,29 @@ function StageGameA() {
             bubbles[i].display();
         }
 
-        //water 
-        stroke('white');
-        strokeWeight(1);
-        fill('rgba(0,0,255, 0.25)');
-        rect(w * 0.63, h * .558, w * 0.02, h * .25);
+        //water
+        let handWashAreaX = width * 0.6;
+        let handWashAreaY = height * 0.6;
+        let handWashAreaW = width * 0.13;
+        let handWashAreaH = height * 0.5;
+
+        if (mouseX > handWashAreaX && mouseX < handWashAreaX + handWashAreaW && mouseY > handWashAreaY
+            && mouseY < handWashAreaY + handWashAreaH){
+
+                 
+                stroke('white');
+                strokeWeight(1);
+                fill('rgba(0,0,255, 0.25)');
+                rect(w * 0.63, h * .558, w * 0.02, h * .25);
+        }
 
         //hits
-        fill(0);
+        fill(100);
         textAlign(CENTER);
         textSize(width / 45);
         textFont(warningFont);
-        text("Tips: Wash your hand by draging your right hand", width * 0.5, height * 0.42);
+        text("Wash hands by dragging your right hand over the left", width * 0.5, height * 0.38);
+        text("Move hand horizontally and orange soap bubbles will appear!", width * 0.5, height * 0.44);
        
 
 

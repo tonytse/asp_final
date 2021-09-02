@@ -16,7 +16,7 @@ function StageEnd() {
         this.cong = "Congratulations. Well done";
 
         if (gPlayerManager.mcWrongAns.length <= 0) {
-            this.tips = "You got all the correct answer, you nailed it";
+            this.tips = "You got all the answers correct. You nailed it!";
         } else {
 
             //! TODO Tony: Hits from game A and game B
