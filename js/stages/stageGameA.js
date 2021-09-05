@@ -10,14 +10,20 @@ function StageGameA() {
     let imgLeftHand = null;
     let imgRightHand = null;
 
-    let dRightHandX = 0;
-
+    let hands = {right: {x: 0, y: 0, restingX: 0, restingY:0, yLimit: false}, left: {x: 0, y: 0,restingX: 0, restingY:0, yLimit: true}, far: true, handsYSpeed: 0, handsXSpeed: 0}
     let bubbles = [];
 
     let bubbleTimer = 0;
     let handWashingTimer = 0;
     let showExitButtonTimer = 0;
     let maxReduceVirus = 40;
+
+    let handWashAreaX = 0;
+    let handWashAreaY = 0;
+    let handWashAreaW = 0;
+    let handWashAreaH = 0;
+
+    let isMouseBeingDragged = false;
 
     this.exitButton = null;
 
@@ -27,7 +33,23 @@ function StageGameA() {
         let width = gSceneManager.width;
         let height = gSceneManager.height;
 
-        dRightHandX = width * 0.6;
+        hands.handsXSpeed = width/2000;
+        hands.handsYSpeed = height/300;
+
+        hands.right.restingX = width * 0.55;
+        hands.right.restingY = height / 1.5;
+        hands.left.restingX = width * 0.4;
+        hands.left.restingY = height /1.5;
+        
+        hands.right.x = hands.right.restingX;
+        hands.right.y = hands.right.restingY;
+        hands.left.x = hands.left.restingX;
+        hands.left.y = hands.left.restingY;
+
+        handWashAreaX = width * 0.3;
+        handWashAreaY = height * 0.6;
+        handWashAreaW = width * 0.5;
+        handWashAreaH = height * 0.5;
 
         oldWidth = width;
         oldHeight = height;
@@ -56,39 +78,65 @@ function StageGameA() {
         }
 
     };
-
+  
     //function to make the bubbles
-    function Bubble(x, y) {
-        this.x = x;
-        this.y = y;
-
-        this.display = function (x, y) {
-            stroke(255);
-            strokeWeight(2);
-            fill("orange");
-            ellipse(this.x, this.y, 10, 10);
+    this.createBubbles = function(x, y, size, time) {
+        let opacity = random(0,150);
+        let strokeColor = color(255,255,255, opacity)
+        let colors = color(random(200,255), random(135,165),random(125,150), opacity);
+        if(bubbles.length < 200){
+            bubbles.push({x: x, y: y, size: size, time: time, color: colors, stroke: strokeColor});
         }
-
-        this.move = function (x, y) {
-            this.x = this.x + random(-2, 2);
-            this.y = this.y + random(-2, 2);
-        }
-    }
+    };
 
     this.onMouseDragged = function () {
-
-        let handWashAreaX = width * 0.6;
-        let handWashAreaY = height * 0.6;
-        let handWashAreaW = width * 0.13;
-        let handWashAreaH = height * 0.5;
-
         if (mouseX > handWashAreaX && mouseX < handWashAreaX + handWashAreaW && mouseY > handWashAreaY
             && mouseY < handWashAreaY + handWashAreaH) {
+                isMouseBeingDragged = true;
+                if(hands.right.y < height /1.65){
+                    hands.right.yLimit = true;
+                } else if(hands.right.y > height / 1.35) {
+                    hands.right.yLimit = false;
+                }
+                if(hands.left.y < height /1.65){
+                    hands.left.yLimit = true;
+                } else if(hands.left.y > height / 1.35) {
+                    hands.left.yLimit = false;
+                }
+                if(hands.right.yLimit == true){
+                    hands.right.y += hands.handsYSpeed;
+                } else{
+                    hands.right.y -= hands.handsYSpeed;
+                }  
+                if(hands.left.yLimit == true){
+                    hands.left.y += hands.handsYSpeed;
+                } else{
+                    hands.left.y -= hands.handsYSpeed;
+                }  
 
-            dRightHandX = mouseX - self.imgRightHand.width / 2;
+                if(hands.right.x - hands.left.x > 100 ){
+                    hands.far = true;
+                   
+                } else if(hands.right.x - hands.left.x < 50){
+                    hands.far = false;
+                }
 
+                if(hands.far == true){
+                    hands.right.x -= hands.handsXSpeed;
+                    hands.left.x += hands.handsXSpeed;
+                } else if (hands.far == false){
+                    hands.right.x += hands.handsXSpeed;
+                    hands.left.x -= hands.handsXSpeed;
+                }
+   
+                
+                this.createBubbles(
+                    random((hands.left.x + self.imgLeftHand.width/2)-(width/10), (hands.right.x + self.imgRightHand.width/2)+(width/10)),
+                    random(height/1.5, height/1.1),
+                    random(width/116,(width/19)),
+                    random(5.0, 10.0)
+                    );
             let dt = deltaTime / 1000;
-
             handWashingTimer += dt;
 
             if (maxReduceVirus > 0) {
@@ -96,20 +144,12 @@ function StageGameA() {
                 gPlayerManager.virusLevel -= r;
                 maxReduceVirus -= dt;
             }
-
-            if (bubbles.length < 40) {
-                bubbleTimer += dt;
-                if (bubbleTimer > 0.5) {
-                    bubbleTimer -= 0.5;
-                    bubbles.push(new Bubble(mouseX, handWashAreaY + random(0, 100)));
-                }
-            }
         }
-
     };
-
+    this.mouseReleased = function(){
+        isMouseBeingDragged = false;
+      }
     this.onDraw = function (w, h) {
-
         if (showExitButtonTimer > 10) {
 
             fill(255, 186, 8);
@@ -127,39 +167,74 @@ function StageGameA() {
         let s = width * 0.0008;
         let x = w / 2;
         let y = h - (s * self.imgLeftHand.height);
-        image(self.imgLeftHand, x, y, s * self.imgLeftHand.width, s * self.imgLeftHand.height);
-        image(self.imgRightHand, dRightHandX, y, s * self.imgRightHand.width, s * self.imgRightHand.height);
+        image(self.imgLeftHand, hands.left.x, hands.left.y, s * self.imgLeftHand.width, s * self.imgLeftHand.height);
+        image(self.imgRightHand, hands.right.x, hands.right.y, s * self.imgRightHand.width, s * self.imgRightHand.height);
 
-        for (var i = 0; i < bubbles.length; i++) {
-            bubbles[i].move();
-            bubbles[i].display();
-        }
+       
 
         //water
-        let handWashAreaX = width * 0.6;
-        let handWashAreaY = height * 0.6;
-        let handWashAreaW = width * 0.13;
-        let handWashAreaH = height * 0.5;
-
         if (mouseX > handWashAreaX && mouseX < handWashAreaX + handWashAreaW && mouseY > handWashAreaY
             && mouseY < handWashAreaY + handWashAreaH){
-
-                 
-                stroke('white');
-                strokeWeight(1);
-                fill('rgba(0,0,255, 0.25)');
-                rect(w * 0.63, h * .558, w * 0.02, h * .25);
+                noStroke();
+                fill('rgba(0,133,255, 0.15)');
+                rect(w * 0.632, h * .412, w * 0.02, h * .25);
         }
 
+        // If mouse drag is stopped it puts the hands back is resting position
+        if(isMouseBeingDragged == false){
+            if(hands.right.x < hands.right.restingX){
+                hands.right.x += hands.handsXSpeed;
+            }
+            if(hands.left.x > hands.left.restingX){
+                hands.left.x -= hands.handsXSpeed;
+            }
+            if(hands.right.y != hands.right.restingY){
+                if(hands.right.y > hands.right.restingY){
+                    hands.right.y -= hands.handsYSpeed;
+                } else if(hands.right.y < hands.right.restingY){
+                    hands.right.y += hands.handsYSpeed;
+                }
+                if(hands.left.y > hands.left.restingY){
+                    hands.left.y -= hands.handsYSpeed;
+                } else if(hands.left.y < hands.left.restingY){
+                    hands.left.y += hands.handsYSpeed;
+                }
+                if(abs(hands.left.y - hands.left.restingY) <  hands.handsYSpeed){
+                    hands.left.y = hands.left.restingY;
+                }
+                if(abs(hands.right.y - hands.right.restingY) <  hands.handsYSpeed){
+                    hands.right.y = hands.right.restingY;
+                }
+            }
+            hands.far = true;
+            hands.left.yLimit = true;
+            hands.right.yLimit = false;
+        }
         //hits
+        push();
         fill(100);
         textAlign(CENTER);
         textSize(width / 45);
         textFont(warningFont);
-        text("Wash hands by dragging your right hand over the left", width * 0.5, height * 0.38);
-        text("Move hand horizontally and orange soap bubbles will appear!", width * 0.5, height * 0.44);
-       
+        text("Wash hands by dragging your hands in circular motion.", width * 0.5, height * 0.38);
+        text("You will see the virus level reducing the longer you wash.", width * 0.5, height * 0.44);
+        pop();
+        push();
+        for(let i = 0; i < bubbles.length; ++i){
+            stroke(bubbles[i].stroke);
+            strokeWeight(1);
+            fill(bubbles[i].color);
+            ellipse(bubbles[i].x, bubbles[i].y, bubbles[i].size);
+            bubbles[i].time -= deltaTime/1000;
+            bubbles[i].x += random(-2.0,2.0);
+            bubbles[i].y -= random(0.1,0.1);
+                if(bubbles[i].time < 0){
+                    bubbles.splice(i, 1);
+                }
+        }
+        pop();
 
+        
 
     };
 
@@ -168,7 +243,10 @@ function StageGameA() {
         self.exitButton.position( w*0.1/2, 150 );
         self.exitButton.size( w * 0.9, 50 );
         self.exitButton.style('font-size', '' + w*0.025  +'px');
-        dRightHandX = (dRightHandX / oldWidth) * w;
+        hands.right.x = (hands.right.x / oldWidth) * w;
+        hands.left.x = (hands.left.x / oldWidth) * w;
+        hands.right.y = (hands.right.y / oldHeight) * h;
+        hands.left.y = (hands.left.y / oldHeight) * h;
 
         for (var i = 0; i < bubbles.length; i++) {
             bubbles[i].x = (bubbles[i].x / oldWidth) * w;
@@ -177,6 +255,19 @@ function StageGameA() {
 
         oldWidth = w;
         oldHeight = h;
+
+        hands.handsXSpeed = w/2000;
+        hands.handsYSpeed = h/300;
+
+        hands.right.restingX = w * 0.55;
+        hands.right.restingY = h / 1.5;
+        hands.left.restingX = w * 0.4;
+        hands.left.restingY = h /1.5;
+
+        handWashAreaX = w * 0.3;
+        handWashAreaY = h * 0.6;
+        handWashAreaW = w * 0.5;
+        handWashAreaH = h * 0.5;
 
     }
 
@@ -188,4 +279,6 @@ function StageGameA() {
         gPlayerManager.gameAWashedTime = handWashingTimer;
 
     }
+
+
 }
