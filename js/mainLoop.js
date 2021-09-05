@@ -49,7 +49,7 @@ function setup() {
     createCanvas(w, h);
     gSceneManager.init(w, h);
     gStageManager.start();
-    //gStageManager.changeStage(new StageGameB(2));
+    //gStageManager.changeStage(new StageGameB(1));
     //gStageManager.changeStage(new StageEnd());
     //gStageManager.changeStage(new StageGameA());
 }
@@ -83,6 +83,10 @@ function mouseDragged() {
     gStageManager.onMouseDragged();
 }
 
+function mouseReleased() {
+    gStageManager.mouseReleased();
+}
+
 function windowResized() {
     let { w, h } = getScreenSize();
     resizeCanvas(w, h);
@@ -95,4 +99,8 @@ function windowResized() {
     gDialogManager.onWindowResized(w, h);
     gMultipleChoice.onWindowResized(w, h);
 
+}
+
+function touchStarted(){
+    gStageManager.touchStarted();
 }

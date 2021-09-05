@@ -73,4 +73,19 @@ function StageManager() {
             }
         }
     }
+
+    this.mouseReleased = function(){
+        if (self.currentStage) {
+            if (self.currentStage.hasOwnProperty("mouseReleased")) {
+                self.currentStage.mouseReleased();
+            }
+        }
+    }
+    this.touchStarted = function(){
+        if (self.currentStage) {
+            if (self.currentStage.hasOwnProperty("touchStarted")) {
+                self.currentStage.touchStarted();
+            }
+        }
+    }
 }
