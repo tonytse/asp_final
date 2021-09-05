@@ -10,6 +10,8 @@ function StageGameA() {
     let imgLeftHand = null;
     let imgRightHand = null;
 
+    let helpPressed = false;
+
     let hands = {right: {x: 0, y: 0, restingX: 0, restingY:0, yLimit: false}, left: {x: 0, y: 0,restingX: 0, restingY:0, yLimit: true}, far: true, handsYSpeed: 0, handsXSpeed: 0}
     let bubbles = [];
 
@@ -23,15 +25,19 @@ function StageGameA() {
     let handWashAreaW = 0;
     let handWashAreaH = 0;
 
+    let helpButton = createButton('HELP');
+
     let isMouseBeingDragged = false;
 
     this.exitButton = null;
 
     this.onEnter = function () {
-        gPlayerManager.isVirusBarVisible = true;
-
         let width = gSceneManager.width;
         let height = gSceneManager.height;
+        gPlayerManager.isVirusBarVisible = true;
+        helpButton.class("helpButton");
+        helpButton.position( width -115, 55 +10);
+        
 
         hands.handsXSpeed = width/2000;
         hands.handsYSpeed = height/300;
@@ -70,6 +76,7 @@ function StageGameA() {
 
     this.onExit = function () {
         bubbles = [];
+        helpButton.hide();
 
         if (self.exitButton) {
 
@@ -150,7 +157,7 @@ function StageGameA() {
         isMouseBeingDragged = false;
       }
     this.onDraw = function (w, h) {
-        if (showExitButtonTimer > 10) {
+        if (showExitButtonTimer > 10 && helpPressed == false) {
 
             fill(255, 186, 8);
             noStroke();
@@ -210,15 +217,7 @@ function StageGameA() {
             hands.left.yLimit = true;
             hands.right.yLimit = false;
         }
-        //hits
-        push();
-        fill(100);
-        textAlign(CENTER);
-        textSize(width / 45);
-        textFont(warningFont);
-        text("Wash hands by dragging your hands in circular motion.", width * 0.5, height * 0.38);
-        text("You will see the virus level reducing the longer you wash.", width * 0.5, height * 0.44);
-        pop();
+
         push();
         for(let i = 0; i < bubbles.length; ++i){
             stroke(bubbles[i].stroke);
@@ -234,7 +233,21 @@ function StageGameA() {
         }
         pop();
 
-        
+        helpButton.mousePressed(this.help);
+
+        if(helpPressed == true){
+        //hits
+        push();
+        fill(0,0,0,100);
+        rect(0,0, width, height);
+        textAlign(CENTER);
+        textSize(width / 45);
+        textFont(warningFont);
+        fill(255);
+        rectMode(CENTER);
+        text("Wash your hands by dragging with your mouse or finger on the sink area", width * 0.5, height /2, width/1.5);
+        pop();
+        }
 
     };
 
@@ -278,6 +291,17 @@ function StageGameA() {
         gStageManager.changeStage(new StageMC3());
         gPlayerManager.gameAWashedTime = handWashingTimer;
 
+    }
+
+    this.help = function(){
+        helpPressed = !helpPressed;
+        if(helpPressed == true){
+            helpButton.html("HIDE HELP");
+            helpButton.position( width -175, 55 +10);
+           } else{
+            helpButton.html("HELP");
+            helpButton.position( width -115, 55 +10);
+           }
     }
 
 

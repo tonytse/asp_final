@@ -80,4 +80,11 @@ function StageManager() {
             }
         }
     }
+    this.touchStarted = function(){
+        if (self.currentStage) {
+            if (self.currentStage.hasOwnProperty("touchStarted")) {
+                self.currentStage.touchStarted();
+            }
+        }
+    }
 }

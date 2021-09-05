@@ -8,9 +8,14 @@ function DialogManager() {
     this.currentText = null;
     this.font = null;
 
+    let oldWidth = 0;
+    let oldHeight = 0;
+
     this.callbackFunc = null;
 
     this.preload = function () {
+        oldWidth = width;
+        oldHeight = height;
         self.font = loadFont("assets/fonts/CabinSketch-Regular.ttf");
     };
 
@@ -26,15 +31,25 @@ function DialogManager() {
         rect(0, height - height / 4, width, height / 4);
 
         fill(255);
-        textSize(36);
+        textSize(width/30);
         textAlign(LEFT);
         textLeading(70);
 
         textFont(self.font);
-        text(self.currentText, 20, height - height / 4.5,
-            width, height / 7);
+        text(self.currentText, gSpriteManager.player.width + 20, height - height / 4.5,
+            width/1.5, height / 7);
+        drawSprite(gSpriteManager.player);
+        gSpriteManager.player.position.x = width/10;
+        gSpriteManager.player.position.y = height/1.2;
+        gSpriteManager.player.scale =  this.charYToScale(width, height, gSpriteManager.player.position.y);
 
     };
+
+    this.charYToScale = function (width, height, y) {
+        let s = width * 0.0005;
+        //return map(y, height * 0.5, height * 0.8, s * 0.6, s);
+        return map(y, height * 0.5, height * 0.8, s * 0.35, s);
+    }
 
     this.setDialog = function (text, callbackFunc = null) {
         self.currentText = text
@@ -124,6 +139,11 @@ function DialogManager() {
         if (self.button) {
             self.button.position(width - 120, height - 70);
         }
+        gSpriteManager.player.position.x = (gSpriteManager.player.position.x / self.oldWidth) * w;
+        gSpriteManager.player.position.y = (gSpriteManager.player.position.y / self.oldHeight) * h;
+        gSpriteManager.player.scale =  this.charYToScale(w, h, gSpriteManager.player.position.y);
 
+        self.oldWidth = w;
+        self.oldHeight = h;
     };
 }

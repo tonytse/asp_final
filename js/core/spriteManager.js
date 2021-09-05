@@ -3,6 +3,7 @@
 function SpriteManager() {
     let self = this;
     this.player = null;
+    this.maskPlayer = null;
     this.redBoy = null;
     this.cowBoy = null;
     this.cowGirl = null;
@@ -29,6 +30,18 @@ function SpriteManager() {
             'assets/characters/player/Walk0011.png', 'assets/characters/player/Walk0012.png', 'assets/characters/player/Walk0013.png', 'assets/characters/player/Walk0014.png', 'assets/characters/player/Walk0015.png');
         self.player.offY = 18;
         self.player.scale = self.characterScale
+
+        self.maskPlayer = createSprite(300, 300, 614, 307);
+        self.maskPlayer.addAnimation('Idle',
+            'assets/characters/mask_player/Idle0001.png', 'assets/characters/mask_player/Idle0002.png', 'assets/characters/mask_player/Idle0003.png', 'assets/characters/mask_player/Idle0004.png', 'assets/characters/mask_player/Idle0005.png',
+            'assets/characters/mask_player/Idle0006.png', 'assets/characters/mask_player/Idle0007.png', 'assets/characters/mask_player/Idle0008.png', 'assets/characters/mask_player/Idle0009.png', 'assets/characters/mask_player/Idle0010.png',
+            'assets/characters/mask_player/Idle0011.png', 'assets/characters/mask_player/Idle0012.png', 'assets/characters/mask_player/Idle0013.png', 'assets/characters/mask_player/Idle0014.png', 'assets/characters/mask_player/Idle0015.png');
+            self.maskPlayer.addAnimation('Walk',
+            'assets/characters/mask_player/Walk0001.png', 'assets/characters/mask_player/Walk0002.png', 'assets/characters/mask_player/Walk0003.png', 'assets/characters/mask_player/Walk0004.png', 'assets/characters/mask_player/Walk0005.png',
+            'assets/characters/mask_player/Walk0006.png', 'assets/characters/mask_player/Walk0007.png', 'assets/characters/mask_player/Walk0008.png', 'assets/characters/mask_player/Walk0009.png', 'assets/characters/mask_player/Walk0010.png',
+            'assets/characters/mask_player/Walk0011.png', 'assets/characters/mask_player/Walk0012.png', 'assets/characters/mask_player/Walk0013.png', 'assets/characters/mask_player/Walk0014.png', 'assets/characters/mask_player/Walk0015.png');
+        self.maskPlayer.offY = 18;
+        self.maskPlayer.scale = self.characterScale
 
         self.redBoy = createSprite(windowWidth / 40, windowHeight / 1.3, 614, 307);
 

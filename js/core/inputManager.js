@@ -32,7 +32,7 @@ function InputManager() {
 
     this.onDraw = function (w, h) {
 
-        image(imgWASD, 40, 120);
+        //image(imgWASD, 40, 120);
 
 
         /*
