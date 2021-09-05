@@ -1,5 +1,4 @@
 
-
 function StageManager() {
     let self = this;
 
@@ -70,6 +69,14 @@ function StageManager() {
         if (self.currentStage) {
             if (self.currentStage.hasOwnProperty("onMouseDragged")) {
                 self.currentStage.onMouseDragged();
+            }
+        }
+    }
+
+    this.mouseReleased = function(){
+        if (self.currentStage) {
+            if (self.currentStage.hasOwnProperty("mouseReleased")) {
+                self.currentStage.mouseReleased();
             }
         }
     }
