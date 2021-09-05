@@ -113,6 +113,7 @@ function StageGameB(level) {
         textFont(warningFont);
         if (self.currentLevel == 1) {
             text("Keep a safe distance and go to the supermarket ---->", width * 0.5, 150);
+            text("Long press arrow keys to move in the desired direction.", width * 0.52, 110);
         }else {
             text("<--- Keep a safe distance and go back home", width * 0.5, 150);
         }
