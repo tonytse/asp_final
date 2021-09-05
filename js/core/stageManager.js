@@ -1,5 +1,4 @@
 
-
 function StageManager() {
     let self = this;
 
