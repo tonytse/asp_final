@@ -42,8 +42,10 @@ function AudioManager() {
     }
 
     this.playEnd = function () {
-        end.play();
         self.isEnd = true; 
+        background.stop();
+        end.play();
+        
     }
 
 

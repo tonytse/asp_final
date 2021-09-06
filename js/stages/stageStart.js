@@ -13,7 +13,7 @@ function StageStart() {
         self.button.size(200, 100);
         self.button.class('startButton');
         self.button.mousePressed(self.gotoMC1);
-        
+
         //! Start button position
         self.onWindowResized(width, height);
     }

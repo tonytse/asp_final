@@ -53,7 +53,6 @@ function setup() {
     createCanvas(w, h);
     gSceneManager.init(w, h);
     gStageManager.start();
-    gStageManager.changeStage( new StageGameB(1) );
 }
 
 function draw() {

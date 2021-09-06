@@ -27,6 +27,7 @@ function StageMC3() {
     }
 
     this.onPreDialogDone = function () {
+        //! Shoe PreDialog Message
         gMultipleChoice.open(gGameDataManager.getMCJson(stageId), self.gotoMC4, self.wrongAnswer);
     }
 }
