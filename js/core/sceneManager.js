@@ -40,6 +40,7 @@ function SceneManager() {
     };
 
 
+    //! Load file in scene folder
     this.load = function (file) {
         if (currentFile == file) return;
         self.offsetX = 0;
@@ -48,6 +49,8 @@ function SceneManager() {
     }
 
     this.onDraw = function (w, h) {
+        //! Draw background
+        
         if (self.background) {
             let width = self.background.width;
             let r = width / 1280;

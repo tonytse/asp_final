@@ -28,12 +28,15 @@ function StageManager() {
         self.changeStage(new StageStart());
     }
 
+
+    //! Forward onDraw function
     this.onDraw = function (w, h) {
         if (self.currentStage) {
             self.currentStage.onDraw(w, h);
         }
     }
 
+    //! Forward onDrawOverlay function
     this.onDrawOverlay = function (w, h) {
         if (self.currentStage) {
             if (self.currentStage.hasOwnProperty("onDrawOverlay")) {
@@ -42,6 +45,7 @@ function StageManager() {
         }
     }
 
+    //! Forward onWindowResized function
     this.onWindowResized = function (w, h) {
         if (self.currentStage) {
             if (self.currentStage.hasOwnProperty("onWindowResized")) {
@@ -49,14 +53,9 @@ function StageManager() {
             }
         }
     }
-    this.preload = function () {
-        if (self.currentStage) {
-            if (self.currentStage.hasOwnProperty("preload")) {
-                self.currentStage.preload();
-            }
-        }
-    }
+    
 
+    //! Forward onMouseMoved function
     this.onMouseMoved = function () {
         if (self.currentStage) {
             if (self.currentStage.hasOwnProperty("onMouseMoved")) {
@@ -65,6 +64,7 @@ function StageManager() {
         }
     }
 
+    //! Forward onMouseDragged function
     this.onMouseDragged = function () {
         if (self.currentStage) {
             if (self.currentStage.hasOwnProperty("onMouseDragged")) {
@@ -73,14 +73,17 @@ function StageManager() {
         }
     }
 
-    this.mouseReleased = function(){
+    //! Forward mouseReleased function
+    this.mouseReleased = function () {
         if (self.currentStage) {
             if (self.currentStage.hasOwnProperty("mouseReleased")) {
                 self.currentStage.mouseReleased();
             }
         }
     }
-    this.touchStarted = function(){
+
+    //! Forward touchStarted function
+    this.touchStarted = function () {
         if (self.currentStage) {
             if (self.currentStage.hasOwnProperty("touchStarted")) {
                 self.currentStage.touchStarted();

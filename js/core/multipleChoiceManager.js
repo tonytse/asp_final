@@ -5,41 +5,41 @@ function MultipleChoiceManager() {
     this.json = null;
     this.callbackCorrect = null;
     this.callbackWrong = null;
-    //this.isBlockingMode = true;
     this.stopwatch = new StopWatch();
 
     this.currAnimation = null;
     this.stopwatchCurrAnimation = new StopWatch();
-    this.currAnimationDur = 0;
+    this.currAnimationDur = 4000;
     this.isCloseAfterAnimation = false;
     this.button = [];
 
     this.onDraw = function () {
 
-        //! When you draw correctAniamtion
-        if( self.currAnimation ) {
-            if( self.stopwatchCurrAnimation.get() > self.currAnimationDur ) {
+        //! remove correctAniamtion
+        if (self.currAnimation) {
+            if (self.stopwatchCurrAnimation.get() > self.currAnimationDur) {
                 self.currAnimation.remove();
                 self.currAnimation = null;
-                
-                if( self.isCloseAfterAnimation ) {
+
+                if (self.isCloseAfterAnimation) {
                     gDialogManager.close();
                     self.close();
                 }
             }
         }
-  
+
     };
 
     this.open = function (jsonFile, callbackCorrect, callbackWrong) {
+
+        self.isCloseAfterAnimation = false;
 
         self.callbackCorrect = callbackCorrect;
         self.callbackWrong = callbackWrong;
 
 
-        //self.isBlockingMode = false;
-
-        loadJSON( jsonFile, function (json) {
+        //! Load json file 
+        loadJSON(jsonFile, function (json) {
 
             let len = json.answers['length'];
 
@@ -70,51 +70,66 @@ function MultipleChoiceManager() {
 
     this.answer = function () {
 
-        if(self.currAnimation ) {
+        //! clear animation
+        if (self.currAnimation) {
             self.currAnimation.remove();
-            self.currAnimation  = null;
+            self.currAnimation = null;
         }
         
+        //! Reset timer 
+        self.stopwatchCurrAnimation.start();
+
+
         if (self.json.answers[this.id()].isCorrect) {
-            
-            self.currAnimation = createImg("assets/correct.gif",  function () {
-                self.isCloseAfterAnimation = true;
-                self.currAnimationDur = 4000;
+            self.isCloseAfterAnimation = true;
+
+            self.currAnimation = createImg("assets/correct.gif", function () {
+                //! Move gif DOM
+                self.onWindowResized(gSceneManager.width, gSceneManager.height);
+                //! Reset timer 
                 self.stopwatchCurrAnimation.start();
-            });    
-            
-        } else {
-                
-            self.currAnimation = createImg("assets/tryagain.gif", function () {
-                self.currAnimationDur = 4000;
-                self.stopwatchCurrAnimation.start();    
             });
-            
 
+            gAudioManager.playCorrect();
+
+        } else {
+            self.isCloseAfterAnimation = false;
+
+            self.currAnimation = createImg("assets/tryagain.gif", function () {
+                //! Move gif DOM
+                self.onWindowResized(gSceneManager.width, gSceneManager.height);
+                //! Reset timer 
+                self.stopwatchCurrAnimation.start();
+            });
+
+            //! Wrong answer callback
             self.callbackWrong(this.id());
+            //! Hide wrong answer button
             self.button[this.id()].hide();
+
+            gAudioManager.playWrong();
         }
-
-        
-        let width = gSceneManager.width;
-        let height = gSceneManager.height;
-        self.onWindowResized(width, height);
-
     }
 
     this.close = function () {
+
         self.json = null;
-        //self.isBlockingMode = false;
         self.callbackWrong = null;
-        self.currAnimationDur = 0;
         self.isCloseAfterAnimation = false;
 
+        //! Call correct callback function
         if (self.callbackCorrect) {
-            self.callbackCorrect( self.stopwatch.get() );
+            self.callbackCorrect(self.stopwatch.get());
             self.callbackCorrect = null;
         }
 
-       
+        //! clear animation
+        if (self.currAnimation) {
+            self.currAnimation.remove();
+            self.currAnimation = null;
+        }
+
+        //! clear button
         for (let i = 0; i < self.button.length; ++i) {
             self.button[i].remove();
             self.button[i] = null;
@@ -126,9 +141,10 @@ function MultipleChoiceManager() {
 
         let len = self.button.length;
 
-        //left,right 80 px space
+        //! left,right 80 px space
         let contentW = w - 160;
-
+        
+        //! Count how many buttons to display
         let numBtn = 0;
         for (let i = 0; i < len; ++i) {
             if (self.button[i].style('display') != 'none') {
@@ -137,9 +153,9 @@ function MultipleChoiceManager() {
         }
 
         let dw = contentW / numBtn;
-
         let idx = 0;
 
+        //! Set buttons position
         for (let i = 0; i < len; ++i) {
             if (self.button[i].style('display') == 'none') continue;
 
@@ -148,11 +164,11 @@ function MultipleChoiceManager() {
             idx++;
         }
 
-
-        if( self.currAnimation ) {
-            let s = min( w,h );
-            self.currAnimation.size( s, s );
-            self.currAnimation.position( (w-s)/2, (h-s)/2);
+        //! Position animation
+        if (self.currAnimation) {
+            let s = min(w, h);
+            self.currAnimation.size(s, s);
+            self.currAnimation.position((w - s) / 2, (h - s) / 2);
         }
     };
 }

@@ -1,20 +1,24 @@
 function PlayerManager() {
     let self = this;
 
+    //! Virus 
     this.imgVirusIcon = null;
-
     this.virusLevel = 50;
     this.isVisible = false;
     this.isVirusBarVisible = false;
+
+    //! Score
     this.score = 0;
+
+    //! Game Status
     this.isCompleted = false;
     this.gameBLevel1Retry = false;
     this.gameBLevel2Retry = false;
     this.gameAWashedTime = 0;
-    
+
     this.mcWrongAns = [];
-    
-    this.reset = function() {
+
+    this.reset = function () {
         self.virusLevel = 50;
         self.isVisible = false;
         self.isVirusBarVisible = false;
@@ -25,7 +29,8 @@ function PlayerManager() {
         self.gameBLevel2Retry = false;
     }
 
-    this.wrongMCAnswer = function( mc, ans ) {
+    //! Hanlde wrong MC answer
+    this.wrongMCAnswer = function (mc, ans) {
         gPlayerManager.virusLevel += 5;
         var obj = new Object();
         obj.mc = parseInt(mc);
@@ -39,6 +44,7 @@ function PlayerManager() {
     }
 
     this.onDrawVirusBar = function () {
+        
         if (self.isVirusBarVisible) {
             image(self.imgVirusIcon, 10, 0);
             image(self.imgVirusIcon, 55, -35);

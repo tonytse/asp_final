@@ -2,9 +2,10 @@ function GameDataManager() {
 
     let self = this;
 
-    this.getPreDialogJson = function( n ) {
+    //! Get Pre dailog json file path
+    this.getPreDialogJson = function (n) {
 
-        switch( n ) {
+        switch (n) {
             case 1: return 'assets/gameData/MC1_PreDialog.json';
             case 2: return 'assets/gameData/MC2_PreDialog.json';
             case 3: return 'assets/gameData/MC3_PreDialog.json';
@@ -14,9 +15,10 @@ function GameDataManager() {
         }
     }
 
-    this.getMCJson = function( n ) {
+    //! Get multiple choice json file path
+    this.getMCJson = function (n) {
 
-        switch( n ) {
+        switch (n) {
             case 1: return 'assets/gameData/MC1_QnA.json';
             case 2: return 'assets/gameData/MC2_QnA.json';
             case 3: return 'assets/gameData/MC3_QnA.json';

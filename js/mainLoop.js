@@ -6,8 +6,10 @@ let gInputManager = null;
 let gDialogManager = null;
 let gMultipleChoice = null;
 let gGameDataManager = null;
+let gAudioManager = null;
 
 function preload() {
+    //! Create core functions
     gGameDataManager = new GameDataManager();
     gSceneManager = new SceneManager()
     gSpriteManager = new SpriteManager();
@@ -16,15 +18,16 @@ function preload() {
     gDialogManager = new DialogManager();
     gMultipleChoice = new MultipleChoiceManager();
     gStageManager = new StageManager();
+    gAudioManager = new AudioManager();
 
-    gInputManager.preload();
+    //! Preload core functions
     gDialogManager.preload();
     gSpriteManager.preload();
     gPlayerManager.preload();
-    gStageManager.preload();
-
+    gAudioManager.preload();
 }
 
+//! The the 4:3 screen size with min. 800 x 600 
 function getScreenSize() {
 
     let w = 800;
@@ -42,6 +45,7 @@ function getScreenSize() {
 
     return { w, h };
 }
+
 
 function setup() {
     let { w, h } = getScreenSize();
@@ -69,6 +73,8 @@ function draw() {
     gStageManager.onDrawOverlay(w, h);
 
     gPlayerManager.onDrawVirusBar(w, h);
+
+    gAudioManager.keepPlay();
 
 }
 
@@ -98,6 +104,6 @@ function windowResized() {
 
 }
 
-function touchStarted(){
+function touchStarted() {
     gStageManager.touchStarted();
 }

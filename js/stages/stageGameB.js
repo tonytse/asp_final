@@ -2,38 +2,43 @@ function StageGameB(level) {
 
     let self = this;
 
+    //! Edge control
     let leftEdge = 14;
     let rightEdge = 1.1;
 
+
+    //! old screen size 
     let oldWidth = null;
     let oldHeight = null;
 
+    //! help 
     let helpPressed = false;
 
+    //! Game play
     let characters = [];
     let endGame = false;
+    let timer = new StopWatch();
+    this.currentLevel = level;
 
+    //! Fonts
     let finishLevelFont = loadFont("assets/fonts/sigmar_one.ttf");
     let warningFont = loadFont("assets/fonts/frijole_regular.ttf");
     let arrowKeys = loadImage("assets/gameB/arrow_keys.png");
+
+    //! Buttons
     let tryAgainButton = createButton('Try Again');
     let goNextButton = createButton('Go Next');
-    let helpButton = createButton('TIPS');
-    let timer = new StopWatch();
+    let helpButton = createButton('Tips');
 
-    let touchControls = {right: false, left: false, up: true, down:true};
-
-    this.currentLevel = level;
 
     this.onEnter = function () {
         gPlayerManager.isVirusBarVisible = true;
         gSceneManager.loadGameB(self.currentLevel);
 
+        //! backup screen size
         self.oldWidth = width;
         self.oldHeight = height;
 
-        helpButton.class("helpButton");
-        helpButton.position( width -115, 55 +10);
         characters = [
             { name: gSpriteManager.maskPlayer, direction: false, speed: 1 * this.currentLevel },
             { name: gSpriteManager.redBoy, direction: false, speed: 1 * this.currentLevel },
@@ -44,6 +49,12 @@ function StageGameB(level) {
 
         this.reset();
 
+        //! help button
+        helpButton.class("helpButton");
+        helpButton.position(width - 115, 55 + 10);
+        helpButton.mousePressed(this.help);
+
+        //! Level 2
         if (self.currentLevel == 2) {
             gSceneManager.offsetX = gSceneManager.background.width / 2;
             gSceneManager.offsetX = 1280;
@@ -59,24 +70,21 @@ function StageGameB(level) {
 
     this.onDraw = function (w, h) {
         let d = deltaTime * 0.2;
+        //! limit update values when browser go to inactive mode
+        if (d > 10) d = 10;
 
-        if (keyDown('n')) {
-            if (self.currentLevel == 1) {
-                gStageManager.changeStage(new StageMC6());
-            } else {
-                gPlayerManager.isCompleted = true;
-                gStageManager.changeStage(new StageEnd());
-            }
-        }
-
+        //! Sort by scale
         characters.sort(function (a, b) {
             return a.name.scale - b.name.scale;
         });
 
-
+        //! handle inpit 
         this.manageInputs(d);
+
+        //! handle player animation
         this.maskPlayerAnimations(d);
 
+        //! update NPC
         let showWarning = false;
         for (let i = 0; i < characters.length; ++i) {
 
@@ -91,6 +99,7 @@ function StageGameB(level) {
             drawSprite(characters[i].name);
         }
 
+        //! Show warning
         if (showWarning && !endGame) {
             push();
             fill(255, 214, 10);
@@ -111,31 +120,27 @@ function StageGameB(level) {
             }
         }
 
-        if (!endGame) {
-            gInputManager.onDraw(w, h);
-        }
-        helpButton.mousePressed(this.help);
-
-        if(helpPressed == true){
+        //! Show help
+        if (helpPressed == true) {
             push();
-            fill(0,0,0,100);
-            rect(0,0, width,height);
+            fill(0, 0, 0, 100);
+            rect(0, 0, width, height);
             fill(255);
             textStyle(BOLD);
-            textSize(width/70);
+            textSize(width / 70);
             textAlign(CENTER);
             rectMode(CENTER);
 
-            text("USE TOUCH CONTROLS OR USE ARROW KEYS", width/2, height/2, width/6);
+            text("USE TOUCH CONTROLS OR USE ARROW KEYS", width / 2, height / 2, width / 6);
 
             let touchText = "Touch left half of the screen to go left";
-            text(touchText.toUpperCase(), width/2-width/4 ,height/2, width/4);
+            text(touchText.toUpperCase(), width / 2 - width / 4, height / 2, width / 4);
             touchText = "Touch right half of the screen to go right";
-            text(touchText.toUpperCase(), width/2+width/4,height/2, width/4);
+            text(touchText.toUpperCase(), width / 2 + width / 4, height / 2, width / 4);
             touchText = "Touch upper half of the screen to go up";
-            text(touchText.toUpperCase(), width/2,height/2-height/4, width/2);
+            text(touchText.toUpperCase(), width / 2, height / 2 - height / 4, width / 2);
             touchText = "Touch lower half of the screen to go down";
-            text(touchText.toUpperCase(), width/2,height/2+height/4, width/2);
+            text(touchText.toUpperCase(), width / 2, height / 2 + height / 4, width / 2);
 
             textStyle(NORMAL);
             fill(255);
@@ -144,22 +149,25 @@ function StageGameB(level) {
             textFont(warningFont);
             if (this.currentLevel == 1) {
                 text("Keep a safe distance and go to the supermarket ---->", width * 0.5, 150);
-            }else {
+            } else {
                 text("<--- Keep a safe distance and go back home", width * 0.5, 150);
             }
             pop();
         }
-        this.touchTracking();
-        this.finishLevel();
+
+        //! Check is level completed
+        this.checkFinishLevel();
 
     }
 
+    //! Try again button
     this.tryAgain = function () {
 
+        //! reset virus level
         gPlayerManager.virusLevel = 50;
         gPlayerManager.isVirusBarVisible = true;
 
-
+        //! Mark fail in gPlayerManager
         if (self.currentLevel == 1) {
             gPlayerManager.gameBLevel1Retry = true;
         } else {
@@ -171,9 +179,12 @@ function StageGameB(level) {
 
     }
 
+    //! Reset game level
     this.reset = function () {
+
         endGame = false;
         helpButton.show();
+
         if (self.currentLevel == 1) {
             gSpriteManager.maskPlayer.position.x = width / 5;
             gSpriteManager.redBoy.position.x = width / 1.5;
@@ -196,6 +207,7 @@ function StageGameB(level) {
             gSpriteManager.girl.position.y = height / 1.25;
         }
 
+        //! Reset NPC
         for (let i = 0; i < characters.length; ++i) {
             if (self.currentLevel == 1 || gSpriteManager.maskPlayer == characters[i].name) {
                 characters[i].name.position.y = height * 0.65;
@@ -216,17 +228,21 @@ function StageGameB(level) {
                 }
             }
         }
+
+        //! Reset offset
         if (self.currentLevel == 1) {
             gSceneManager.offsetX = 0;
         } else {
             gSceneManager.offsetX = 1280;
         }
+
         tryAgainButton.hide();
         goNextButton.hide();
 
         timer.start();
     }
 
+    //! Move npc 
     this.moveNPC = function (d, character) {
 
         if (endGame == true) return;
@@ -247,25 +263,32 @@ function StageGameB(level) {
         }
 
     }
+
+    //! Check is showing warning 
     this.isShowWarning = function (character) {
         if (dist(gSpriteManager.maskPlayer.position.x, gSpriteManager.maskPlayer.position.y, character.name.position.x, character.name.position.y) < 300 * gSpriteManager.maskPlayer.scale) {
             return true;
         }
     }
 
+    //! Handle player animation
     this.maskPlayerAnimations = function (d) {
         if (endGame) return;
         let anyAction = false;
 
-        if (gInputManager.isUp || gInputManager.isDown || touchControls.up || touchControls.down) {
+        //! Walk
+        if (gInputManager.isUp || gInputManager.isDown) {
             gSpriteManager.maskPlayer.changeAnimation('Walk');
             anyAction = true;
         }
 
-        if (gInputManager.isLeft || touchControls.left) {
+        //! Left 
+        if (gInputManager.isLeft) {
+
             gSpriteManager.maskPlayer.changeAnimation('Walk');
             gSpriteManager.maskPlayer.mirrorX(-1);
             anyAction = true;
+
             if (self.currentLevel == 2 && gSceneManager.offsetX >= 0) {
                 if (self.currentLevel == 2) {
                     gSceneManager.offsetX -= d;
@@ -278,7 +301,9 @@ function StageGameB(level) {
             }
         }
 
-        if (gInputManager.isRight || touchControls.right) {
+        //! Right
+
+        if (gInputManager.isRight) {
 
             if (gSceneManager.offsetX < gSceneManager.background.width / 2 && self.currentLevel == 1) {
                 gSceneManager.offsetX += d;
@@ -287,13 +312,12 @@ function StageGameB(level) {
                     characters[i].name.position.x -= d;
                 }
             }
-
-
             gSpriteManager.maskPlayer.changeAnimation('Walk');
             gSpriteManager.maskPlayer.mirrorX(1);
             anyAction = true;
         }
 
+        //! No action
         if (!anyAction) {
             gSpriteManager.maskPlayer.changeAnimation('Idle');
         }
@@ -301,14 +325,15 @@ function StageGameB(level) {
 
     this.charYToScale = function (width, height, y) {
         let s = width * 0.0005;
-        //return map(y, height * 0.5, height * 0.8, s * 0.6, s);
         return map(y, height * 0.5, height * 0.8, s * 0.35, s);
     }
 
+    //! Check gInputManager
     this.manageInputs = function (d) {
         if (endGame) return;
 
-        if ((gInputManager.isUp || touchControls.up) && gSpriteManager.maskPlayer.position.y > height * 0.5) {
+        //! Right edge
+        if (gInputManager.isUp && gSpriteManager.maskPlayer.position.y > height * 0.5) {
             gSpriteManager.maskPlayer.position.y -= d;
             gSpriteManager.maskPlayer.scale = this.charYToScale(width, height, gSpriteManager.maskPlayer.position.y);
 
@@ -318,7 +343,8 @@ function StageGameB(level) {
             }
         };
 
-        if ((gInputManager.isDown || touchControls.down) && gSpriteManager.maskPlayer.position.y < height * 0.8) {
+        //! Left edge
+        if (gInputManager.isDown && gSpriteManager.maskPlayer.position.y < height * 0.8) {
             gSpriteManager.maskPlayer.position.y += d;
             gSpriteManager.maskPlayer.scale = this.charYToScale(width, height, gSpriteManager.maskPlayer.position.y);
 
@@ -328,13 +354,15 @@ function StageGameB(level) {
             }
         };
 
-        if ((gInputManager.isLeft || touchControls.down) && gSpriteManager.maskPlayer.position.x > width / leftEdge) {
+        //! Move left
+        if (gInputManager.isLeft && gSpriteManager.maskPlayer.position.x > width / leftEdge) {
             if (gSceneManager.offsetX < 200 || gSpriteManager.maskPlayer.position.x > width / 1.25 && self.currentLevel == 2) {
                 gSpriteManager.maskPlayer.position.x -= d;
             }
         }
 
-        if ((gInputManager.isRight || touchControls.right)&& gSpriteManager.maskPlayer.position.x < width / rightEdge) {
+        //! Move right
+        if (gInputManager.isRight && gSpriteManager.maskPlayer.position.x < width / rightEdge) {
             if (self.currentLevel == 2) {
                 gSpriteManager.maskPlayer.position.x += d;
             } else if (gSceneManager.offsetX > 1100 || gSpriteManager.maskPlayer.position.x < width / 4) {
@@ -343,7 +371,8 @@ function StageGameB(level) {
         };
     }
 
-    this.finishLevel = function () {
+    this.checkFinishLevel = function () {
+
         // When the Player loses
         if (gPlayerManager.virusLevel >= 100) {
             helpButton.hide();
@@ -353,6 +382,8 @@ function StageGameB(level) {
             for (let i = 0; i < characters.length; ++i) {
                 characters[i].name.changeAnimation('Idle');
             }
+
+            //! Draw fail message
             fill(0, 0, 0, 150);
             rect(0, 0, width, height);
             fill(230, 57, 70);
@@ -371,24 +402,30 @@ function StageGameB(level) {
             image(arrowKeys, width / 2, height / 2.15, width / 10, width / 14.6);
             text("Use arrow keys to maintain a certain distance from the characters to avoid getting COVID-19. If you get too close, you should see a warning.", width / 2, height / 1.85, width / 4)
 
+            //! Try again button
             tryAgainButton.position(width / 2 - tryAgainButton.width / 2, height / 1.55);
             tryAgainButton.mousePressed(this.tryAgain);
             tryAgainButton.id("tryAgainButton");
             tryAgainButton.show();
         }
+
         // When the maskPlayer Wins Level 1
-        if (
-            gSceneManager.offsetX > 1100 && gSpriteManager.maskPlayer.position.x > width / 1.33 &&
+        if (gSceneManager.offsetX > 1100 && gSpriteManager.maskPlayer.position.x > width / 1.33 &&
             self.currentLevel == 1
         ) {
 
+            //! Level complete
             if (gSpriteManager.maskPlayer.position.y < height / 1.75) {
+                
                 helpButton.hide();
                 gPlayerManager.isVirusBarVisible = false;
                 helpPressed = false;
+                //! Stop all NPC
                 for (let i = 0; i < characters.length; ++i) {
                     characters[i].name.changeAnimation('Idle');
                 }
+
+                //! Draw compelte message
                 fill(0, 0, 0, 150);
                 rect(0, 0, width, height);
                 fill(255, 186, 8);
@@ -402,10 +439,12 @@ function StageGameB(level) {
                 textFont("Arial");
                 textSize(width / 70);
 
+                //! go next button
                 goNextButton.position(width / 2 - goNextButton.width / 2, height / 1.75);
                 goNextButton.mousePressed(this.goNext);
                 goNextButton.id("goNext");
                 goNextButton.show();
+
                 endGame = true;
 
             }
@@ -420,9 +459,13 @@ function StageGameB(level) {
                 gPlayerManager.isVirusBarVisible = false;
                 helpButton.hide();
                 helpPressed = false;
+
+                //! Stop all NPC
                 for (let i = 0; i < characters.length; ++i) {
                     characters[i].name.changeAnimation('Idle');
                 }
+
+                //! Draw compelte message
                 fill(0, 0, 0, 150);
                 rect(0, 0, width, height);
                 fill(255, 186, 8);
@@ -436,6 +479,7 @@ function StageGameB(level) {
                 textFont("Arial");
                 textSize(width / 70);
 
+                //! go next button
                 goNextButton.position(width / 2 - goNextButton.width / 2, height / 1.75);
                 goNextButton.mousePressed(this.goNext);
                 goNextButton.id("goNext");
@@ -446,12 +490,17 @@ function StageGameB(level) {
             }
         }
     }
+
     this.goNext = function () {
         let remainTime = 150.0 - timer.get() / 1000;
         if (self.currentLevel == 1) {
+
+            //! Calc score
             if (remainTime > 0) gPlayerManager.score += remainTime * 10;
             gStageManager.changeStage(new StageMC6());
         } else {
+
+            //! Calc score
             if (remainTime > 0) gPlayerManager.score += remainTime * 20;
             gStageManager.changeStage(new StageEnd());
         }
@@ -459,65 +508,36 @@ function StageGameB(level) {
 
     this.onWindowResized = function (w, h) {
 
+        //! Move NPC
         for (let i = 0; i < characters.length; ++i) {
             characters[i].name.position.x = (characters[i].name.position.x / self.oldWidth) * w;
             characters[i].name.position.y = (characters[i].name.position.y / self.oldHeight) * h;
 
             characters[i].name.scale = this.charYToScale(w, h, characters[i].name.position.y);
         }
-        if(helpPressed == true){
-            helpButton.position( width -175, 55 +10);
-           } else{
-            helpButton.position( width -115, 55 +10);
-           }
 
+        //! help position
+        if (helpPressed == true) {
+            helpButton.position(width - 175, 55 + 10);
+        } else {
+            helpButton.position(width - 115, 55 + 10);
+        }
+
+        //! Backup screen size
         self.oldWidth = w;
         self.oldHeight = h;
     }
 
-    this.help = function(){
-       helpPressed = !helpPressed;
-       if(helpPressed == true){
-        helpButton.html("HIDE TIPS");
-        helpButton.position( width -175, 55 +10);
-       } else{
-        helpButton.html("TIPS");
-        helpButton.position( width -115, 55 +10);
-       }
-
-    }
-
-    this.touchTracking = function(){
-        if(touches.length != 0){
-            for(let i = 0; i < touches.length; ++i){
-            if(touches[i].x > width/2){
-                touchControls.right = true;
-            } else {
-                touchControls.right = false;
-            }
-            if(touches[i].x < width/2){
-                touchControls.left = true;
-            } else{
-                touchControls.left = false;
-            }
-            if(touches[i].y < height/2){
-                touchControls.up = true;
-            } else{
-                touchControls.up = false;
-            }
-            if(touches[i].y > height/2){
-                touchControls.down = true;
-            } else{
-                touchControls.down = false;
-            }
+    this.help = function () {
+        helpPressed = !helpPressed;
+        if (helpPressed == true) {
+            helpButton.html("HIDE HELP");
+            helpButton.position(width - 175, 55 + 10);
+        } else {
+            helpButton.html("HELP");
+            helpButton.position(width - 115, 55 + 10);
         }
-        }else{
-        touchControls.left = false;
-        touchControls.right = false;
-        touchControls.up = false;
-        touchControls.down = false;
-        }
-        
+
     }
 
 }

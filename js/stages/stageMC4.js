@@ -3,7 +3,7 @@ function StageMC4() {
     let stageId = 4;
 
     this.onEnter = function () {
-        gSceneManager.loadBathroom();
+        gSceneManager.loadHome();
         gDialogManager.load(gGameDataManager.getPreDialogJson(stageId), self.onPreDialogDone);
     }
 
@@ -16,17 +16,19 @@ function StageMC4() {
     }
 
     this.gotoMC5 = function (stopwatch) {
-        if( stopwatch < 10000 ) {
+        if (stopwatch < 10000) {
             gPlayerManager.score += 10000 - stopwatch;
         }
         gStageManager.changeStage(new StageMC5());
     }
 
     this.wrongAnswer = function (ans) {
+        //! Add wrong answer record to gPlayerManager
         gPlayerManager.wrongMCAnswer(stageId, ans);
     }
 
     this.onPreDialogDone = function () {
+        //! Shoe PreDialog Message
         gMultipleChoice.open(gGameDataManager.getMCJson(stageId), self.gotoMC5, self.wrongAnswer);
     }
 }
