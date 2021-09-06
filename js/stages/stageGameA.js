@@ -36,7 +36,7 @@ function StageGameA() {
 
     //! Help
     let helpPressed = false;
-    let helpButton = createButton('HELP');
+    let helpButton = createButton('TIPS');
 
     //! Exit
     this.exitButton = null;
@@ -326,10 +326,10 @@ function StageGameA() {
         
         helpPressed = !helpPressed;
         if (helpPressed == true) {
-            helpButton.html("HIDE HELP");
+            helpButton.html("HIDE TIPS");
             helpButton.position(width - 175, 55 + 10);
         } else {
-            helpButton.html("HELP");
+            helpButton.html("TIPS");
             helpButton.position(width - 115, 55 + 10);
         }
     }

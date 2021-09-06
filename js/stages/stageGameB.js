@@ -28,7 +28,7 @@ function StageGameB(level) {
     //! Buttons
     let tryAgainButton = createButton('Try Again');
     let goNextButton = createButton('Go Next');
-    let helpButton = createButton('Tips');
+    let helpButton = createButton('TIPS');
 
 
     this.onEnter = function () {
@@ -531,10 +531,10 @@ function StageGameB(level) {
     this.help = function () {
         helpPressed = !helpPressed;
         if (helpPressed == true) {
-            helpButton.html("HIDE HELP");
+            helpButton.html("HIDE TIPS");
             helpButton.position(width - 175, 55 + 10);
         } else {
-            helpButton.html("HELP");
+            helpButton.html("TIPS");
             helpButton.position(width - 115, 55 + 10);
         }
 
