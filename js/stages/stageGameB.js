@@ -18,7 +18,7 @@ function StageGameB(level) {
     let arrowKeys = loadImage("assets/gameB/arrow_keys.png");
     let tryAgainButton = createButton('Try Again');
     let goNextButton = createButton('Go Next');
-    let helpButton = createButton('HELP');
+    let helpButton = createButton('TIPS');
     let timer = new StopWatch();
 
     let touchControls = {right: false, left: false, up: true, down:true};
@@ -478,10 +478,10 @@ function StageGameB(level) {
     this.help = function(){
        helpPressed = !helpPressed;
        if(helpPressed == true){
-        helpButton.html("HIDE HELP");
+        helpButton.html("HIDE TIPS");
         helpButton.position( width -175, 55 +10);
        } else{
-        helpButton.html("HELP");
+        helpButton.html("TIPS");
         helpButton.position( width -115, 55 +10);
        }
 

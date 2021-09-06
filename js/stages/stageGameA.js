@@ -12,7 +12,7 @@ function StageGameA() {
 
     let helpPressed = false;
 
-    let hands = {right: {x: 0, y: 0, restingX: 0, restingY:0, yLimit: false}, left: {x: 0, y: 0,restingX: 0, restingY:0, yLimit: true}, far: true, handsYSpeed: 0, handsXSpeed: 0}
+    let hands = {right: {x: 0, y: 0, restingX: 0, restingY:0, yLimit: false,}, left: {x: 0, y: 0,restingX: 0, restingY:0, yLimit: true}, far: true, handsYSpeed: 0, handsXSpeed: 0,}
     let bubbles = [];
 
     let bubbleTimer = 0;
@@ -25,7 +25,7 @@ function StageGameA() {
     let handWashAreaW = 0;
     let handWashAreaH = 0;
 
-    let helpButton = createButton('HELP');
+    let helpButton = createButton('TIPS');
 
     let isMouseBeingDragged = false;
 
@@ -100,6 +100,7 @@ function StageGameA() {
         if (mouseX > handWashAreaX && mouseX < handWashAreaX + handWashAreaW && mouseY > handWashAreaY
             && mouseY < handWashAreaY + handWashAreaH) {
                 isMouseBeingDragged = true;
+                
                 if(hands.right.y < height /1.65){
                     hands.right.yLimit = true;
                 } else if(hands.right.y > height / 1.35) {
@@ -174,9 +175,9 @@ function StageGameA() {
         let s = width * 0.0008;
         let x = w / 2;
         let y = h - (s * self.imgLeftHand.height);
+       
         image(self.imgLeftHand, hands.left.x, hands.left.y, s * self.imgLeftHand.width, s * self.imgLeftHand.height);
         image(self.imgRightHand, hands.right.x, hands.right.y, s * self.imgRightHand.width, s * self.imgRightHand.height);
-
        
 
         //water
@@ -296,10 +297,10 @@ function StageGameA() {
     this.help = function(){
         helpPressed = !helpPressed;
         if(helpPressed == true){
-            helpButton.html("HIDE HELP");
+            helpButton.html("HIDE TIPS");
             helpButton.position( width -175, 55 +10);
            } else{
-            helpButton.html("HELP");
+            helpButton.html("TIPS");
             helpButton.position( width -115, 55 +10);
            }
     }
