@@ -15,13 +15,14 @@ function StageMC3() {
     }
 
     this.gotoMC4 = function (stopwatch) {
-        if( stopwatch < 10000 ) {
+        if (stopwatch < 10000) {
             gPlayerManager.score += 10000 - stopwatch;
         }
         gStageManager.changeStage(new StageMC4());
     }
 
     this.wrongAnswer = function (ans) {
+        //! Add wrong answer record to gPlayerManager
         gPlayerManager.wrongMCAnswer(stageId, ans);
     }
 

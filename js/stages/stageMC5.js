@@ -3,7 +3,7 @@ function StageMC5() {
     let stageId = 5;
 
     this.onEnter = function () {
-        gSceneManager.loadBathroom();
+        gSceneManager.loadHome();
         gDialogManager.load(gGameDataManager.getPreDialogJson(stageId), self.onPreDialogDone);
     }
 
@@ -16,13 +16,14 @@ function StageMC5() {
     }
 
     this.gotoGameB = function (stopwatch) {
-        if( stopwatch < 10000 ) {
+        if (stopwatch < 10000) {
             gPlayerManager.score += 10000 - stopwatch;
         }
         gStageManager.changeStage(new StageGameB(1));
     }
 
     this.wrongAnswer = function (ans) {
+        //! Add wrong answer record to gPlayerManager
         gPlayerManager.wrongMCAnswer(stageId, ans);
     }
 

@@ -22,10 +22,12 @@ function StageMC1() {
     }
 
     this.wrongAnswer = function (ans) {
+        //! Add wrong answer record to gPlayerManager
         gPlayerManager.wrongMCAnswer(stageId, ans);
     }
 
     this.onPreDialogDone = function () {
+        //! Shoe PreDialog Message
         gMultipleChoice.open(gGameDataManager.getMCJson(stageId), self.gotoMC2, self.wrongAnswer);
     }
 }

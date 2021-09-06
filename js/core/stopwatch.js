@@ -2,11 +2,13 @@ function StopWatch() {
     let self = this;
     let t = null;
 
-    this.start = function() {
-        self.t =  Date.now();
+    //! Start stopwatch
+    this.start = function () {
+        self.t = Date.now();
     }
 
-    this.get = function() {
+    //! Get the time from start
+    this.get = function () {
         return Date.now() - self.t;
     }
 

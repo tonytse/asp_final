@@ -22,6 +22,7 @@ function StageMC2() {
     }
 
     this.wrongAnswer = function (ans) {
+        //! Add wrong answer record to gPlayerManager
         gPlayerManager.wrongMCAnswer(stageId, ans);
     }
 
