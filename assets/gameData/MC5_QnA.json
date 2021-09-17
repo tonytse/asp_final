@@ -7,13 +7,13 @@
         },
         {
             "text": "Go without wearing a mask",
-            "reason": "Wearing masks prevent Covid-19 transmission by restricting the respiratory droplets from spreading or coming in direct contact with people.",
+            "reason": "Wearing masks help prevent Covid-19 transmission by restricting the respiratory droplets from spreading or coming in direct contact with people.",
             "reasonUrl": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7902177/",
             "isCorrect": false
         },
         {
-            "text": "Wear a scarves",
-            "reason": "Wearing masks prevent Covid-19 transmission by restricting the respiratory droplets from spreading or coming in direct contact with people.",
+            "text": "Wear a scarf",
+            "reason": "Wearing masks help prevent Covid-19 transmission by restricting the respiratory droplets from spreading or coming in direct contact with people.",
             "reasonUrl": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7902177/",
             "isCorrect": false
         }

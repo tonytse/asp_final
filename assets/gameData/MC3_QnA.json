@@ -1,5 +1,5 @@
 {
-    "title": "What will you do next?",
+    "title": "So, what will you do next?",
     "answers": [
         {
             "text": "Change Clothes",
@@ -7,13 +7,13 @@
         },
         {
             "text": "Watch TV",
-            "reason": "After doing so many activities, it is likely virus has gotten to our clothes as well and it is a good idea to change clothes first, before doing anything else.",
+            "reason": "After doing so many activities, there is a possibility that the virus is on our clothes, so it is a good idea to change our clothes before we do anything else.",
             "reasonUrl": "https://www.unicef.org/coronavirus/cleaning-and-hygiene-tips-help-keep-coronavirus-covid-19-out-your-home",
             "isCorrect": false
         },
         {
             "text": "Eat Cake",
-            "reason": "After doing so many activities, it is likely virus has gotten to our clothes as well and it is a good idea to change clothes first, before doing anything else.",
+            "reason": "After doing so many activities, there is a possibility that the virus is on our clothes, so it is a good idea to change our clothes before we do anything else.",
             "reasonUrl": "https://www.unicef.org/coronavirus/cleaning-and-hygiene-tips-help-keep-coronavirus-covid-19-out-your-home",
             "isCorrect": false
         }

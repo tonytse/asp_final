@@ -3,14 +3,14 @@
     "answers": [
         {
             "text": "12:30pm",
-            "reason": "It's safer to go outside when there is less crowd.",
+            "reason": "It's safer to go outside when it is less crowded.",
             "reasonUrl": "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public",
             "isCorrect": false
         },
         {
             "text": "6:00pm",
-            "reason": "You have gems/virus in your hand ......",
-            "reason": "It's safer to go outside when there is less crowd.",
+            "reason": "You may have the virus on your hand ......",
+            "reason": "It is safer to go outside when it is less crowded.",
             "reasonUrl": "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public",
             "isCorrect": false
         },
